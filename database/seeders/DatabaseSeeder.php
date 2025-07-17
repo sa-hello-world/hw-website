@@ -29,6 +29,12 @@ class DatabaseSeeder extends Seeder
             'semester_membership_price' => 10,
         ]);
 
-        Event::factory(5)->create();
+        $events = Event::factory(5)->create();
+
+        foreach ($events as $event) {
+            User::factory(random_int(1, 20))
+                ->create()
+                ->each(fn($user) => $user->registerForEvent($event));
+        }
     }
 }
