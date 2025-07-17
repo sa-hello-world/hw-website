@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SponsorshipTier;
 use App\Models\Event;
 use App\Models\SchoolYear;
+use App\Models\Sponsor;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -36,5 +38,9 @@ class DatabaseSeeder extends Seeder
                 ->create()
                 ->each(fn($user) => $user->registerForEvent($event));
         }
+
+        Sponsor::factory()->create(['tier' => SponsorshipTier::GOLD->value]);
+        Sponsor::factory()->create(['tier' => SponsorshipTier::SILVER->value]);
+        Sponsor::factory()->create(['tier' => SponsorshipTier::BRONZE->value]);
     }
 }
