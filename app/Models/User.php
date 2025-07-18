@@ -65,16 +65,17 @@ class User extends Authenticatable
 
     /**
      * Please do not use this method; it's just hiding away the connection
-     * @return HasMany
+     * @return HasMany<EventUser, $this>
      */
-    public function eventUsers(): HasMany {
+    public function eventUsers(): HasMany
+    {
         return $this->hasMany(EventUser::class);
     }
 
     /**
      * Returns the events a user has registered for
      *
-     * @return Attribute<Collection, never>
+     * @return Attribute<Collection<int, Event>, never>
      */
     public function events(): Attribute
     {
@@ -83,6 +84,16 @@ class User extends Authenticatable
                 $query->where('user_id', $this->id);
             })->get(),
         );
+    }
+
+    /**
+     * Returns the associated memberships
+     *
+     * @return HasMany<Membership, $this>
+     */
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(Membership::class);
     }
 
     /**

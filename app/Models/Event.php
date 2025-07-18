@@ -19,16 +19,17 @@ class Event extends Model
 
     /**
      * Please do not use this method; it's just hiding away the connection
-     * @return HasMany
+     * @return HasMany<EventUser, $this>
      */
-    public function eventUsers(): HasMany {
+    public function eventUsers(): HasMany
+    {
         return $this->hasMany(EventUser::class);
     }
 
     /**
      * Returns the users that registered for the event
      *
-     * @return Attribute<Collection, never>
+     * @return Attribute<Collection<int, User>, never>
      */
     public function users(): Attribute
     {

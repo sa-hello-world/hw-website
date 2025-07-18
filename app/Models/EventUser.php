@@ -16,7 +16,7 @@ class EventUser extends Model
 
     /**
      * Establishes relationship between users and this model (linking table) to events
-     * @return BelongsTo
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -25,9 +25,10 @@ class EventUser extends Model
 
     /**
      * Establishes relationship between events and this model (linking table) to users
-     * @return BelongsTo
+     * @return BelongsTo<Event, $this>
      */
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
-    }}
+    }
+}
