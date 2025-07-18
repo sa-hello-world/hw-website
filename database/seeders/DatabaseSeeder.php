@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         User::take(5)->each(function ($user) {
             Membership::create([
                 'user_id' => $user->id,
-                'school_year_id' => SchoolYear::first()->id,
+                'school_year_id' => SchoolYear::firstOrFail()->id,
             ]);
         });
 
