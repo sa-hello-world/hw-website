@@ -10,6 +10,8 @@ use App\Models\Sponsor;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,10 +20,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        Artisan::call('app:sync-permissions');
+
+        $user = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'chair@hz.nl',
+            'password' => Hash::make('123'),
         ]);
+
+        $user->assignRole('chairman');
 
         SchoolYear::create([
             'start_academic_year' => Carbon::parse('2025-08-24'),

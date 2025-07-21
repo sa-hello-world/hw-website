@@ -1,0 +1,22 @@
+# The YML file format allows for comments to be added to the file.
+# This makes it possible to add explanations to the file.
+# The roles are defined in the roles section of the file.
+# TODO: These are not the final permissions!
+roles:
+  - member
+  - chairman
+  - head of activity
+  - head of media
+permissions:
+  sponsor:
+    viewAny: [ chairman, head of activity, head of media ]
+    view: [ chairman, head of activity, head of media ]
+    create: [ chairman, head of media ]
+    update: [ chairman, head of media ]
+    delete: [ chairman ]
+  event:
+    viewAny: [ chairman, head of activity, head of media ]
+    view: [ chairman, head of activity, head of media ]
+    create: [ chairman, head of activity, head of media ]
+    update: [ chairman, head of activity, head of media ]
+    delete: [ chairman, head of activity ]
