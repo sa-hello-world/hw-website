@@ -1,0 +1,156 @@
+Table users {
+  id bigint [pk, increment]
+  name varchar
+  email varchar [unique]
+  email_verified_at timestamp [note: 'nullable']
+  password varchar
+  remember_token varchar
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table password_reset_tokens {
+  email varchar [pk]
+  token varchar
+  created_at timestamp [note: 'nullable']
+}
+
+Table sessions {
+  id varchar [pk]
+  user_id bigint [ref: > users.id, note: 'nullable']
+  ip_address varchar(45) [note: 'nullable']
+  user_agent text [note: 'nullable']
+  payload text
+  last_activity int
+}
+
+Table events {
+  id bigint [pk, increment]
+  name varchar
+  description varchar
+  poster_path varchar [note: 'nullable']
+  available_places int [note: 'nullable']
+  start datetime
+  end datetime [note: 'nullable']
+  regular_price int [note: 'nullable']
+  member_price int [note: 'nullable']
+  type varchar
+  open_for varchar [note: 'nullable']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table school_years {
+  id bigint [pk, increment]
+  start_academic_year date
+  end_academic_year date
+  name_of_chairman varchar [note: 'nullable']
+  regular_membership_price int
+  early_membership_price int [note: 'nullable']
+  semester_membership_price int [note: 'nullable']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table permissions {
+  id bigint [pk, increment]
+  name varchar
+  guard_name varchar
+  created_at timestamp
+  updated_at timestamp
+
+  Indexes {
+    (name, guard_name) [unique]
+  }
+}
+
+Table roles {
+  id bigint [pk, increment]
+  team_id bigint [note: 'nullable']
+  name varchar
+  guard_name varchar
+  created_at timestamp
+  updated_at timestamp
+
+  Indexes {
+    (team_id)
+    (team_id, name, guard_name) [unique]
+  }
+}
+
+Table model_has_permissions {
+  permission_id bigint
+  model_type varchar
+  model_id bigint
+  team_id bigint [note: 'nullable']
+
+  Indexes {
+    (model_id, model_type)
+    (team_id)
+  }
+
+  Primary Key (permission_id, model_id, model_type, team_id)
+}
+Ref: model_has_permissions.permission_id > permissions.id
+
+
+Table model_has_roles {
+  role_id bigint
+  model_type varchar
+  model_id bigint
+  team_id bigint [note: 'nullable']
+
+  Indexes {
+    (model_id, model_type)
+    (team_id)
+  }
+
+  Primary Key (role_id, model_id, model_type, team_id)
+
+}
+
+Ref: model_has_roles.role_id > roles.id
+
+Table role_has_permissions {
+  permission_id bigint
+  role_id bigint
+
+  Primary Key (permission_id, role_id)
+}
+
+Ref: role_has_permissions.permission_id > permissions.id
+Ref: role_has_permissions.role_id > roles.id
+
+Table event_users {
+  id bigint [pk, increment]
+  event_id bigint
+  user_id bigint
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: event_users.event_id > events.id
+Ref: event_users.user_id > users.id
+
+Table sponsors {
+  id bigint [pk, increment]
+  name varchar
+  tier varchar
+  logo_path varchar [note: 'nullable']
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table memberships {
+  id bigint [pk, increment]
+  user_id bigint
+  school_year_id bigint
+  created_at timestamp
+  updated_at timestamp
+}
+
+Ref: memberships.user_id > users.id
+Ref: memberships.school_year_id > school_years.id
+
+
+Ref: "school_years"."id" < "school_years"."created_at"
