@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('tier');
             $table->string('logo_path')->nullable();
+            $table->string('website');
             $table->timestamps();
         });
     }
