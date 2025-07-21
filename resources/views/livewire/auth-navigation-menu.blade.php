@@ -2,54 +2,52 @@
      class="relative z-40 bg-hw-dark">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto">
-        <div class="flex flex-wrap items-center justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="flex items-center flex-shrink-0 text-white">
-                    <a href="/">
-                        SA Hello World
-                    </a>
-                </div>
+        <div class="flex items-center justify-between h-16">
+            <!-- Logo -->
+            <div class="flex items-center flex-shrink-0">
+                <a href="/" class="mb-2">
+                    <img src="{{ asset('/img/logo-white.png') }}" alt="WAITT Logo" class="h-9 w-auto max-w-full"/>
+                </a>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('dashboard')"
-                                      wire:navigate.hover>
+                                   wire:navigate.hover>
                         {{ __('Home') }}
                     </x-hw.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
-                                      wire:navigate.hover>
+                                   wire:navigate.hover>
                         {{ __('About Us') }}
                     </x-hw.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
-                                      wire:navigate.hover>
+                                   wire:navigate.hover>
                         {{ __('Shenanigans') }}
                     </x-hw.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
-                                      wire:navigate.hover>
+                                   wire:navigate.hover>
                         {{ __('Partners') }}
                     </x-hw.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
-                                      wire:navigate.hover>
+                                   wire:navigate.hover>
                         {{ __('Events') }}
                     </x-hw.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
-                                      wire:navigate.hover>
+                                   wire:navigate.hover>
                         {{ __('Say Hello!') }}
                     </x-hw.nav-link>
                 </div>
@@ -94,7 +92,7 @@
                             <form method="POST" action="{{ route('logout') }}" x-data>
                                 @csrf
                                 <x-hw.dropdown-link href="{{ route('logout') }}"
-                                                       @click.prevent="$root.submit();">
+                                                    @click.prevent="$root.submit();">
                                     {{ __('Log Out') }}
                                 </x-hw.dropdown-link>
                             </form>
@@ -123,12 +121,12 @@
     <div :class="{'block': open, 'hidden': ! open}" class="bg-waitt-dark hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('welcome') }}"
-                                         :active="request()->routeIs('welcome')">
+                                      :active="request()->routeIs('welcome')">
                 {{ __('Home') }}
             </x-hw.responsive-nav-link>
             <div class="border-t border-gray-200 dark:border-gray-600"></div>
             <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('dashboard') }}"
-                                         :active="request()->routeIs('dashboard')">
+                                      :active="request()->routeIs('dashboard')">
                 {{ __(Auth::user()->name) }}
             </x-hw.responsive-nav-link>
             <div class="border-t border-gray-200 dark:border-gray-600"></div>
