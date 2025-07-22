@@ -25,7 +25,7 @@
 
                         <!-- Bottom section -->
                         <!-- TODO: Remove the pb-12 at some point -->
-                        <ul class="flex flex-col pb-12" role="list">
+                        <ul class="flex flex-col " role="list">
                             <li>
                                 <div class="leading-6 font-semibold text-xs text-gray-400 hidden lg:block">Profile</div>
                                 <ul class="mt-2 -mx-2" role="list">
@@ -50,7 +50,9 @@
         </div>
         <!-- Content -->
         <div class="grow overflow-y-auto bg-hw-dark px-2">
-            {{ $slot }}
+            <div class="h-full">
+                {{ $slot }}
+            </div>
         </div>
     </div>
 </x-layouts.app>

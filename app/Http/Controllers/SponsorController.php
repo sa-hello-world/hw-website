@@ -6,6 +6,7 @@ use App\Enums\SponsorshipTier;
 use App\Models\Sponsor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class SponsorController extends Controller
@@ -13,14 +14,14 @@ class SponsorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() : View
+    public function index(): View
     {
         if (Auth::user()->cannot('viewAny', Sponsor::class)) {
             abort(403);
         }
 
         $sponsorCounts = collect(SponsorshipTier::cases())
-            ->mapWithKeys(fn ($tier) => [
+            ->mapWithKeys(fn($tier) => [
                 $tier->value => Sponsor::whereTier($tier->value)->count(),
             ])
             ->toArray();
@@ -35,7 +36,7 @@ class SponsorController extends Controller
      */
     public function create()
     {
-        //
+        return view('sponsors.create');
     }
 
     /**
@@ -43,7 +44,20 @@ class SponsorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|min:3|max:255',
+            'tier' => ['required', Rule::in(array_map(fn($e) => $e->value, SponsorshipTier::cases()))],
+            'logo' => 'nullable|mimes:jpeg,jpg,png,gif,webp,svg|max:2048',
+            'website' => ['required', 'regex:/^www\.[\w\-]+\.[\w\-\.]+$/i'],
+        ]);
+
+        $logo = $request->file('logo');
+        $path = $logo->store('uploads', 'public');
+
+        Sponsor::create(array_merge($validated, ['logo_path' => $path]));
+
+        return redirect()->route('sponsors.index')
+            ->with('success', 'Sponsor created successfully.');
     }
 
     /**
