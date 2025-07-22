@@ -6,7 +6,7 @@
             <!-- Logo -->
             <div class="flex items-center flex-shrink-0">
                 <a href="/" class="mb-2">
-                    <img src="{{ asset('/img/logo-white.png') }}" alt="WAITT Logo" class="h-9 w-auto max-w-full"/>
+                    <img src="{{ asset('/img/main_logo_inline_white.png') }}" alt="WAITT Logo" class="h-9 w-auto max-w-full"/>
                 </a>
 
                 <!-- Navigation Links -->
