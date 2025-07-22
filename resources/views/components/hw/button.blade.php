@@ -1,6 +1,6 @@
 @props(['href' => '#', 'label'])
 
 <a href="{{ $href }}"
-   class="inline-block px-6 py-3 rounded-full font-bold text-white bg-hw-blue hover:bg-blue-400 transition">
+   class="inline-block px-8 py-2 rounded-2xl font-bayon text-2xl tracking-wider uppercase text-white bg-hw-blue hover:bg-hw-blue-600 transition">
     {{ $label }}
 </a>
