@@ -14,6 +14,11 @@ Route::get('/', function () {
     return view('welcome', compact('events', 'sponsors'));
 })->name('welcome');
 
+Route::get('/aboutus', function () {
+    return view('aboutus');
+})->name('aboutus');
+
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');

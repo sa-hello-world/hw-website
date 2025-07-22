@@ -1,4 +1,4 @@
-<div class="bg-white px-6 py-12">
+<section class="bg-white p-20">
     <div class="max-w-4xl mx-auto">
         <!-- Decorative dots border -->
         <div class="flex justify-center mb-8">
@@ -34,11 +34,11 @@
                 </div>
             </div>
 
-            <x-hw.button/>
+            <x-hw.button label="Read More" href="/aboutus" />
 
             <p class="mt-4 text-hw-blue font-handwritten text-lg">
                 Okay, got it. So we are doing what now?
             </p>
         </div>
     </div>
-</div>
+</section>

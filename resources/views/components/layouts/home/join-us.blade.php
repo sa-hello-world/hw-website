@@ -1,4 +1,4 @@
-<div class="bg-hwblack px-6 py-12">
+<section class="bg-hw-dark p-20">
     <div class="max-w-4xl mx-auto text-center">
         <p class="text-white font-handwritten text-2xl mb-4">
             Caught your attention?
@@ -33,13 +33,8 @@
                     </div>
 
                     <!-- Membership cards illustration -->
-                    <div class="mt-8 relative">
-                        <div class="transform rotate-12 bg-pink-500 w-32 h-20 rounded-lg mx-auto relative">
-                            <div class="absolute inset-2 bg-white rounded"></div>
-                        </div>
-                        <div class="transform -rotate-6 bg-green-400 w-32 h-20 rounded-lg mx-auto relative -mt-16">
-                            <div class="absolute inset-2 bg-white rounded"></div>
-                        </div>
+                    <div class="-ml-16 -mb-16 absolute">
+                        <img src="{{ asset('/img/tickets.png') }}" alt="Tickets" class="w-84 object-contain">
                     </div>
                 </div>
 
@@ -100,4 +95,4 @@
             </div>
         </div>
     </div>
-</div>
+</section>
