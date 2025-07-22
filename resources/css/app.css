@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bayon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=CraftyGirls&display=swap');
+
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
 
 @theme {
     --font-bayon:  "Bayon", sans-serif;
+    --font-handwriting: "Crafty Girls", cursive;
     --color-hw-dark: #0A0809;
     --color-hw-blue: #00B3FD;
     --color-hw-blue-50: #eff9ff;
@@ -17,6 +20,8 @@
     --color-hw-blue-800: #005e8d;
     --color-hw-blue-900: #064e74;
     --color-hw-blue-950: #04314d;
+    --color-hw-green: #DCFBA9;
+    --color-hw-pink: #F962C9;
 }
 
 @source '../views';

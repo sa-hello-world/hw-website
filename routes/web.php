@@ -4,9 +4,14 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
+use App\Models\Event;
+use App\Models\Sponsor;
 
 Route::get('/', function () {
-    return view('welcome');
+    $events = Event::latest()->take(3)->get();
+    $sponsors = Sponsor::all();
+
+    return view('welcome', compact('events', 'sponsors'));
 })->name('welcome');
 
 Route::view('dashboard', 'dashboard')
