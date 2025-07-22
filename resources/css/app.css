@@ -1,5 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Bayon&display=swap');
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
+
+@theme {
+    --font-bayon:  "Bayon", sans-serif;
+    --color-hw-dark: #0A0809;
+    --color-hw-blue: #00B3FD;
+    --color-hw-blue-50: #eff9ff;
+    --color-hw-blue-100: #def3ff;
+    --color-hw-blue-200: #b6e8ff;
+    --color-hw-blue-300: #75d8ff;
+    --color-hw-blue-400: #2cc6ff;
+    --color-hw-blue-500: #00b3fd;
+    --color-hw-blue-600: #008cd4;
+    --color-hw-blue-700: #006fab;
+    --color-hw-blue-800: #005e8d;
+    --color-hw-blue-900: #064e74;
+    --color-hw-blue-950: #04314d;
+}
 
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
