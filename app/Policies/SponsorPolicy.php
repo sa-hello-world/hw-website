@@ -13,7 +13,7 @@ class SponsorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('viewAny sponsors');
+        return $user->can('viewAny sponsor');
     }
 
     /**
