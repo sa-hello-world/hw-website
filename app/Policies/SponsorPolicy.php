@@ -29,7 +29,7 @@ class SponsorPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->can('create sponsor');
     }
 
     /**
@@ -37,7 +37,7 @@ class SponsorPolicy
      */
     public function update(User $user, Sponsor $sponsor): bool
     {
-        return false;
+        return $user->can('update sponsor');
     }
 
     /**
@@ -45,7 +45,7 @@ class SponsorPolicy
      */
     public function delete(User $user, Sponsor $sponsor): bool
     {
-        return false;
+        return $user->can('delete sponsor');
     }
 
     /**

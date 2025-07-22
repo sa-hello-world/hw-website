@@ -1,4 +1,4 @@
-@props(['name', 'label' => null])
+@props(['name', 'label' => null, 'id' => 'file'])
 
 <div x-data="{ fileName: '' }" class="flex flex-col space-y-1">
     @if($label)
@@ -23,7 +23,7 @@
         <span x-text="fileName || 'No file selected'" class="truncate text-sm"></span>
 
         <input
-            id="{{ $name }}"
+            id="{{ $id }}"
             name="{{ $name }}"
             type="file"
             accept="image/*"
