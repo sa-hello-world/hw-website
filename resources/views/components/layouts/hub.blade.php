@@ -1,6 +1,6 @@
 @php use App\Models\Sponsor; @endphp
 <x-layouts.app>
-    <div class="flex">
+    <div class="flex font-public-sans">
         <div class="flex-col lg:w-72 flex inset-y-0 relative min-h-screen bg-hw-dark">
             <div
                 class="pb-4 px-6 overflow-y-auto flex-col grow flex">

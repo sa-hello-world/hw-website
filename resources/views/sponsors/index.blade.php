@@ -1,4 +1,5 @@
 <x-layouts.hub>
+    <h1 class="text-5xl font-bayon text-white pt-5">Sponsorships</h1>
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded">
         <div class="grid auto-rows-min gap-4 md:grid-cols-3 pt-5">
             @foreach($sponsorCounts as $tier => $count)
