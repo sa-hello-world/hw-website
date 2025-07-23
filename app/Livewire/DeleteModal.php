@@ -9,6 +9,9 @@ class DeleteModal extends Component
 {
     public bool $showModal = false;
 
+    // Purposefully without type - in order to be reused for different modals
+    // since apparently the Model type cannot be generalized in Laravel
+    // @phpstan-ignore-next-line
     public $model;
     public string $route;
 
@@ -18,6 +21,7 @@ class DeleteModal extends Component
      * @param string $route
      * @return void
      */
+    // @phpstan-ignore-next-line
     public function mount($model, string $route): void
     {
         $this->model = $model;
