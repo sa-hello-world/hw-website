@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\SponsorshipTier;
 use App\Models\Sponsor;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -34,7 +35,7 @@ class SponsorController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : View
     {
         if (Auth::user()->cannot('create', Sponsor::class)) {
             abort(403);
@@ -46,7 +47,7 @@ class SponsorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
         if (Auth::user()->cannot('create', Sponsor::class)) {
             abort(403);
@@ -69,17 +70,9 @@ class SponsorController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Sponsor $sponsor)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Sponsor $sponsor)
+    public function edit(Sponsor $sponsor) : View
     {
         return view('sponsors.edit', compact('sponsor'));
     }
@@ -87,7 +80,7 @@ class SponsorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Sponsor $sponsor)
+    public function update(Request $request, Sponsor $sponsor) : RedirectResponse
     {
         if (Auth::user()->cannot('update', $sponsor)) {
             abort(403);
@@ -115,8 +108,15 @@ class SponsorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Sponsor $sponsor)
+    public function destroy(Sponsor $sponsor) : RedirectResponse
     {
-        //
+        if (Auth::user()->cannot('delete', $sponsor)) {
+            abort(403);
+        }
+
+        $sponsor->delete();
+
+        return redirect()->route('sponsors.index')
+            ->with('success', 'Sponsor deleted successfully.');
     }
 }

@@ -1,5 +1,5 @@
 <div>
-    <svg wire:click="show" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+    <svg wire:click="show(true)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
          stroke-width="1.5" stroke="currentColor"
          class="size-5 stroke-hw-blue-200 hover:stroke-hw-blue-400 hover:cursor-pointer transition-all">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -19,7 +19,7 @@
             <form action="{{route($route, $model)}}" method="POST">
                 @csrf
                 @method('DELETE')
-                <x-hw.button wire:click="closeModal" class="mr-2">
+                <x-hw.button type="button" wire:click="show(false)" class="mr-2">
                     Cancel
                 </x-hw.button>
 
