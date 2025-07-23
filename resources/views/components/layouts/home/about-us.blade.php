@@ -1,4 +1,4 @@
-<section class="md:px-20 px-6">
+<section class="md:p-20 p-6">
     <div class="mx-full bg-white rounded-2xl">
         <!-- Decorative dots border -->
         <div class="flex justify-center">
@@ -34,7 +34,7 @@
                  </p>
             </div>
 
-            <div class="flex flex-col items-center justify-between md:mt-12">
+            <div class="flex md:flex-row flex-col items-center justify-between md:mt-12">
                 <x-hw.button label="Read More" href="/aboutus" />
                 <div class="relative">
                     <p class="text-hw-dark font-handwriting md:text-lg text-sm md:mt-0 mt-6 whitespace-nowrap relative z-10">

@@ -45,9 +45,14 @@
     </div>
 </div>
 
-<footer class="bg-waitt-dark relative z-40">
-
-</footer>
+@if (!Str::contains(Request::url(), ['errors']))
+    @guest()
+        @livewire('guest-footer')
+    @endguest
+    @auth()
+        @livewire('auth-footer')
+    @endauth
+@endif
 
 @stack('modals')
 @stack('scripts')
