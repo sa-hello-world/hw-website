@@ -5,21 +5,47 @@
         Thank you to our Sponsors!
     </h2>
 
-    <div class="relative bg-white px-6 md:px-20 py-12">
-        @if(count($sponsors) > 0)
+    <div class="relative bg-white px-6 md:px-20 py-12 space-y-12">
+
+        {{-- Gold Sponsors --}}
+        @if($sponsors->where('tier', 'gold')->count())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                @foreach($sponsors as $sponsor)
-                    <div class="flex items-center justify-center p-4 bg-white rounded-lg shadow">
+                @foreach($sponsors->where('tier', 'gold') as $sponsor)
+                    <div class="flex items-center justify-center p-4 bg-white rounded-lg shadow h-24">
                         <img src="{{ asset('storage/' . $sponsor->image_path) }}"
                              alt="{{ $sponsor->name }}"
-                             class="max-h-16 object-contain"/>
+                             class="w-full  object-contain" />
                         <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
                     </div>
                 @endforeach
             </div>
-        @else
-            <div class="text-center text-xl text-gray-700 font-semibold">
-                Waiting for sponsors!
+        @endif
+
+        {{-- Silver Sponsors --}}
+        @if($sponsors->where('tier', 'silver')->count())
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                @foreach($sponsors->where('tier', 'silver') as $sponsor)
+                    <div class="flex items-center justify-center p-4 bg-white rounded-lg shadow h-16">
+                        <img src="{{ asset('storage/' . $sponsor->image_path) }}"
+                             alt="{{ $sponsor->name }}"
+                             class="w-full h-16 object-contain" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
+                    </div>
+                @endforeach
+            </div>
+        @endif
+
+        {{-- Bronze Sponsors --}}
+        @if($sponsors->where('tier', 'bronze')->count())
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                @foreach($sponsors->where('tier', 'bronze') as $sponsor)
+                    <div class="flex items-center justify-center p-4 bg-white rounded-lg shadow h-12">
+                        <img src="{{ asset('storage/' . $sponsor->image_path) }}"
+                             alt="{{ $sponsor->name }}"
+                             class="w-full h-12 object-contain" />
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
+                    </div>
+                @endforeach
             </div>
         @endif
 
