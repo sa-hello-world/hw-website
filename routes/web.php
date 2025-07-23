@@ -16,7 +16,8 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
-    Route::resource('sponsors', SponsorController::class);
+    Route::resource('sponsors', SponsorController::class)
+        ->except(['show']);
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
