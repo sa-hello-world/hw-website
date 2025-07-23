@@ -74,6 +74,10 @@ class SponsorController extends Controller
      */
     public function edit(Sponsor $sponsor) : View
     {
+        if (Auth::user()->cannot('update', $sponsor)) {
+            abort(403);
+        }
+
         return view('sponsors.edit', compact('sponsor'));
     }
 
