@@ -1,4 +1,4 @@
-<section class="bg-hw-dark p-20">
+<section class="bg-hw-dark md:p-20 p-6">
     <div class="mx-full text-center">
         <p class="text-white font-handwriting text-2xl mb-4">
             Caught your attention?

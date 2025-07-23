@@ -1,6 +1,6 @@
 @props(['events'])
 
-<section class="px-20">
+<section class="md:px-20 px-6">
     <h2 class="text-white font-bayon text-5xl mb-6">Some of our last events</h2>
     <div class="grid md:grid-cols-3 gap-6">
         @foreach($events as $event)

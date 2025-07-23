@@ -18,6 +18,13 @@ Route::get('/aboutus', function () {
     return view('aboutus');
 })->name('aboutus');
 
+Route::get('/partners', function () {
+    return view('partners');
+})->name('partners');
+
+Route::get('/events', function () {
+    return view('events');
+})->name('events');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

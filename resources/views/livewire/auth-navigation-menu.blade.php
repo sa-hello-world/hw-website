@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
+                    <x-hw.nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('welcome')"
                                    wire:navigate.hover>
                         {{ __('About Us') }}
                     </x-hw.nav-link>
@@ -32,14 +32,14 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
+                    <x-hw.nav-link href="{{ route('partners') }}" :active="request()->routeIs('welcome')"
                                    wire:navigate.hover>
                         {{ __('Partners') }}
                     </x-hw.nav-link>
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
+                    <x-hw.nav-link href="{{ route('events') }}" :active="request()->routeIs('welcome')"
                                    wire:navigate.hover>
                         {{ __('Events') }}
                     </x-hw.nav-link>

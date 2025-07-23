@@ -1,15 +1,15 @@
-<section class="px-20">
+<section class="md:px-20 px-6">
     <div class="mx-full bg-white rounded-2xl">
         <!-- Decorative dots border -->
         <div class="flex justify-center">
-            <div class="flex space-x-8 my-3">
+            <div class="flex md:space-x-8 space-x-2 my-3 overflow-hidden">
                 @for($i = 0; $i < 27; $i++)
-                    <div class="w-5 h-5 bg-hw-dark rounded-full"></div>
+                    <div class="md:w-5 md:h-5 w-2 h-2 bg-hw-dark rounded-full"></div>
                 @endfor
             </div>
         </div>
 
-        <div class="text-hw-dark p-12">
+        <div class="text-hw-dark md:p-12 p-8">
             <h2 class="font-bayon text-5xl mb-6 uppercase">
                 WHAT IS SA HELLO WORLD?
             </h2>
@@ -34,10 +34,10 @@
                  </p>
             </div>
 
-            <div class="flex items-center justify-between mt-12">
+            <div class="flex flex-col items-center justify-between md:mt-12">
                 <x-hw.button label="Read More" href="/aboutus" />
                 <div class="relative">
-                    <p class="text-hw-dark font-handwriting text-lg whitespace-nowrap relative z-10">
+                    <p class="text-hw-dark font-handwriting md:text-lg text-sm md:mt-0 mt-6 whitespace-nowrap relative z-10">
                         Okay, got it. So we are doing what now?
                     </p>
 

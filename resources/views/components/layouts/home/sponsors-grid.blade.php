@@ -1,6 +1,6 @@
 @props(['sponsors'])
 
-<section class="p-20">
+<section class="md:p-20 p-6">
     <h2 class="text-white text-5xl font-bayon mb-6">Thank you to our Sponsors!</h2>
     <div class="bg-white p-12 max-w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         @foreach($sponsors as $sponsor)
