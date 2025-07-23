@@ -5,7 +5,6 @@
             <h4 class="uppercase tracking-wider mb-4 text-white text-lg">Dashboard</h4>
             <ul class="space-y-2">
                 <li><a href="{{ route('dashboard') }}" class="hover:underline">My Hub</a></li>
-                <li><a href="{{ route('profile') }}" class="hover:underline">Profile</a></li>
                 <li><a href="{{ route('events') }}" class="hover:underline">My Events</a></li>
             </ul>
         </div>

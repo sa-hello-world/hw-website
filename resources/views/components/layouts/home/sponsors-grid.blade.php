@@ -13,6 +13,7 @@
                         <img src="{{ asset('storage/' . $sponsor->image_path) }}"
                              alt="{{ $sponsor->name }}"
                              class="max-h-16 object-contain"/>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
                     </div>
                 @endforeach
             </div>
