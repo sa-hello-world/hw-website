@@ -5,8 +5,8 @@
 
 @php
     $variantClasses = match($variant) {
-        'save' => 'bg-hw-blue text-white hover:bg-hw-blue-700',
-        'delete' => 'border-red-600 text-red-600',
+        'save' => 'border-hw-blue text-hw-blue',
+        'danger' => 'border-red-600 text-red-600',
         'default' => 'border-gray-600 text-gray-400 ',
     };
 @endphp
