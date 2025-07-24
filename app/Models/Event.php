@@ -52,7 +52,7 @@ class Event extends Model
     /** @use HasFactory<EventFactory> */
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'poster_path', 'available_places', 'start', 'end',
+    protected $fillable = ['name', 'description', 'location', 'poster_path', 'available_places', 'start', 'end',
         'regular_price', 'membership_price', 'type', 'open_for', 'school_year_id'];
 
     /**

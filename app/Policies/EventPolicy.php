@@ -38,11 +38,7 @@ class EventPolicy
      */
     public function update(User $user, Event $event): bool
     {
-        $currentSchoolYear = SchoolYear::current();
-
-        return $user->can('update event') &&
-            $currentSchoolYear &&
-            $currentSchoolYear->events->contains($event);
+        return $user->can('update event') && $event->status == 'upcoming';
     }
 
     /**
