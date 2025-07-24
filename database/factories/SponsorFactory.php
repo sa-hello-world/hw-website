@@ -19,6 +19,7 @@ class SponsorFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'tier' => 'bronze',
+            'website' => $this->faker->url(),
         ];
     }
 }
