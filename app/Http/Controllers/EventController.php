@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\SchoolYear;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class EventController extends Controller
 {
@@ -19,9 +20,21 @@ class EventController extends Controller
         $currentSchoolYearEvents = optional($currentSchoolYear)
             ->events()
             ->orderBy('start', 'desc')
-            ->paginate(10);
+            ->paginate(5, ['*'], 'current_page')
+            ->withQueryString();
 
-        return view('events.index', compact('currentSchoolYear', 'currentSchoolYearEvents', 'currentSchoolYearEventsCount'));
+        $previousSchoolYear = SchoolYear::previous();
+
+
+        $previousSchoolYearEvents = new LengthAwarePaginator(collect([]), 0, 5, 1);
+        if($previousSchoolYear){
+            $previousSchoolYearEvents = $previousSchoolYear->events()
+                ->orderBy('start', 'desc')
+                ->paginate(5, ['*'], 'archive_page')
+                ->withQueryString();
+        }
+
+        return view('events.index', compact('currentSchoolYear', 'currentSchoolYearEvents', 'currentSchoolYearEventsCount', 'previousSchoolYearEvents'));
     }
 
     /**

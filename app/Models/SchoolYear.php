@@ -65,9 +65,18 @@ class SchoolYear extends Model
         $today = now()->startOfDay();
 
         return self::whereDate('start_academic_year', '<=', $today)
-            ->orWhereNull('start_academic_year')
             ->whereDate('end_academic_year', '>=', $today)
-            ->orWhereNull('end_academic_year')
+            ->first();
+    }
+
+    /**
+     * Returns the previous academic year if such exist
+     * @return SchoolYear|null
+     */
+    public static function previous(): ?SchoolYear
+    {
+        return self::whereDate('start_academic_year', '<', SchoolYear::current()->start_academic_year)
+            ->orderByDesc('start_academic_year')
             ->first();
     }
 }

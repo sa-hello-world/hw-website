@@ -106,7 +106,7 @@ class Event extends Model
                     return EventStatus::CURRENT->value;
                 }
 
-                return  EventStatus::PASSED->value;
+                return  EventStatus::PAST->value;
             }
         );
     }

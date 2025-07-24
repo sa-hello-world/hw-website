@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Event;
+use App\Models\SchoolYear;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -37,7 +38,11 @@ class EventPolicy
      */
     public function update(User $user, Event $event): bool
     {
-        return $user->can('update event');
+        $currentSchoolYear = SchoolYear::current();
+
+        return $user->can('update event') &&
+            $currentSchoolYear &&
+            $currentSchoolYear->events->contains($event);
     }
 
     /**
