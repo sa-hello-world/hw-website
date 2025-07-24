@@ -45,9 +45,7 @@
     </div>
 </div>
 
-<footer class="bg-waitt-dark relative z-40">
-
-</footer>
+<x-hw.footer/>
 
 @stack('modals')
 @stack('scripts')

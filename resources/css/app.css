@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Bayon&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Aladin&family=Crafty+Girls&family=Satisfy&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
 
 @theme {
-    --font-bayon: "Bayon", sans-serif;
+    --font-bayon:  "Bayon", sans-serif;
+    --font-handwriting: "Crafty Girls", cursive;
     --font-public-sans: "Public Sans", sans-serif;
     --color-hw-dark: #0A0809;
     --color-hw-blue: #00B3FD;
@@ -19,6 +21,8 @@
     --color-hw-blue-800: #005e8d;
     --color-hw-blue-900: #064e74;
     --color-hw-blue-950: #04314d;
+    --color-hw-green: #DCFBA9;
+    --color-hw-pink: #F962C9;
 }
 
 @source '../views';
