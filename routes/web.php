@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\HomeController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -7,16 +9,9 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Event;
 use App\Models\Sponsor;
 
-Route::get('/', function () {
-    $events = Event::latest()->take(3)->get();
-    $sponsors = Sponsor::all();
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
-    return view('welcome', compact('events', 'sponsors'));
-})->name('welcome');
-
-Route::get('/aboutus', function () {
-    return view('aboutus');
-})->name('aboutus');
+Route::get('/aboutus', [AboutUsController::class, 'index'])->name('aboutus');
 
 Route::get('/partners', function () {
     return view('partners');

@@ -45,14 +45,7 @@
     </div>
 </div>
 
-@if (!Str::contains(Request::url(), ['errors']))
-    @guest()
-        @livewire('guest-footer')
-    @endguest
-    @auth()
-        @livewire('auth-footer')
-    @endauth
-@endif
+<x-hw.footer/>
 
 @stack('modals')
 @stack('scripts')
