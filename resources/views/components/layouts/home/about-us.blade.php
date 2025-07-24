@@ -35,7 +35,7 @@
             </div>
 
             <div class="flex md:flex-row flex-col items-center justify-between md:mt-12">
-                <x-hw.button label="Read More" href="/aboutus" />
+                <x-hw.button variant="save"><a href="{{ route('aboutus') }}">Read More</a></x-hw.button>
                 <div class="relative">
                     <p class="text-hw-dark font-handwriting md:text-lg text-sm md:mt-0 mt-6 whitespace-nowrap relative z-10">
                         Okay, got it. So we are doing what now?
