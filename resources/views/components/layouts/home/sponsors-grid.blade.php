@@ -11,11 +11,10 @@
         @if($sponsors->where('tier', 'gold')->count())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                 @foreach($sponsors->where('tier', 'gold') as $sponsor)
-                    <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg shadow h-24">
-                        <img src="{{ asset('storage/' . $sponsor->image_path) }}"
+                    <div class="w-fit h-20">
+                        <img src="{{ asset('storage/' . $sponsor->logo_path) }}"
                              alt="{{ $sponsor->name }}"
                              class="w-full  object-contain" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
                     </div>
                 @endforeach
             </div>
@@ -25,11 +24,10 @@
         @if($sponsors->where('tier', 'silver')->count())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                 @foreach($sponsors->where('tier', 'silver') as $sponsor)
-                    <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg shadow h-16">
-                        <img src="{{ asset('storage/' . $sponsor->image_path) }}"
+                    <div class="w-fit h-16">
+                        <img src="{{ asset('storage/' . $sponsor->logo_path) }}"
                              alt="{{ $sponsor->name }}"
                              class="w-full h-16 object-contain" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
                     </div>
                 @endforeach
             </div>
@@ -39,11 +37,10 @@
         @if($sponsors->where('tier', 'bronze')->count())
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                 @foreach($sponsors->where('tier', 'bronze') as $sponsor)
-                    <div class="flex items-center justify-center p-4 bg-gray-50 rounded-lg shadow h-12">
-                        <img src="{{ asset('storage/' . $sponsor->image_path) }}"
+                    <div class="w-fit h-12">
+                        <img src="{{ asset('storage/' . $sponsor->logo_path) }}"
                              alt="{{ $sponsor->name }}"
                              class="w-full h-12 object-contain" />
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png" class="max-h-16 object-contain"/>
                     </div>
                 @endforeach
             </div>
