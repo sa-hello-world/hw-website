@@ -11,10 +11,10 @@ use Illuminate\View\View;
 class HomeController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|object
+     * @return \Illuminate\View\View
      * passes the last 3 events, the sponsors, and some information about the join us section
      */
-    public function index() :View
+    public function index(): View
     {
         $events = Event::latest()->take(3)->get();
         $sponsors = Sponsor::all();
