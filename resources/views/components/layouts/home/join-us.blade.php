@@ -2,15 +2,15 @@
 
 <section class="bg-hw-dark md:p-20 p-6">
     <div class="mx-auto max-w-6xl text-center">
-        <p class="text-white font-handwriting text-2xl mb-4">
+        <p class="text-gray-50 font-handwriting text-2xl mb-4">
             Caught your attention?
         </p>
 
-        <h2 class="text-white text-4xl md:text-5xl font-bayon mb-12 uppercase leading-tight">
+        <h2 class="text-gray-50 text-4xl md:text-5xl font-bayon mb-12 uppercase leading-tight">
             SEE OUR MEMBER BENEFITS AND JOIN US
         </h2>
 
-        <div class="bg-white rounded-3xl p-6 md:p-12 relative overflow-visible shadow-xl z-10">
+        <div class="bg-gray-50 rounded-3xl p-6 md:p-12 relative overflow-visible shadow-xl z-10">
             <!-- Decorative chain in the middle -->
             <div class="absolute left-1/2 top-0 bottom-0 w-8 transform -translate-x-1/2 flex flex-col items-center justify-center space-y-6 md:space-y-8">
                 @for($i = 0; $i < 12; $i++)
@@ -57,7 +57,7 @@
                     <!-- Line and pink tag -->
                     <div class="relative my-4">
                         <div class="border-t-2 border-hw-dark"></div>
-                        <span class="absolute -top-3 left-2 text-xs text-white bg-hw-pink px-2 py-0.5 rounded font-bold">
+                        <span class="absolute -top-3 left-2 text-xs text-gray-50 bg-hw-pink px-2 py-0.5 rounded font-bold">
                             Order membership
                         </span>
                     </div>
@@ -70,7 +70,7 @@
 
                                 @if($price['highlight'])
                                     <div class="absolute -top-3 -right-3">
-                <span class="text-xs text-white {{ $price['highlightColor'] }} px-2 py-0.5 rounded font-bold">
+                <span class="text-xs text-gray-50 {{ $price['highlightColor'] }} px-2 py-0.5 rounded font-bold">
                     {{ $price['highlight'] }}
                 </span>
                                     </div>

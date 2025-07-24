@@ -1,9 +1,9 @@
 <x-layouts.app :title="'About Us'">
-    <section class="flex h-full w-full flex-col text-hw-dark bg-hw-dark dark:bg-hw-dark dark:text-white md:px-20 px-6">
-        <h2 class="text-white font-bayon text-5xl my-6">About us</h2>
+    <section class="flex h-full w-full flex-col text-hw-dark bg-hw-dark md:px-20 px-6">
+        <h2 class="text-gray-50 font-bayon text-5xl my-6">About us</h2>
 
         <!-- Association Info -->
-        <div class="text-white text-lg space-y-6">
+        <div class="text-gray-50 text-lg space-y-6">
             <p>
                 Study association <strong>“Hello World”</strong> is the study association for all students of the HBO-ICT program of the HZ University of Applied Sciences. Long answer? It’s so much more...
             </p>
@@ -22,7 +22,7 @@
 
         <!-- Static Gallery -->
         <div class="mt-12">
-            <h3 class="text-white font-bayon text-3xl mb-6">Moments We Cherish 📸</h3>
+            <h3 class="text-gray-50 font-bayon text-3xl mb-6">Moments We Cherish 📸</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 @foreach($galleryImages as $image)
                     <img src="{{ asset($image) }}" alt="Gallery Image" class="rounded-xl object-cover w-full h-64">
@@ -33,9 +33,9 @@
         <!-- More Info -->
         <!-- Enhanced Why Join Us Section -->
         <section class="bg-hw-dark md:py-20 py-6">
-            <h3 class="text-white font-bayon text-3xl mb-6">Why join us?</h3>
+            <h3 class="text-gray-50 font-bayon text-3xl mb-6">Why join us?</h3>
             <div class="text-center">
-                <div class="bg-white rounded-3xl p-6 md:p-12 relative overflow-visible shadow-xl z-10">
+                <div class="bg-gray-50 rounded-3xl p-6 md:p-12 relative overflow-visible shadow-xl z-10">
                     <!-- Decorative chain in the middle -->
                     <div class="absolute left-1/2 top-0 bottom-0 w-8 transform -translate-x-1/2 flex flex-col items-center justify-center space-y-6 md:space-y-8">
                         @for($i = 0; $i < 7; $i++)

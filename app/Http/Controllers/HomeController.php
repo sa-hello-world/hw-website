@@ -28,7 +28,7 @@ class HomeController extends Controller
             [
                 'label' => 'Early bird – ' . $schoolYear->early_membership_price . '€',
                 'highlight' => 'Few left',
-                'style' => 'bg-white',
+                'style' => 'bg-gray-50',
                 'highlightColor' => 'bg-hw-pink',
             ],
             [
@@ -40,7 +40,7 @@ class HomeController extends Controller
             [
                 'label' => '1 semester – ' . $schoolYear->semester_membership_price . '€',
                 'highlight' => null,
-                'style' => 'bg-white',
+                'style' => 'bg-gray-50',
                 'highlightColor' => null,
             ],
         ];

@@ -1,5 +1,5 @@
 <section class="md:p-20 p-6">
-    <div class="mx-full bg-white rounded-2xl">
+    <div class="mx-full bg-gray-50 rounded-2xl">
         <!-- Decorative dots border -->
         <div class="flex justify-center">
             <div class="flex md:space-x-8 space-x-2 my-3 overflow-hidden">

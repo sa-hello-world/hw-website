@@ -1,8 +1,8 @@
-<footer class="bg-hw-dark text-white px-6 md:px-20 py-12 text-sm font-bayon">
+<footer class="bg-hw-dark text-gray-50 px-6 md:px-20 py-12 text-sm font-bayon">
     <div class="flex flex-col md:flex-row md:justify-start md:space-x-20 space-y-8 md:space-y-0">
         <!-- Important Links -->
         <div>
-            <h4 class="uppercase tracking-wider mb-4 text-white text-lg">Important Links</h4>
+            <h4 class="uppercase tracking-wider mb-4 text-gray-50 text-lg">Important Links</h4>
             <ul class="space-y-2">
                 <li><a href="{{ route('aboutus') }}" class="hover:underline">About Us</a></li>
                 <li><a href="{{ route('welcome') }}" class="hover:underline">Shenanigans</a></li>
@@ -13,7 +13,7 @@
 
         <!-- Legal -->
         <div>
-            <h4 class="uppercase tracking-wider mb-4 text-white text-lg">Legal</h4>
+            <h4 class="uppercase tracking-wider mb-4 text-gray-50 text-lg">Legal</h4>
             <ul class="space-y-2">
                 <li><a href="#" class="hover:underline">Privacy Policy</a></li>
                 <li><a href="#" class="hover:underline">Licensing</a></li>

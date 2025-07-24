@@ -1,5 +1,5 @@
 <x-layouts.app :title="'Home'">
-    <div class="flex h-full w-full flex-col text-hw-dark bg-hw-dark dark:bg-hw-dark dark:text-white">
+    <div class="flex h-full w-full flex-col text-hw-dark bg-hw-dark">
         <x-layouts.home.greeting />
         <x-layouts.home.about-us />
         <x-layouts.home.event-list :events="$events" />
