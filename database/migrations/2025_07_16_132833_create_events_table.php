@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('member_price')->nullable();
             $table->string('type');
             $table->string('open_for')->nullable();
+            $table->unsignedBigInteger('school_year_id')->nullable();
+            $table->foreign('school_year_id')->references('id')->on('school_years');
             $table->timestamps();
         });
     }

@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\EventStatus;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
@@ -51,7 +53,7 @@ class Event extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'poster_path', 'available_places', 'start', 'end',
-        'regular_price', 'membership_price', 'type', 'open_for'];
+        'regular_price', 'membership_price', 'type', 'open_for', 'school_year_id'];
 
     /**
      * Please do not use this method; it's just hiding away the connection
@@ -60,6 +62,16 @@ class Event extends Model
     public function eventUsers(): HasMany
     {
         return $this->hasMany(EventUser::class);
+    }
+
+    /**
+     * Returns the school year in which the event happened
+     *
+     * @return BelongsTo<SchoolYear, $this>
+     */
+    public function schoolYear(): BelongsTo
+    {
+        return $this->belongsTo(SchoolYear::class);
     }
 
     /**
@@ -73,6 +85,29 @@ class Event extends Model
             get: fn() => User::whereHas('eventUsers', function ($query) {
                 $query->where('event_id', $this->id);
             })->get(),
+        );
+    }
+
+    /**
+     * Returns the status on the event for a nice badge
+     * @return Attribute<string, never>
+     */
+    public function status(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $now = now();
+
+                if ($this->start > $now) {
+                    return EventStatus::UPCOMING->value;
+                }
+
+                if($this->end && $now->between($this->start, $this->end)) {
+                    return EventStatus::CURRENT->value;
+                }
+
+                return  EventStatus::PASSED->value;
+            }
         );
     }
 }

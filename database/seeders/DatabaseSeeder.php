@@ -30,16 +30,16 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole('chairman');
 
-        SchoolYear::create([
-            'start_academic_year' => Carbon::parse('2025-08-24'),
-            'end_academic_year' => Carbon::parse('2026-08-01'),
+        $schoolYear = SchoolYear::create([
+            'start_academic_year' => Carbon::parse('2024-08-24'),
+            'end_academic_year' => Carbon::parse('2025-08-01'),
             'name_of_chairman' => 'Silvia Popova',
             'regular_membership_price' => 20,
             'early_membership_price' => 10,
             'semester_membership_price' => 10,
         ]);
 
-        $events = Event::factory(5)->create();
+        $events = Event::factory(5)->create(['school_year_id' => $schoolYear->id]);
 
         foreach ($events as $event) {
             User::factory(random_int(1, 20))

@@ -45,4 +45,29 @@ class SchoolYear extends Model
     {
         return $this->hasMany(Membership::class);
     }
+
+    /**
+     * Returns the events created through the season
+     *
+     * @return HasMany<Event, $this>
+     */
+    public function events(): HasMany
+    {
+        return $this->hasMany(Event::class);
+    }
+
+    /**
+     * Returns the current academic year if such exist
+     * @return SchoolYear|null
+     */
+    public static function current(): ?SchoolYear
+    {
+        $today = now()->startOfDay();
+
+        return self::whereDate('start_academic_year', '<=', $today)
+            ->orWhereNull('start_academic_year')
+            ->whereDate('end_academic_year', '>=', $today)
+            ->orWhereNull('end_academic_year')
+            ->first();
+    }
 }
