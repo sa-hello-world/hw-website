@@ -24,12 +24,9 @@
         <div class="mt-12">
             <h3 class="text-white font-bayon text-3xl mb-6">Moments We Cherish 📸</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <img src="{{ asset('/img/aboutUs/gallery_01.jpg') }}" alt="Gallery 1" class="rounded-xl object-cover w-full h-64">
-                <img src="{{ asset('/img/aboutUs/gallery_02.jpg') }}" alt="Gallery 2" class="rounded-xl object-cover w-full h-64">
-                <img src="{{ asset('/img/aboutUs/gallery_03.jpg') }}" alt="Gallery 3" class="rounded-xl object-cover w-full h-64">
-                <img src="{{ asset('/img/aboutUs/gallery_04.png') }}" alt="Gallery 4" class="rounded-xl object-cover w-full h-64">
-                <img src="{{ asset('/img/aboutUs/gallery_05.jpg') }}" alt="Gallery 5" class="rounded-xl object-cover w-full h-64">
-                <img src="{{ asset('/img/aboutUs/gallery_06.png') }}" alt="Gallery 6" class="rounded-xl object-cover w-full h-64">
+                @foreach($galleryImages as $image)
+                    <img src="{{ asset($image) }}" alt="Gallery Image" class="rounded-xl object-cover w-full h-64">
+                @endforeach
             </div>
         </div>
 

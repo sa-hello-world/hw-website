@@ -1,3 +1,5 @@
+@props(['memberBenefits', 'membershipPrices'])
+
 <section class="bg-hw-dark md:p-20 p-6">
     <div class="mx-auto max-w-6xl text-center">
         <p class="text-white font-handwriting text-2xl mb-4">
@@ -44,13 +46,7 @@
                     </div>
 
                     <div class="space-y-3 text-left text-lg mb-12 leading-snug">
-                        @foreach ([
-                            'Free access to most events',
-                            'Discount fee on bigger events',
-                            'Loyalty card access',
-                            'Priority during registering for company visits',
-                            'Free merch'
-                        ] as $benefit)
+                        @foreach ($memberBenefits as $benefit)
                             <div class="flex items-center space-x-2">
                                 <span class="text-xl text-gray-400 font-handwriting font-bold leading-none">✔</span>
                                 <span class="text-gray-800">{{ $benefit }}</span>
@@ -68,32 +64,23 @@
 
                     <!-- Pricing options -->
                     <section class="space-y-2">
-                        <!-- Early Bird -->
-                        <div class="flex items-center justify-between rounded-lg relative">
-                            <span class="text-lg text-hw-dark font-handwriting">Early bird – 15€</span>
-                            <div class="absolute -top-3 -right-3">
-                                <span class="text-xs text-white bg-hw-pink px-2 py-0.5 rounded font-bold">Few left</span>
+                        @foreach ($membershipPrices as $price)
+                            <div class="flex items-center justify-between rounded-lg relative">
+                                <span class="text-lg text-hw-dark font-handwriting">{{ $price['label'] }}</span>
+
+                                @if($price['highlight'])
+                                    <div class="absolute -top-3 -right-3">
+                <span class="text-xs text-white {{ $price['highlightColor'] }} px-2 py-0.5 rounded font-bold">
+                    {{ $price['highlight'] }}
+                </span>
+                                    </div>
+                                @endif
+
+                                <button class="{{ $price['style'] }} border border-hw-dark text-hw-dark font-bold text-sm px-5 py-2 rounded-full">
+                                    Order
+                                </button>
                             </div>
-                            <button class="bg-white border border-hw-dark text-hw-dark font-bold text-sm px-5 py-2 rounded-full">
-                                Order
-                            </button>
-                        </div>
-
-                        <!-- Normal -->
-                        <div class="flex items-center justify-between rounded-lg">
-                            <span class="text-lg text-hw-dark font-handwriting">Normal – 30€</span>
-                            <button class="bg-hw-green border border-hw-dark text-hw-dark font-bold text-sm px-5 py-2 rounded-full">
-                                Order
-                            </button>
-                        </div>
-
-                        <!-- 1 Semester -->
-                        <div class="flex items-center justify-between rounded-lg">
-                            <span class="text-lg text-hw-dark font-handwriting">1 semester – 18€</span>
-                            <button class="bg-white border border-hw-dark text-hw-dark font-bold text-sm px-5 py-2 rounded-full">
-                                Order
-                            </button>
-                        </div>
+                        @endforeach
                     </section>
                 </section>
             </div>
