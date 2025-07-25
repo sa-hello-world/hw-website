@@ -1,15 +1,25 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SponsorController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+Route::get('/', [HomeController::class, 'index'])->name('welcome');
+
+Route::get('/aboutus', [AboutUsController::class, 'index'])->name('aboutus');
+
+Route::get('/partners', function () {
+    return view('partners');
+})->name('partners');
+
+Route::get('/events', function () {
+    return view('events');
+})->name('events');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -17,9 +27,12 @@ Route::view('dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
-    Route::resource('sponsors', SponsorController::class)
-        ->except(['show']);
-    Route::resource('events', EventController::class);
+
+    Route::prefix('board')->group(function () {
+        Route::resource('sponsors', SponsorController::class)->except(['show']);
+        Route::resource('events', EventController::class);
+    });
+
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
