@@ -18,8 +18,11 @@ use Illuminate\Support\Collection;
  * @property int|null $semester_membership_price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
+ * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
+ * @property-read mixed $years
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear query()
@@ -74,7 +77,7 @@ class SchoolYear extends Model
 
     /**
      * Returns the available school years in which you can add an event
-     * @return Collection
+     * @return Collection<int, SchoolYear>
      */
     public static function available(): Collection
     {
@@ -90,7 +93,7 @@ class SchoolYear extends Model
      */
     public static function previous(): ?SchoolYear
     {
-        return self::whereDate('start_academic_year', '<', SchoolYear::current()->start_academic_year)
+        return self::whereDate('start_academic_year', '<', (optional(SchoolYear::current())->start_academic_year ?? now()->startOfDay()))
             ->orderByDesc('start_academic_year')
             ->first();
     }
@@ -100,9 +103,12 @@ class SchoolYear extends Model
      * E.g. 2024-2025
      * @return Attribute<string, never>
      */
-    public function years(): Attribute {
+    public function years(): Attribute
+    {
         return Attribute::make(
-            get: fn () => Carbon::parse($this->start_academic_year)->format('Y') . ' - ' . Carbon::parse($this->end_academic_year)->format('Y')
+            get: fn () => Carbon::parse($this->start_academic_year)->format('Y')
+                . ' - '
+                . Carbon::parse($this->end_academic_year)->format('Y')
         );
     }
 }

@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $events = Event::factory(6)->create(['school_year_id' => $schoolYear->id]);
+        // @phpstan-ignore-next-line Of course there would be an event, above we generate 6
         $events[0]->update(['start' => now()->addDays(7)]);
 
         $prevYear = SchoolYear::create([

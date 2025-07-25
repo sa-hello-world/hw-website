@@ -5,17 +5,19 @@ namespace App\Http\Controllers;
 use App\Enums\EventType;
 use App\Models\Event;
 use App\Models\SchoolYear;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class EventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() : View
     {
         if (Auth::user()->cannot('viewAny', Event::class)) {
             abort(403);
@@ -34,20 +36,25 @@ class EventController extends Controller
 
 
         $previousSchoolYearEvents = new LengthAwarePaginator(collect([]), 0, 5, 1);
-        if($previousSchoolYear){
+        if ($previousSchoolYear) {
             $previousSchoolYearEvents = $previousSchoolYear->events()
                 ->orderBy('start', 'desc')
                 ->paginate(5, ['*'], 'archive_page')
                 ->withQueryString();
         }
 
-        return view('events.index', compact('currentSchoolYear', 'currentSchoolYearEvents', 'currentSchoolYearEventsCount', 'previousSchoolYearEvents'));
+        return view('events.index', compact(
+            'currentSchoolYear',
+            'currentSchoolYearEvents',
+            'currentSchoolYearEventsCount',
+            'previousSchoolYearEvents'
+        ));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() : View
     {
         if (Auth::user()->cannot('create', Event::class)) {
             abort(403);
@@ -59,7 +66,7 @@ class EventController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
         if (Auth::user()->cannot('create', Event::class)) {
             abort(403);
@@ -95,17 +102,9 @@ class EventController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Event $event)
+    public function edit(Event $event) : View
     {
         if (Auth::user()->cannot('update', $event)) {
             abort(403);
@@ -117,7 +116,7 @@ class EventController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Event $event)
+    public function update(Request $request, Event $event) : RedirectResponse
     {
         if (Auth::user()->cannot('update', $event)) {
             abort(403);
@@ -155,7 +154,7 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event) : RedirectResponse
     {
         if (Auth::user()->cannot('delete', $event)) {
             abort(403);
