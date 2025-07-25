@@ -49,6 +49,9 @@
                             </td>
                             <td class="px-4 py-4">
                                 <div class="flex gap-x-3">
+                                    @can('view', $event)
+                                        <livewire:events.preview-modal :$event/>
+                                    @endcan
                                     @can('update', $event)
                                         <a href="{{route('events.edit', $event)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
