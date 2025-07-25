@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('location');
             $table->string('poster_path')->nullable();
+            $table->string('banner_path')->nullable();
             $table->integer('available_places')->nullable();
             $table->dateTime('start');
             $table->dateTime('end')->nullable();

@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
             'semester_membership_price' => 10,
         ]);
 
-        $events = Event::factory(15)->create(['school_year_id' => $schoolYear->id]);
+        $events = Event::factory(6)->create(['school_year_id' => $schoolYear->id]);
         $events[0]->update(['start' => now()->addDays(7)]);
 
         $prevYear = SchoolYear::create([
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'semester_membership_price' => 10,
         ]);
 
-        $events = Event::factory(15)->create(['school_year_id' => $prevYear->id]);
+        $events = Event::factory(6)->create(['school_year_id' => $prevYear->id]);
 
         foreach ($events as $event) {
             User::factory(random_int(1, 20))

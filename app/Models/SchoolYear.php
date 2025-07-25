@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 
 /**
  * @property int $id
@@ -70,6 +73,18 @@ class SchoolYear extends Model
     }
 
     /**
+     * Returns the available school years in which you can add an event
+     * @return Collection
+     */
+    public static function available(): Collection
+    {
+        $start = SchoolYear::current()->start_academic_year ?? now()->startOfDay();
+
+        return self::whereDate('start_academic_year', '>=', $start)
+            ->get();
+    }
+
+    /**
      * Returns the previous academic year if such exist
      * @return SchoolYear|null
      */
@@ -78,5 +93,16 @@ class SchoolYear extends Model
         return self::whereDate('start_academic_year', '<', SchoolYear::current()->start_academic_year)
             ->orderByDesc('start_academic_year')
             ->first();
+    }
+
+    /**
+     * Simply returns the years it spans through
+     * E.g. 2024-2025
+     * @return Attribute<string, never>
+     */
+    public function years(): Attribute {
+        return Attribute::make(
+            get: fn () => Carbon::parse($this->start_academic_year)->format('Y') . ' - ' . Carbon::parse($this->end_academic_year)->format('Y')
+        );
     }
 }
