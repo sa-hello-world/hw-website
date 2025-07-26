@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Money\Currency;
+use Money\Money;
 
 /**
  * @property int $id
@@ -109,6 +111,45 @@ class SchoolYear extends Model
             get: fn () => Carbon::parse($this->start_academic_year)->format('Y')
                 . ' - '
                 . Carbon::parse($this->end_academic_year)->format('Y')
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the regular membership price
+     * @return Attribute<Money, int>
+     */
+    protected function regularMembershipPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => new Money($value, new Currency('EUR')),
+            set: fn (Money $money) => $money->getAmount()
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the early membership price
+     * @return Attribute<Money, int>
+     */
+    protected function earlyMembershipPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('USD')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the semester membership price
+     * @return Attribute<Money, int>
+     */
+    protected function semesterMembershipPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('USD')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
         );
     }
 }

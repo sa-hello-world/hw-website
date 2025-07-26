@@ -33,7 +33,7 @@ class SchoolYearController extends Controller
             abort(403);
         }
 
-
+        return view('school-years.create');
     }
 
     /**

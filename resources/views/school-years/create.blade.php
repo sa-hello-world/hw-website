@@ -4,28 +4,90 @@
           class="max-w-5xl space-y-6 p-6 pl-0 rounded-lg shadow-md">
         @csrf
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+            <div class="space-y-6">
                 <div>
                     <x-hw.label for="start_academic_year" value="Starting date of academic year" required/>
-                    <x-hw.input type="date-local" name="start_academic_year" id="start_academic_year" value="{{ old('start_academic_year') }}" required/>
+                    <x-hw.input type="date-local" name="start_academic_year" id="start_academic_year"
+                                value="{{ old('start_academic_year') }}" required/>
                     @error('start_academic_year') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <x-hw.label for="end_academic_year" value="Ending date of academic year" required/>
-                    <x-hw.input type="date-local" name="end_academic_year" id="end_academic_year" value="{{ old('end_academic_year') }}" required/>
+                    <x-hw.input type="date-local" name="end_academic_year" id="end_academic_year"
+                                value="{{ old('end_academic_year') }}" required/>
                     @error('end_academic_year') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
-                    <x-hw.label for="name_of_chairman" value="Name of Chairman" required/>
-                    <x-hw.input type="text" name="name_of_chairman" id="name_of_chairman" value="{{ old('name_of_chairman') }}" required/>
+                    <x-hw.label for="name_of_chairman" value="Name of Chairman"/>
+                    <x-hw.input type="text" name="name_of_chairman" id="name_of_chairman"
+                                value="{{ old('name_of_chairman') }}"/>
                     @error('name_of_chairman') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
-            <div>
+            <div class="space-y-6">
+                <div>
+                    <x-hw.label for="regular_membership_price" value="Regular membership price (EUR)" required/>
+                    <x-hw.input
+                        type="text"
+                        name="regular_membership_price"
+                        class="money-field"
+                        id="regular_membership_price"
+                        value="{{ old('regular_membership_price') }}"
+                        step="0.01"
+                        min="0"
+                        inputmode="decimal"
+                        required
+                    />
+                    @error('regular_membership_price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
 
+                <div>
+                    <x-hw.label for="early_membership_price" value="Early membership price (EUR)"/>
+                    <x-hw.input
+                        type="text"
+                        name="early_membership_price"
+                        class="money-field"
+                        id="early_membership_price"
+                        value="{{ old('early_membership_price') }}"
+                        step="0.01"
+                        min="0"
+                        inputmode="decimal"
+                    />
+                    @error('early_membership_price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div>
+                    <x-hw.label for="semester_membership_price" value="Semester membership price (EUR)"/>
+                    <x-hw.input
+                        type="text"
+                        name="semester_membership_price"
+                        class="money-field"
+                        id="semester_membership_price"
+                        value="{{ old('semester_membership_price') }}"
+                        step="0.01"
+                        min="0"
+                        inputmode="decimal"
+                    />
+                    @error('semester_membership_price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                </div>
             </div>
         </div>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            AutoNumeric.multiple('.money-field', {
+                currencySymbol: '€',
+                decimalPlaces: 2,
+                decimalCharacter: '.',
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                outputFormat: 'number',
+                unformatOnSubmit: true,
+                modifyValueOnWheel: false
+            });
+        });
+
+    </script>
 </x-layouts.hub>
