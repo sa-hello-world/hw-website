@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SponsorController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
@@ -30,7 +31,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('board')->group(function () {
         Route::resource('sponsors', SponsorController::class)->except(['show']);
-        Route::resource('events', EventController::class);
+        Route::resource('events', EventController::class)->except(['show']);
+        Route::resource('school-years', SchoolYearController::class)->except(['show']);
     });
 
 
