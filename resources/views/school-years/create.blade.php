@@ -7,14 +7,14 @@
             <div class="space-y-6">
                 <div>
                     <x-hw.label for="start_academic_year" value="Starting date of academic year" required/>
-                    <x-hw.input type="date-local" name="start_academic_year" id="start_academic_year"
+                    <x-hw.input type="date" name="start_academic_year" id="start_academic_year"
                                 value="{{ old('start_academic_year') }}" required/>
                     @error('start_academic_year') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
 
                 <div>
                     <x-hw.label for="end_academic_year" value="Ending date of academic year" required/>
-                    <x-hw.input type="date-local" name="end_academic_year" id="end_academic_year"
+                    <x-hw.input type="date" name="end_academic_year" id="end_academic_year"
                                 value="{{ old('end_academic_year') }}" required/>
                     @error('end_academic_year') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
@@ -73,6 +73,12 @@
                     @error('semester_membership_price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
                 </div>
             </div>
+        </div>
+        <div class="flex flex-row-reverse gap-x-2 pt-4">
+            <x-hw.button type="submit" variant="save">Create</x-hw.button>
+            <x-hw.button type="button">
+                <a href="{{ url()->previous() }}">Cancel</a>
+            </x-hw.button>
         </div>
     </form>
     <script>
