@@ -10,16 +10,8 @@
             SEE OUR MEMBER BENEFITS AND JOIN US
         </h2>
 
-        <div class="bg-gray-50 rounded-3xl p-6 md:p-12 relative overflow-visible shadow-xl z-10">
-            <!-- Decorative chain in the middle -->
-            <div class="absolute left-1/2 top-0 bottom-0 w-8 transform -translate-x-1/2 flex flex-col items-center justify-center space-y-6 md:space-y-8">
-                @for($i = 0; $i < 12; $i++)
-                    <div class="hidden md:block w-8 h-8 bg-hw-dark rounded-full"></div>
-                @endfor
-                <div class="hidden md:block absolute bg-hw-dark h-full w-2"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
+        <x-notebook-card>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative pb-8">
                 <!-- Non Member Side -->
                 <section class="text-center px-4 md:px-8">
                     <div class="bg-hw-pink font-bayon px-6 py-2 text-3xl md:text-5xl mb-12 inline-block rotate-[-6deg]">
@@ -84,6 +76,6 @@
                     </section>
                 </section>
             </div>
-        </div>
+        </x-notebook-card>
     </div>
 </section>

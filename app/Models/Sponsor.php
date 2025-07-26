@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $tier
  * @property string|null $logo_path
+ * @property string $website
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\SponsorFactory factory($count = null, $state = [])
@@ -22,6 +23,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Sponsor whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Sponsor whereTier($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Sponsor whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Sponsor whereWebsite($value)
  * @mixin \Eloquent
  */
 class Sponsor extends Model

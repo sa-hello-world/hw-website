@@ -30,8 +30,8 @@ class DatabaseSeeder extends Seeder
 
         $user->assignRole('chairman');
 
-        SchoolYear::create([
-            'start_academic_year' => Carbon::parse('2025-08-24'),
+        $schoolYear = SchoolYear::create([
+            'start_academic_year' => Carbon::parse('2025-07-23'),
             'end_academic_year' => Carbon::parse('2026-08-01'),
             'name_of_chairman' => 'Silvia Popova',
             'regular_membership_price' => 20,
@@ -39,7 +39,20 @@ class DatabaseSeeder extends Seeder
             'semester_membership_price' => 10,
         ]);
 
-        $events = Event::factory(5)->create();
+        $events = Event::factory(6)->create(['school_year_id' => $schoolYear->id]);
+        // @phpstan-ignore-next-line Of course there would be an event, above we generate 6
+        $events[0]->update(['start' => now()->addDays(7)]);
+
+        $prevYear = SchoolYear::create([
+            'start_academic_year' => Carbon::parse('2024-07-23'),
+            'end_academic_year' => Carbon::parse('2025-07-01'),
+            'name_of_chairman' => 'Silvia Popova',
+            'regular_membership_price' => 20,
+            'early_membership_price' => 10,
+            'semester_membership_price' => 10,
+        ]);
+
+        $events = Event::factory(6)->create(['school_year_id' => $prevYear->id]);
 
         foreach ($events as $event) {
             User::factory(random_int(1, 20))

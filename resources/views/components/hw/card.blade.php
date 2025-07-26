@@ -6,6 +6,7 @@
         'success' => 'text-green-600',
         'danger'  => 'text-red-600',
         'warning' => 'text-yellow-600',
+        'green' => 'border-green-500 text-green-500',
         'neutral' => 'text-neutral-900',
     ];
 
