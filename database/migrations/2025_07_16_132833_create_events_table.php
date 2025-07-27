@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->string('location');
             $table->string('poster_path')->nullable();
+            $table->string('banner_path')->nullable();
             $table->integer('available_places')->nullable();
             $table->dateTime('start');
             $table->dateTime('end')->nullable();
@@ -23,6 +25,8 @@ return new class extends Migration
             $table->integer('member_price')->nullable();
             $table->string('type');
             $table->string('open_for')->nullable();
+            $table->unsignedBigInteger('school_year_id')->nullable();
+            $table->foreign('school_year_id')->references('id')->on('school_years');
             $table->timestamps();
         });
     }

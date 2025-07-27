@@ -12,5 +12,7 @@ parameters:
     ignoreErrors:
         -
             message: '#^Cannot call method cannot\(\) on App\\Models\\User\|null\.$#'
-            path: app/Http/Controllers/SponsorController.php # The controller is behind an Auth middleware
+            paths:
+                - app/Http/Controllers/SponsorController.php # The controller is behind an Auth middleware
+                - app/Http/Controllers/EventController.php # Ditto
 

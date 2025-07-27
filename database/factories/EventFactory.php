@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\EventType;
 use App\Models\Event;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,11 +21,12 @@ class EventFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
+            'location' => $this->faker->address(),
             'available_places' => $this->faker->randomDigit(),
             'start' => $this->faker->dateTime(),
             'regular_price' => $this->faker->randomNumber(),
             'member_price' => $this->faker->randomNumber(),
-            'type' => 'gathering',
+            'type' => fake()->randomElement(EventType::cases())->value,
             'open_for' => 'everyone'
         ];
     }
