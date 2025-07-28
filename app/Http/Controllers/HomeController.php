@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\MoneyFormatter;
 use App\Models\Event;
 use App\Models\SchoolYear;
 use App\Models\Sponsor;
@@ -34,19 +35,19 @@ class HomeController extends Controller
         if ($schoolYear) {
             $membershipPrices = [
                 [
-                    'label' => 'Early bird – ' . $schoolYear->early_membership_price . '€',
+                    'label' => 'Early bird – ' . MoneyFormatter::toDecimal($schoolYear->early_membership_price) . '€',
                     'highlight' => 'Few left',
                     'style' => 'bg-white',
                     'highlightColor' => 'bg-hw-pink',
                 ],
                 [
-                    'label' => 'Normal – ' . $schoolYear->regular_membership_price . '€',
+                    'label' => 'Normal – ' . MoneyFormatter::toDecimal($schoolYear->regular_membership_price) . '€',
                     'highlight' => null,
                     'style' => 'bg-hw-green',
                     'highlightColor' => null,
                 ],
                 [
-                    'label' => '1 semester – ' . $schoolYear->semester_membership_price . '€',
+                    'label' => '1 semester – ' . MoneyFormatter::toDecimal($schoolYear->semester_membership_price) . '€',
                     'highlight' => null,
                     'style' => 'bg-white',
                     'highlightColor' => null,

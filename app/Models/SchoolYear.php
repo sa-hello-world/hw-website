@@ -17,9 +17,9 @@ use Money\Money;
  * @property string $start_academic_year
  * @property string $end_academic_year
  * @property string|null $name_of_chairman
- * @property int $regular_membership_price
- * @property int|null $early_membership_price
- * @property int|null $semester_membership_price
+ * @property Money $regular_membership_price
+ * @property \Money\Money|null $early_membership_price
+ * @property \Money\Money|null $semester_membership_price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
@@ -27,6 +27,7 @@ use Money\Money;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
  * @property-read mixed $years
+ * @method static \Database\Factories\SchoolYearFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear query()

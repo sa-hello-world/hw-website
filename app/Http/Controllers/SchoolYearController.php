@@ -65,13 +65,16 @@ class SchoolYearController extends Controller
         $currencies = new ISOCurrencies();
         $moneyParser = new DecimalMoneyParser($currencies);
 
-        $validated['regular_membership_price'] = $moneyParser->parse($validated['regular_membership_price'], new Currency('EUR'));
+        $validated['regular_membership_price'] =
+            $moneyParser->parse($validated['regular_membership_price'], new Currency('EUR'));
 
-        if($validated['early_membership_price'] !== null){
-            $validated['early_membership_price'] = $moneyParser->parse($validated['early_membership_price'], new Currency('EUR'));
+        if ($validated['early_membership_price'] !== null) {
+            $validated['early_membership_price'] =
+                $moneyParser->parse($validated['early_membership_price'], new Currency('EUR'));
         }
-        if($validated['semester_membership_price'] !== null){
-            $validated['semester_membership_price'] = $moneyParser->parse($validated['semester_membership_price'], new Currency('EUR'));
+        if ($validated['semester_membership_price'] !== null) {
+            $validated['semester_membership_price'] =
+                $moneyParser->parse($validated['semester_membership_price'], new Currency('EUR'));
         }
 
         SchoolYear::create($validated);
@@ -103,7 +106,8 @@ class SchoolYearController extends Controller
 
         $rules = [
             'start_academic_year' => ['required', 'date',  new NoAcademicStartOverlap($schoolYear->id)],
-            'end_academic_year' => ['required', 'date', 'after:start_academic_year', new NoAcademicEndOverlap($schoolYear->id)],
+            'end_academic_year' =>
+                ['required', 'date', 'after:start_academic_year', new NoAcademicEndOverlap($schoolYear->id)],
             'name_of_chairman' => ['nullable', 'string', 'max:255', 'min:3'],
             'regular_membership_price' => ['nullable', 'numeric', 'min:0'],
             'early_membership_price' => ['nullable', 'numeric', 'min:0'],
@@ -115,13 +119,16 @@ class SchoolYearController extends Controller
         $currencies = new ISOCurrencies();
         $moneyParser = new DecimalMoneyParser($currencies);
 
-        $validated['regular_membership_price'] = $moneyParser->parse($validated['regular_membership_price'], new Currency('EUR'));
+        $validated['regular_membership_price'] =
+            $moneyParser->parse($validated['regular_membership_price'], new Currency('EUR'));
 
-        if($validated['early_membership_price'] !== null){
-            $validated['early_membership_price'] = $moneyParser->parse($validated['early_membership_price'], new Currency('EUR'));
+        if ($validated['early_membership_price'] !== null) {
+            $validated['early_membership_price'] =
+                $moneyParser->parse($validated['early_membership_price'], new Currency('EUR'));
         }
-        if($validated['semester_membership_price'] !== null){
-            $validated['semester_membership_price'] = $moneyParser->parse($validated['semester_membership_price'], new Currency('EUR'));
+        if ($validated['semester_membership_price'] !== null) {
+            $validated['semester_membership_price'] =
+                $moneyParser->parse($validated['semester_membership_price'], new Currency('EUR'));
         }
 
         $schoolYear->update($validated);

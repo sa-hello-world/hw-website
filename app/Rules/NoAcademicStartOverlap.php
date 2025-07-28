@@ -10,6 +10,10 @@ class NoAcademicStartOverlap implements ValidationRule
 {
     protected int|null $currentId;
 
+    /**
+     * Initializes the class
+     * @param int|null $currentId
+     */
     public function __construct(int|null $currentId = null)
     {
         $this->currentId = $currentId;
@@ -25,7 +29,7 @@ class NoAcademicStartOverlap implements ValidationRule
         $start = strtotime($value);
 
         $currentSchoolYear = SchoolYear::current();
-        $isTheSameYear = $this->currentId && $currentSchoolYear->id == $this->currentId;
+        $isTheSameYear = $this->currentId && $currentSchoolYear && $currentSchoolYear->id == $this->currentId;
         if ($currentSchoolYear && !$isTheSameYear) {
             $currentEnd = strtotime($currentSchoolYear->end_academic_year);
             if ($start <= $currentEnd) {

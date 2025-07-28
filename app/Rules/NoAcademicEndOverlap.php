@@ -10,6 +10,10 @@ class NoAcademicEndOverlap implements ValidationRule
 {
     protected int|null $currentId;
 
+    /**
+     * Initializes the class
+     * @param int|null $currentId
+     */
     public function __construct(int|null $currentId = null)
     {
         $this->currentId = $currentId;

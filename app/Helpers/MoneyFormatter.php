@@ -25,5 +25,4 @@ class MoneyFormatter
 
         return $formatter->format($money);
     }
-
 }

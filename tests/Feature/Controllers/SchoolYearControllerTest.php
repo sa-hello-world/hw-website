@@ -142,8 +142,8 @@ class SchoolYearControllerTest extends TestCase
         ]);
 
         $data = [
-            'start_academic_year' => $schoolYear->start_academic_year->toDateString(),
-            'end_academic_year' => $schoolYear->end_academic_year->toDateString(),
+            'start_academic_year' => $schoolYear->start_academic_year,
+            'end_academic_year' => $schoolYear->end_academic_year,
             'name_of_chairman' => 'New Chair',
             'regular_membership_price' => 12.34,
             'early_membership_price' => 8.00,

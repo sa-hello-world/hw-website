@@ -28,7 +28,10 @@ class SchoolYearTest extends TestCase
             'end_academic_year' => $today->copy()->addMonth(),
         ]);
 
-        $this->assertTrue(SchoolYear::current()->is($year));
+        $currentSchoolYear = SchoolYear::current();
+
+        $this->assertNotNull($currentSchoolYear);
+        $this->assertTrue($currentSchoolYear->is($year));
     }
 
 
@@ -104,6 +107,7 @@ class SchoolYearTest extends TestCase
 
         $this->assertEquals($money, $year->regular_membership_price);
 
+        /** @phpstan-ignore-next-line PHPStan does not detect it, but it is cast - check docs in SchoolYear Model */
         $year->regular_membership_price = Money::EUR(2500);
         $year->save();
 
@@ -120,9 +124,11 @@ class SchoolYearTest extends TestCase
             'early_membership_price' => null,
         ]);
 
+        /** @phpstan-ignore-next-line PHPStan does not detect it, but the attr returns null if no value */
         $this->assertNull($year->early_membership_price);
 
         $money = Money::EUR(1500);
+        /** @phpstan-ignore-next-line PHPStan does not detect it, but it is cast - check docs in SchoolYear Model */
         $year->early_membership_price = $money;
         $year->save();
 
@@ -131,6 +137,7 @@ class SchoolYearTest extends TestCase
             'early_membership_price' => 1500,
         ]);
 
+        /** @phpstan-ignore-next-line year was literally created above */
         $this->assertEquals($money, $year->fresh()->early_membership_price);
     }
 
@@ -141,9 +148,11 @@ class SchoolYearTest extends TestCase
             'semester_membership_price' => null,
         ]);
 
+        /** @phpstan-ignore-next-line PHPStan does not detect it, but the attr returns null if no value */
         $this->assertNull($year->semester_membership_price);
 
         $money = Money::EUR(1100);
+        /** @phpstan-ignore-next-line PHPStan does not detect it, but it is cast - check docs in SchoolYear Model */
         $year->semester_membership_price = $money;
         $year->save();
 
@@ -152,6 +161,7 @@ class SchoolYearTest extends TestCase
             'semester_membership_price' => 1100,
         ]);
 
+        /** @phpstan-ignore-next-line year was literally created above */
         $this->assertEquals($money, $year->fresh()->semester_membership_price);
     }
 }

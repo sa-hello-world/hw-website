@@ -108,4 +108,3 @@ class NoAcademicEndOverlapTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 }
-
