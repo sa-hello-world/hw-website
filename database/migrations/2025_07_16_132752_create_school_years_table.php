@@ -16,9 +16,9 @@ return new class extends Migration
             $table->date('start_academic_year');
             $table->date('end_academic_year');
             $table->string('name_of_chairman')->nullable();
-            $table->integer('regular_membership_price');
-            $table->integer('early_membership_price')->nullable();
-            $table->integer('semester_membership_price')->nullable();
+            $table->string('regular_membership_price');
+            $table->string('early_membership_price')->nullable();
+            $table->string('semester_membership_price')->nullable();
             $table->timestamps();
         });
     }

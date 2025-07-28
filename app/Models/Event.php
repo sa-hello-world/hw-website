@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Money\Currency;
+use Money\Money;
 
 /**
  * @property int $id
@@ -116,6 +118,32 @@ class Event extends Model
 
                 return  EventStatus::PAST->value;
             }
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the regular price
+     * @return Attribute<Money, int>
+     */
+    protected function regularPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => new Money($value, new Currency('EUR')),
+            set: fn (Money $money) => $money->getAmount()
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the member price
+     * @return Attribute<Money, int>
+     */
+    protected function memberPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => new Money($value, new Currency('EUR')),
+            set: fn (Money $money) => $money->getAmount()
         );
     }
 }
