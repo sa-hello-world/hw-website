@@ -4,6 +4,7 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\SchoolYear;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Money\Money;
@@ -20,12 +21,19 @@ class SchoolYearControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        Carbon::setTestNow(Carbon::parse('2025-08-01'));
         Artisan::call('app:sync-permissions');
 
         $this->unauthorized = User::factory()->create();
         $this->chair = User::factory()->create();
         $this->chair->assignRole('chairman');
         $this->actingAs($this->chair);
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Carbon::setTestNow();
     }
 
     #[Test]
@@ -112,7 +120,10 @@ class SchoolYearControllerTest extends TestCase
     #[Test]
     public function test_edit_displays_form(): void
     {
-        $schoolYear = SchoolYear::factory()->create();
+        $schoolYear = SchoolYear::factory()->create([
+            'start_academic_year' => now()->subMonth(),
+            'end_academic_year' => now()->addMonth()
+        ]);
 
         $response = $this->get(route('school-years.edit', $schoolYear));
 
@@ -125,6 +136,21 @@ class SchoolYearControllerTest extends TestCase
     public function test_edit_throws_403_for_unauthorized_user(): void
     {
         $schoolYear = SchoolYear::factory()->create();
+
+        $this->actingAs($this->unauthorized);
+
+        $response = $this->get(route('school-years.edit', $schoolYear));
+
+        $response->assertForbidden();
+    }
+
+    #[Test]
+    public function test_edit_throws_403_when_trying_to_edit_previous_year(): void
+    {
+        $schoolYear = SchoolYear::factory()->create([
+            'start_academic_year' => now()->subYears(2),
+            'end_academic_year' => now()->subYear()
+        ]);
 
         $this->actingAs($this->unauthorized);
 

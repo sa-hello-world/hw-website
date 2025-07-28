@@ -13,6 +13,18 @@ class SchoolYearTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        Carbon::setTestNow(Carbon::parse('2025-08-01'));
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        Carbon::setTestNow();
+    }
+
     #[Test]
     public function test_current_returns_null_if_no_matching_year(): void
     {
@@ -64,8 +76,6 @@ class SchoolYearTest extends TestCase
     #[Test]
     public function test_previous_returns_only_years_before_current(): void
     {
-        Carbon::setTestNow(Carbon::parse('2025-07-28'));
-
         $past1 = SchoolYear::factory()->create([
             'start_academic_year' => now()->copy()->subYears(3),
             'end_academic_year' => now()->copy()->subYears(2),
