@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
+use Money\Money;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -35,9 +36,9 @@ class EventControllerTest extends TestCase
             'start_academic_year' => now()->subMonths(1)->startOfMonth(),
             'end_academic_year' => now()->addMonths(11)->endOfMonth(),
             'name_of_chairman' => 'John Doe',
-            'regular_membership_price' => 20,
-            'early_membership_price' => 10,
-            'semester_membership_price' => 10,
+            'regular_membership_price' => Money::EUR(2000),
+            'early_membership_price' => Money::EUR(1000),
+            'semester_membership_price' => Money::EUR(1000),
         ]);
     }
 
