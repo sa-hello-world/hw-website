@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\SchoolYearFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
@@ -41,6 +43,9 @@ use Money\Money;
  */
 class SchoolYear extends Model
 {
+    /** @use HasFactory<SchoolYearFactory> */
+    use HasFactory;
+
     protected $fillable = ['start_academic_year', 'end_academic_year', 'name_of_chairman', 'regular_membership_price',
         'early_membership_price', 'semester_membership_price'];
 
@@ -135,7 +140,7 @@ class SchoolYear extends Model
     protected function earlyMembershipPrice(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value !== null ? new Money($value, new Currency('USD')) : null,
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
             set: fn (?Money $money) => $money?->getAmount()
         );
     }
@@ -148,7 +153,7 @@ class SchoolYear extends Model
     protected function semesterMembershipPrice(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value !== null ? new Money($value, new Currency('USD')) : null,
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
             set: fn (?Money $money) => $money?->getAmount()
         );
     }
