@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Models\SchoolYear;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Money\Money;
 use PHPUnit\Framework\Attributes\Test;
@@ -63,6 +64,8 @@ class SchoolYearTest extends TestCase
     #[Test]
     public function test_previous_returns_only_years_before_current(): void
     {
+        Carbon::setTestNow(Carbon::parse('2025-07-28'));
+
         $past1 = SchoolYear::factory()->create([
             'start_academic_year' => now()->copy()->subYears(3),
             'end_academic_year' => now()->copy()->subYears(2),
