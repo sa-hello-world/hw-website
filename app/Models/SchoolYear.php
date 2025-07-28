@@ -123,7 +123,7 @@ class SchoolYear extends Model
     /**
      * Casts the integer values from the db into money type and vice versa
      * for the regular membership price
-     * @return Attribute<Money, int>
+     * @return Attribute<Money, string>
      */
     protected function regularMembershipPrice(): Attribute
     {
@@ -136,7 +136,7 @@ class SchoolYear extends Model
     /**
      * Casts the integer values from the db into money type and vice versa
      * for the early membership price
-     * @return Attribute<Money, int>
+     * @return Attribute<Money, string>
      */
     protected function earlyMembershipPrice(): Attribute
     {
@@ -149,7 +149,7 @@ class SchoolYear extends Model
     /**
      * Casts the integer values from the db into money type and vice versa
      * for the semester membership price
-     * @return Attribute<Money, int>
+     * @return Attribute<Money, string>
      */
     protected function semesterMembershipPrice(): Attribute
     {

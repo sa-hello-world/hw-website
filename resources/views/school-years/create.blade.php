@@ -91,9 +91,9 @@
                 minimumValue: '0',
                 outputFormat: 'number',
                 unformatOnSubmit: true,
-                modifyValueOnWheel: false
+                modifyValueOnWheel: false,
+                showOnlyNumbersOnFocus: false,
             });
         });
-
     </script>
 </x-layouts.hub>

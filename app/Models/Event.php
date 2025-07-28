@@ -124,26 +124,27 @@ class Event extends Model
     /**
      * Casts the integer values from the db into money type and vice versa
      * for the regular price
-     * @return Attribute<Money, int>
+     * @return Attribute<Money, string>
      */
     protected function regularPrice(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => new Money($value, new Currency('EUR')),
-            set: fn (Money $money) => $money->getAmount()
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
         );
     }
 
     /**
      * Casts the integer values from the db into money type and vice versa
      * for the member price
-     * @return Attribute<Money, int>
+     * @return Attribute<Money, string>
      */
     protected function memberPrice(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => new Money($value, new Currency('EUR')),
-            set: fn (Money $money) => $money->getAmount()
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
         );
     }
+
 }
