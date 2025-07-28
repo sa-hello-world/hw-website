@@ -26,7 +26,7 @@ class EventControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Carbon::setTestNow(Carbon::parse('2025-08-01'));
+        Carbon::setTestNow(Carbon::parse('2025-08-01 12:00:00', 'CET'));
         Artisan::call('app:sync-permissions');
 
         $this->unauthorized = User::factory()->create();
