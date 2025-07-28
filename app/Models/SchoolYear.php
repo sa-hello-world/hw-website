@@ -91,13 +91,13 @@ class SchoolYear extends Model
 
     /**
      * Returns the previous academic year if such exist
-     * @return SchoolYear|null
+     * @return Collection<int, SchoolYear>
      */
-    public static function previous(): ?SchoolYear
+    public static function previous(): Collection
     {
         return self::whereDate('start_academic_year', '<', (optional(SchoolYear::current())->start_academic_year ?? now()->startOfDay()))
             ->orderByDesc('start_academic_year')
-            ->first();
+            ->get();
     }
 
     /**

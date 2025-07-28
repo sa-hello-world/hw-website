@@ -44,6 +44,9 @@
                             <td class="px-4 py-4 capitalize">{{ $schoolYear->name_of_chairman }}</td>
                             <td class="px-4 py-4">
                                 <div class="flex gap-x-3">
+                                    @can('view', $schoolYear)
+                                        <livewire:school-years.preview-modal :$schoolYear/>
+                                    @endcan
                                     @can('update', $schoolYear)
                                         <a href="{{route('school-years.edit', $schoolYear)}}">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

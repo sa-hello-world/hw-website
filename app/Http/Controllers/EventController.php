@@ -32,7 +32,7 @@ class EventController extends Controller
             ->paginate(5, ['*'], 'current_page')
             ->withQueryString();
 
-        $previousSchoolYear = SchoolYear::previous();
+        $previousSchoolYear = SchoolYear::previous()->first();
 
 
         $previousSchoolYearEvents = new LengthAwarePaginator(collect([]), 0, 5, 1);

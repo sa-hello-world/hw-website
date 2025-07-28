@@ -37,7 +37,7 @@ class SchoolYearPolicy
      */
     public function update(User $user, SchoolYear $schoolYear): bool
     {
-        return $user->can('update schoolYear');
+        return $user->can('update schoolYear') && !optional(SchoolYear::previous())->contains($schoolYear);
     }
 
     /**
