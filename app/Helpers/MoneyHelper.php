@@ -39,6 +39,10 @@ class MoneyHelper
         $currencies = new ISOCurrencies();
         $moneyParser = new DecimalMoneyParser($currencies);
 
+        if (empty($amount) || empty($currencyCode)) {
+            return null;
+        }
+
         return $moneyParser->parse($amount, new Currency($currencyCode));
     }
 }

@@ -23,8 +23,8 @@ use Money\Money;
  * @property int|null $available_places
  * @property string $start
  * @property string|null $end
- * @property int|null $regular_price
- * @property int|null $member_price
+ * @property \Money\Money|null $regular_price
+ * @property \Money\Money|null $member_price
  * @property string $type
  * @property string|null $open_for
  * @property int|null $school_year_id
@@ -146,5 +146,4 @@ class Event extends Model
             set: fn (?Money $money) => $money?->getAmount()
         );
     }
-
 }
