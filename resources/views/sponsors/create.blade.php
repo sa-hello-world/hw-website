@@ -57,9 +57,11 @@
             <x-hw.button type="submit" variant="save">
                 Create
             </x-hw.button>
-            <x-hw.button type="button">
-                <a href="{{ url()->previous() }}">Cancel</a>
-            </x-hw.button>
+            <a href="{{ url()->previous() }}">
+                <x-hw.button type="button">
+                    Cancel
+                </x-hw.button>
+            </a>
         </div>
     </form>
 </x-layouts.hub>

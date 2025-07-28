@@ -114,10 +114,12 @@
     </div>
 
     <div class="flex flex-row-reverse gap-x-2 pt-4">
-        <x-hw.button type="submit" variant="save">{{ $event ? 'Edit' : 'Create' }}</x-hw.button>
-        <x-hw.button type="button">
-            <a href="{{ url()->previous() }}">Cancel</a>
-        </x-hw.button>
+        <x-hw.button type="submit" variant="save">{{ $event ? 'Update' : 'Create' }}</x-hw.button>
+        <a href="{{ url()->previous() }}">
+            <x-hw.button type="button">
+                Cancel
+            </x-hw.button>
+        </a>
     </div>
     <script>
         document.addEventListener('livewire:initialized', () => {
