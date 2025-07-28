@@ -8,7 +8,7 @@
 
     <x-hw.modal wire:model="showModal" maxWidth="lg">
         <x-slot name="title">
-            Delete the {{lcfirst(class_basename($model))}}
+            Delete the {{ preg_replace('/(?<!^)([A-Z])/', ' $1', class_basename($model)) }}
         </x-slot>
 
         <x-slot name="content">

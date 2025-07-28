@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+use Money\Money;
 
 class DatabaseSeeder extends Seeder
 {
@@ -34,9 +35,9 @@ class DatabaseSeeder extends Seeder
             'start_academic_year' => Carbon::parse('2025-07-23'),
             'end_academic_year' => Carbon::parse('2026-08-01'),
             'name_of_chairman' => 'Silvia Popova',
-            'regular_membership_price' => 20,
-            'early_membership_price' => 10,
-            'semester_membership_price' => 10,
+            'regular_membership_price' => Money::EUR(2000),
+            'early_membership_price' => Money::EUR(1000),
+            'semester_membership_price' => Money::EUR(1000),
         ]);
 
         $events = Event::factory(6)->create(['school_year_id' => $schoolYear->id]);
@@ -47,9 +48,9 @@ class DatabaseSeeder extends Seeder
             'start_academic_year' => Carbon::parse('2024-07-23'),
             'end_academic_year' => Carbon::parse('2025-07-01'),
             'name_of_chairman' => 'Silvia Popova',
-            'regular_membership_price' => 20,
-            'early_membership_price' => 10,
-            'semester_membership_price' => 10,
+            'regular_membership_price' => Money::EUR(2000),
+            'early_membership_price' => Money::EUR(1000),
+            'semester_membership_price' => Money::EUR(1000),
         ]);
 
         $events = Event::factory(6)->create(['school_year_id' => $prevYear->id]);

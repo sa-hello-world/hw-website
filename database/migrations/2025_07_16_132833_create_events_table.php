@@ -26,7 +26,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('open_for')->nullable();
             $table->unsignedBigInteger('school_year_id')->nullable();
-            $table->foreign('school_year_id')->references('id')->on('school_years');
+            $table->foreign('school_year_id')->references('id')->on('school_years')
+                ->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

@@ -6,13 +6,13 @@ use App\Models\SchoolYear;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class NoAcademicYearOverlap implements ValidationRule
+class NoAcademicStartOverlap implements ValidationRule
 {
-    protected $startDate;
+    protected int|null $currentId;
 
-    public function __construct($startDate)
+    public function __construct(int|null $currentId = null)
     {
-        $this->startDate = $startDate;
+        $this->currentId = $currentId;
     }
 
     /**
@@ -22,18 +22,11 @@ class NoAcademicYearOverlap implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $start = strtotime($this->startDate);
-        $end = strtotime($value);
-        $today = strtotime(date('Y-m-d'));
-
-        if ($start < $today) {
-            $fail('The start date must be today or a future date.');
-            return;
-        }
+        $start = strtotime($value);
 
         $currentSchoolYear = SchoolYear::current();
-
-        if ($currentSchoolYear) {
+        $isTheSameYear = $this->currentId && $currentSchoolYear->id == $this->currentId;
+        if ($currentSchoolYear && !$isTheSameYear) {
             $currentEnd = strtotime($currentSchoolYear->end_academic_year);
             if ($start <= $currentEnd) {
                 $fail("The start date must be after the current school year's end date ({$currentSchoolYear->end_academic_year}).");
@@ -44,11 +37,15 @@ class NoAcademicYearOverlap implements ValidationRule
         $futureSchoolYears = SchoolYear::where('start_academic_year', '>', date('Y-m-d'))->get();
 
         foreach ($futureSchoolYears as $schoolYear) {
+            if ($this->currentId && $schoolYear->id == $this->currentId) {
+                continue;
+            }
+
             $existingStart = strtotime($schoolYear->start_academic_year);
             $existingEnd = strtotime($schoolYear->end_academic_year);
 
-            if ($start <= $existingEnd && $end >= $existingStart) {
-                $fail("The new school year period overlaps with existing future school year ({$schoolYear->start_academic_year} to {$schoolYear->end_academic_year}).");
+            if ($start >= $existingStart && $start <= $existingEnd) {
+                $fail("The start of the school year overlaps with existing future school year  ({$schoolYear->start_academic_year} to {$schoolYear->end_academic_year}).");
                 return;
             }
         }
