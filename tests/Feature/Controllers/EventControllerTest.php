@@ -6,7 +6,6 @@ use App\Enums\EventType;
 use App\Models\Event;
 use App\Models\SchoolYear;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Artisan;
@@ -26,7 +25,6 @@ class EventControllerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Carbon::setTestNow(Carbon::parse('2025-08-01 12:00:00', 'CET'));
         Artisan::call('app:sync-permissions');
 
         $this->unauthorized = User::factory()->create();
@@ -42,12 +40,6 @@ class EventControllerTest extends TestCase
             'early_membership_price' => Money::EUR(1000),
             'semester_membership_price' => Money::EUR(1000),
         ]);
-    }
-
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-        Carbon::setTestNow();
     }
 
     #[Test]
