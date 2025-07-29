@@ -20,3 +20,9 @@ permissions:
     create: [ chairman, head of activity, head of media ]
     update: [ chairman, head of activity, head of media ]
     delete: [ chairman, head of activity ]
+  schoolYear:
+    viewAny: [ chairman, head of activity, head of media ]
+    view: [ chairman, head of activity, head of media ]
+    create: [ chairman, head of media ]
+    update: [ chairman, head of media ]
+    delete: [ chairman ]

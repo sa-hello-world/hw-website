@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\EventType;
+use App\Helpers\MoneyHelper;
 use App\Models\Event;
 use App\Models\SchoolYear;
 use Illuminate\Http\RedirectResponse;
@@ -32,7 +33,7 @@ class EventController extends Controller
             ->paginate(5, ['*'], 'current_page')
             ->withQueryString();
 
-        $previousSchoolYear = SchoolYear::previous();
+        $previousSchoolYear = SchoolYear::previous()->first();
 
 
         $previousSchoolYearEvents = new LengthAwarePaginator(collect([]), 0, 5, 1);
@@ -95,6 +96,13 @@ class EventController extends Controller
             $validated['banner_path'] = $request->file('banner')->store('event-posters', 'public');
         }
 
+        if ($validated['regular_price'] !== null) {
+            $validated['regular_price'] = MoneyHelper::parse($validated['regular_price']);
+        }
+        if ($validated['member_price'] !== null) {
+            $validated['member_price'] = MoneyHelper::parse($validated['member_price']);
+        }
+
         Event::create($validated);
 
         return redirect()->route('events.index')
@@ -143,6 +151,13 @@ class EventController extends Controller
         }
         if ($request->hasFile('banner')) {
             $validated['banner_path'] = $request->file('banner')->store('event-posters', 'public');
+        }
+
+        if ($validated['regular_price'] !== null) {
+            $validated['regular_price'] = MoneyHelper::parse($validated['regular_price']);
+        }
+        if ($validated['member_price'] !== null) {
+            $validated['member_price'] = MoneyHelper::parse($validated['member_price']);
         }
 
         $event->update($validated);

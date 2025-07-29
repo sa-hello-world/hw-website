@@ -21,12 +21,13 @@ return new class extends Migration
             $table->integer('available_places')->nullable();
             $table->dateTime('start');
             $table->dateTime('end')->nullable();
-            $table->integer('regular_price')->nullable();
-            $table->integer('member_price')->nullable();
+            $table->string('regular_price')->nullable();
+            $table->string('member_price')->nullable();
             $table->string('type');
             $table->string('open_for')->nullable();
             $table->unsignedBigInteger('school_year_id')->nullable();
-            $table->foreign('school_year_id')->references('id')->on('school_years');
+            $table->foreign('school_year_id')->references('id')->on('school_years')
+                ->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
         });
     }

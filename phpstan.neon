@@ -15,4 +15,5 @@ parameters:
             paths:
                 - app/Http/Controllers/SponsorController.php # The controller is behind an Auth middleware
                 - app/Http/Controllers/EventController.php # Ditto
+                - app/Http/Controllers/SchoolYearController.php # Ditto
 

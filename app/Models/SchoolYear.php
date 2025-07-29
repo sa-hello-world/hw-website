@@ -3,19 +3,23 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Database\Factories\SchoolYearFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Money\Currency;
+use Money\Money;
 
 /**
  * @property int $id
  * @property string $start_academic_year
  * @property string $end_academic_year
  * @property string|null $name_of_chairman
- * @property int $regular_membership_price
- * @property int|null $early_membership_price
- * @property int|null $semester_membership_price
+ * @property Money $regular_membership_price
+ * @property \Money\Money|null $early_membership_price
+ * @property \Money\Money|null $semester_membership_price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Event> $events
@@ -23,6 +27,7 @@ use Illuminate\Support\Collection;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
  * @property-read mixed $years
+ * @method static \Database\Factories\SchoolYearFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear query()
@@ -39,6 +44,9 @@ use Illuminate\Support\Collection;
  */
 class SchoolYear extends Model
 {
+    /** @use HasFactory<SchoolYearFactory> */
+    use HasFactory;
+
     protected $fillable = ['start_academic_year', 'end_academic_year', 'name_of_chairman', 'regular_membership_price',
         'early_membership_price', 'semester_membership_price'];
 
@@ -89,13 +97,13 @@ class SchoolYear extends Model
 
     /**
      * Returns the previous academic year if such exist
-     * @return SchoolYear|null
+     * @return Collection<int, SchoolYear>
      */
-    public static function previous(): ?SchoolYear
+    public static function previous(): Collection
     {
         return self::whereDate('start_academic_year', '<', (optional(SchoolYear::current())->start_academic_year ?? now()->startOfDay()))
             ->orderByDesc('start_academic_year')
-            ->first();
+            ->get();
     }
 
     /**
@@ -109,6 +117,45 @@ class SchoolYear extends Model
             get: fn () => Carbon::parse($this->start_academic_year)->format('Y')
                 . ' - '
                 . Carbon::parse($this->end_academic_year)->format('Y')
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the regular membership price
+     * @return Attribute<Money, string>
+     */
+    protected function regularMembershipPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => new Money($value, new Currency('EUR')),
+            set: fn (Money $money) => $money->getAmount()
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the early membership price
+     * @return Attribute<Money, string>
+     */
+    protected function earlyMembershipPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the semester membership price
+     * @return Attribute<Money, string>
+     */
+    protected function semesterMembershipPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
         );
     }
 }

@@ -14,6 +14,7 @@
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.1.1",
         "livewire/volt": "^1.7.0",
+        "moneyphp/money": "^4.7",
         "spatie/laravel-permission": "^6.20"
     },
     "require-dev": {
