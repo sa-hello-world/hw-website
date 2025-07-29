@@ -1,5 +1,5 @@
 <div>
-    @php use App\Enums\EventType;use App\Models\SchoolYear; @endphp
+    @php use App\Enums\EventType;use App\Models\SchoolYear;use App\Helpers\MoneyHelper; @endphp
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
             <x-hw.label for="name" value="Event name" required/>
@@ -53,15 +53,15 @@
 
         <div>
             <x-hw.label for="regular_price" value="Regular Price"/>
-            <x-hw.input type="number" name="regular_price" id="regular_price" step="0.01"
-                        value="{{ old('regular_price', $event->regular_price ?? '') }}" required/>
+            <x-hw.input type="text" name="regular_price" id="regular_price" step="0.01" class="money-field"
+                        value="{{ old('regular_price', MoneyHelper::toDecimal(optional($event)->regular_price) ?? '') }}"/>
             @error('regular_price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div>
             <x-hw.label for="member_price" value="Membership Price"/>
-            <x-hw.input type="number" name="member_price" id="member_price" step="0.01"
-                        value="{{ old('member_price', $event->member_price ?? '') }}" required/>
+            <x-hw.input type="text" name="member_price" id="member_price" step="0.01" class="money-field"
+                        value="{{ old('member_price', MoneyHelper::toDecimal(optional($event)->member_price) ?? '') }}"/>
             @error('member_price') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
@@ -114,9 +114,26 @@
     </div>
 
     <div class="flex flex-row-reverse gap-x-2 pt-4">
-        <x-hw.button type="submit" variant="save">Create</x-hw.button>
-        <x-hw.button type="button">
-            <a href="{{ url()->previous() }}">Cancel</a>
-        </x-hw.button>
+        <x-hw.button type="submit" variant="save">{{ $event ? 'Update' : 'Create' }}</x-hw.button>
+        <a href="{{ url()->previous() }}">
+            <x-hw.button type="button">
+                Cancel
+            </x-hw.button>
+        </a>
     </div>
+    <script>
+        document.addEventListener('livewire:initialized', () => {
+            AutoNumeric.multiple('.money-field', {
+                currencySymbol: '€',
+                decimalPlaces: 2,
+                decimalCharacter: '.',
+                digitGroupSeparator: ',',
+                minimumValue: '0',
+                outputFormat: 'number',
+                unformatOnSubmit: true,
+                modifyValueOnWheel: false,
+                showOnlyNumbersOnFocus: false,
+            });
+        });
+    </script>
 </div>

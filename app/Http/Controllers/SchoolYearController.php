@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\MoneyHelper;
 use App\Models\SchoolYear;
 use App\Rules\NoAcademicEndOverlap;
 use App\Rules\NoAcademicStartOverlap;
@@ -62,19 +63,13 @@ class SchoolYearController extends Controller
 
         $validated = $request->validate($rules);
 
-        $currencies = new ISOCurrencies();
-        $moneyParser = new DecimalMoneyParser($currencies);
-
-        $validated['regular_membership_price'] =
-            $moneyParser->parse($validated['regular_membership_price'], new Currency('EUR'));
+        $validated['regular_membership_price'] = MoneyHelper::parse($validated['regular_membership_price']);
 
         if ($validated['early_membership_price'] !== null) {
-            $validated['early_membership_price'] =
-                $moneyParser->parse($validated['early_membership_price'], new Currency('EUR'));
+            $validated['early_membership_price'] = MoneyHelper::parse($validated['early_membership_price']);
         }
         if ($validated['semester_membership_price'] !== null) {
-            $validated['semester_membership_price'] =
-                $moneyParser->parse($validated['semester_membership_price'], new Currency('EUR'));
+            $validated['semester_membership_price'] = MoneyHelper::parse($validated['semester_membership_price']);
         }
 
         SchoolYear::create($validated);

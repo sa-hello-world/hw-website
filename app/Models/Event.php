@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Money\Currency;
+use Money\Money;
 
 /**
  * @property int $id
@@ -21,8 +23,8 @@ use Illuminate\Support\Collection;
  * @property int|null $available_places
  * @property string $start
  * @property string|null $end
- * @property int|null $regular_price
- * @property int|null $member_price
+ * @property \Money\Money|null $regular_price
+ * @property \Money\Money|null $member_price
  * @property string $type
  * @property string|null $open_for
  * @property int|null $school_year_id
@@ -116,6 +118,32 @@ class Event extends Model
 
                 return  EventStatus::PAST->value;
             }
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the regular price
+     * @return Attribute<Money, string>
+     */
+    protected function regularPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
+        );
+    }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the member price
+     * @return Attribute<Money, string>
+     */
+    protected function memberPrice(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
+            set: fn (?Money $money) => $money?->getAmount()
         );
     }
 }

@@ -1,4 +1,4 @@
-@php use App\Helpers\MoneyFormatter;use Carbon\Carbon; @endphp
+@php use App\Helpers\MoneyHelper;use Carbon\Carbon; @endphp
 <div>
     <svg wire:click="show(true)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
          stroke-width="1.5" stroke="currentColor"
