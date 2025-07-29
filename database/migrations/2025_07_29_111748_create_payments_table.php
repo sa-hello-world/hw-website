@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('status');
             $table->dateTime('paid_at');
+            $table->json('meta')->nullable();
             $table->timestamps();
         });
     }

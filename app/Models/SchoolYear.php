@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\MembershipType;
 use Carbon\Carbon;
 use Database\Factories\SchoolYearFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -158,4 +159,21 @@ class SchoolYear extends Model
             set: fn (?Money $money) => $money?->getAmount()
         );
     }
+
+    /**
+     * Returns the correct price based on the passed membership type
+     * @param string $membershipType
+     * @return Money
+     */
+    public function getPrice(string $membershipType): Money
+    {
+        $prices = [
+            MembershipType::REGULAR->value => $this->regular_membership_price,
+            MembershipType::EARLY_BIRD->value => $this->early_membership_price,
+            MembershipType::SEMESTER->value => $this->semester_membership_price,
+        ];
+
+        return $prices[$membershipType] ?? throw new \InvalidArgumentException("Invalid membership type: $membershipType");
+    }
+
 }
