@@ -30,7 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class EventUser extends Model
 {
-    protected $fillable = ['user_id', 'event_id'];
+    protected $fillable = ['user_id', 'event_id', 'payment_id'];
 
     /**
      * Establishes relationship between users and this model (linking table) to events
@@ -48,5 +48,15 @@ class EventUser extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Returns the payment it was created with
+     *
+     * @return BelongsTo
+     */
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
     }
 }

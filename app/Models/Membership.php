@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Membership extends Model
 {
-    protected $fillable = ['user_id', 'school_year_id'];
+    protected $fillable = ['user_id', 'school_year_id', 'payment_id'];
 
     /**
      * Returns the user it belongs to
@@ -47,5 +47,15 @@ class Membership extends Model
     public function schoolYear(): BelongsTo
     {
         return $this->belongsTo(SchoolYear::class);
+    }
+
+    /**
+     * Returns the payment it was created with
+     *
+     * @return BelongsTo
+     */
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
     }
 }
