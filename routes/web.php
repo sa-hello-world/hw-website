@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SponsorController;
 use App\Livewire\Settings\Appearance;
@@ -34,6 +35,10 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('events', EventController::class)->except(['show']);
         Route::resource('school-years', SchoolYearController::class)->except(['show']);
     });
+
+    Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
+    Route::get('/payment/{payment}/review', [PaymentController::class, 'review'])->name('payments.review');
+    Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');

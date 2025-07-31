@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('amount');
             $table->string('description');
             $table->string('status');
-            $table->dateTime('paid_at');
+            $table->dateTime('paid_at')->nullable();
             $table->json('meta')->nullable();
             $table->timestamps();
         });

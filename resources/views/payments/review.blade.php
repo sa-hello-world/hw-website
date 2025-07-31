@@ -1,53 +1,70 @@
+@php use App\Helpers\MoneyHelper;use Illuminate\Support\Facades\Auth; @endphp
 <x-layouts.hub>
+    <div class="h-full px-8 py-12">
+        <h1 class="text-3xl font-bold text-white mb-2">Review Your Payment</h1>
+        <p class="text-gray-400 mb-8">Please confirm the details before proceeding to Mollie.</p>
 
-<div class="min-h-screen bg-gray-900 flex items-center justify-center px-4 py-8">
-        <div class="w-full max-w-md">
-            <div class="bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-700">
-                <!-- Payment Heading -->
-                <div class="text-center mb-6">
-                    <h1 class="text-2xl font-bold text-white">Review Your Payment</h1>
-                    <p class="text-gray-400 mt-2">Please confirm the details before proceeding to Mollie.</p>
-                </div>
+        <div class="max-w-3xl space-y-8">
+            <div class="bg-hw-black rounded-2xl shadow-lg border border-neutral-500 bg-neutral-500/5 p-8">
+                <div class="space-y-6">
+                    <!-- Description -->
+                    <div class="flex justify-between items-center border-b border-neutral-700 pb-4">
+                        <span class="text-neutral-300">User</span>
+                        <span class="text-gray-200 font-medium">{{ Auth::user()->name  }}</span>
+                    </div>
 
-                <!-- Payment Info Card -->
-                <div class="bg-gray-900 rounded-xl p-5 border border-gray-700 mb-6">
-                    <div class="flex justify-between mb-3">
-                        <span class="text-gray-400">Description</span>
+                    <div class="flex justify-between items-center border-b border-neutral-700 pb-4">
+                        <span class="text-neutral-300">Description</span>
                         <span class="text-gray-200 font-medium">{{ $payment->description }}</span>
                     </div>
-                    <div class="flex justify-between mb-3">
-                        <span class="text-gray-400">Amount</span>
-                        <span class="text-green-400 font-semibold text-lg">
-                        € {{ number_format($payment->amount, 2) }}
-                    </span>
+
+                    <!-- Amount -->
+                    <div class="flex justify-between items-center border-b border-neutral-700 pb-4">
+                        <span class="text-neutral-300">Amount</span>
+                        <span class="text-green-400 font-semibold text-2xl">
+                            € {{ MoneyHelper::toDecimal($payment->amount) }}
+                        </span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-400">Status</span>
-                        <span class="px-3 py-1 text-sm rounded-full
-                        @if($payment->status === 'pending') bg-yellow-500/20 text-yellow-400
-                        @elseif($payment->status === 'failed') bg-red-500/20 text-red-400
-                        @else bg-green-500/20 text-green-400 @endif">
-                        {{ ucfirst($payment->status) }}
-                    </span>
+
+                    <!-- Status -->
+                    <div class="flex justify-between items-center">
+                        <span class="text-neutral-300">Status</span>
+                        <span class="px-4 py-1 text-sm rounded-full
+                            @if($payment->status === 'pending') bg-yellow-500/20 text-yellow-400
+                            @elseif($payment->status === 'failed') bg-red-500/20 text-red-400
+                            @else bg-green-500/20 text-green-400 @endif">
+                            {{ ucfirst($payment->status) }}
+                        </span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Action Buttons -->
-                <div class="flex gap-3">
-                    <a href="{{ route('payments.cancel', $payment) }}"
-                       class="w-1/2 text-center py-3 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-700 transition">
-                        Cancel
-                    </a>
+            <!-- Ready to Pay Section -->
+            <div class="max-w-3xl text-left">
+                <h2 class="text-2xl font-semibold text-white mb-3">Ready to Pay?</h2>
+                <p class="text-gray-400 text-sm mb-6">
+                    Double-check your payment details and proceed to Mollie to complete the transaction.
+                </p>
 
-                    <form method="POST" action="{{ route('payments.proceed', $payment) }}" class="w-1/2">
+                <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                    <form action="{{route('payments.cancel', $payment)}}" method="POST">
+                        @csrf
+                        <button
+                            class="flex-1 sm:flex-none sm:w-40 text-center py-3 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-700 transition">
+                            Cancel
+                        </button>
+                    </form>
+
+                    <form method="POST" class="flex-1 sm:flex-none sm:w-40">
                         @csrf
                         <button type="submit"
-                                class="w-full py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-500 transition shadow-md shadow-blue-500/20">
-                            Proceed to Mollie
+                                class="w-full py-3 rounded-xl bg-hw-blue-600 text-white font-medium hover:bg-hw-blue-700 hover:cursor-pointer transition-colors">
+                            Pay
                         </button>
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
 </x-layouts.hub>

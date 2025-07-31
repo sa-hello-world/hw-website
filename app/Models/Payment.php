@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Money\Currency;
+use Money\Money;
 
 class Payment extends Model
 {
@@ -93,4 +95,18 @@ class Payment extends Model
             ]
         );
     }
+
+    /**
+     * Casts the integer values from the db into money type and vice versa
+     * for the amount of the payment
+     * @return Attribute<Money, string>
+     */
+    protected function amount(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => new Money($value, new Currency('EUR')),
+            set: fn (Money $money) => $money->getAmount()
+        );
+    }
+
 }

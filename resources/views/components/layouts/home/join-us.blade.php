@@ -57,21 +57,25 @@
                     <!-- Pricing options -->
                     <section class="space-y-2">
                         @foreach ($membershipPrices as $price)
-                            <div class="flex items-center justify-between rounded-lg relative">
-                                <span class="text-lg text-hw-dark font-handwriting">{{ $price['label'] }}</span>
+                            <form action="{{route('payments.store.membership', $price['membershipType'])}}" method="POST">
+                                @csrf
+                                <div class="flex items-center justify-between rounded-lg relative">
+                                    <span class="text-lg text-hw-dark font-handwriting">{{ $price['label'] }}</span>
 
-                                @if($price['highlight'])
-                                    <div class="absolute -top-3 -right-3">
-                <span class="text-xs text-gray-50 {{ $price['highlightColor'] }} px-2 py-0.5 rounded font-bold">
-                    {{ $price['highlight'] }}
-                </span>
-                                    </div>
-                                @endif
+                                    @if($price['highlight'])
+                                        <div class="absolute -top-3 -right-3">
+                                            <span class="text-xs text-gray-50 {{ $price['highlightColor'] }} px-2 py-0.5 rounded font-bold">
+                                                {{ $price['highlight'] }}
+                                            </span>
+                                        </div>
+                                    @endif
 
-                                <button class="{{ $price['style'] }} border border-hw-dark text-hw-dark font-bold text-sm px-5 py-2 rounded-full">
-                                    Order
-                                </button>
-                            </div>
+                                    <button type="submit" class="{{ $price['style'] }}
+                                        border border-hw-dark text-hw-dark font-bold text-sm px-5 py-2 rounded-full hover:cursor-pointer">
+                                        Order
+                                    </button>
+                                </div>
+                            </form>
                         @endforeach
                     </section>
                 </section>
