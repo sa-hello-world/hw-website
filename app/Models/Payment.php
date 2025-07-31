@@ -12,7 +12,7 @@ use Money\Money;
 
 class Payment extends Model
 {
-    protected $fillable = ['user_id', 'amount', 'description', 'status', 'paid_at', 'meta'];
+    protected $fillable = ['user_id', 'amount', 'description', 'status', 'paid_at', 'meta', 'mollie_id'];
 
     protected $attributes = [
         'status' => PaymentStatus::PENDING

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\MembershipType;
+use App\Enums\PaymentStatus;
 use App\Helpers\MoneyHelper;
 use App\Models\Payment;
 use App\Models\SchoolYear;
@@ -48,9 +49,9 @@ class PaymentController extends Controller
         return redirect('dashboard')->with('success', 'Payment has been cancelled.');
     }
 
-    public function preparePayment(Payment $payment)
+    public function prepare(Payment $payment): RedirectResponse
     {
-        $payment = Mollie::api()
+        $molliePayment = Mollie::api()
             ->payments
             ->create([
                 'amount' => [
@@ -58,17 +59,41 @@ class PaymentController extends Controller
                     'value' => MoneyHelper::toDecimal($payment->amount)
                 ],
                 'description' => $payment->description,
-                'redirectUrl' => route('payments.review', $payment),
+                'redirectUrl' => route('payments.callback', $payment),
+                #'webhookUrl' => route('payments.webhook'),
             ]);
+
+        $payment->update(['mollie_id' => $molliePayment->id]);
+
+        return redirect($molliePayment->getCheckoutUrl(), 303);
     }
 
-    public function success(): RedirectResponse
+    public function callback(Payment $payment): RedirectResponse
     {
-        dd('Successs!!!');
+        $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
+
+        if($molliePayment->isPaid())
+        {
+            $payment->update([
+                'status' => PaymentStatus::PAID->value,
+                'paid_at' => $molliePayment->paidAt,
+            ]);
+
+            return redirect()->route('payments.show', $payment)
+                ->with('success', 'Payment has been confirmed.');
+        }
+
+        return redirect()->route('payments.show', $payment)
+            ->with('error', 'Something has gone wrong or it could be just your payment being processed slower. If this continue contact us.');
     }
 
     public function webhook(): RedirectResponse
     {
-        dd('31232');
+        //TODO: issue #30
+    }
+
+    public function show(Payment $payment): View
+    {
+        return view('payments.show', compact('payment'));
     }
 }
