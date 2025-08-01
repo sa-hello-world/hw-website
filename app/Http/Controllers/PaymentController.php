@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Enums\MembershipType;
 use App\Enums\PaymentStatus;
 use App\Helpers\MoneyHelper;
+use App\Models\Membership;
 use App\Models\Payment;
 use App\Models\SchoolYear;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Mollie\Laravel\Facades\Mollie;
 
@@ -77,6 +79,12 @@ class PaymentController extends Controller
             $payment->update([
                 'status' => PaymentStatus::PAID->value,
                 'paid_at' => $molliePayment->paidAt,
+            ]);
+
+            Membership::create([
+                'user_id' => Auth::user()->id,
+                'school_year_id' => SchoolYear::current()->id,
+                'payment_id' => $payment->id,
             ]);
 
             return redirect()->route('payments.show', $payment)
