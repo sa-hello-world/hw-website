@@ -18,7 +18,9 @@ class PaymentController extends Controller
 {
     public function storeForMembership(MembershipType $membershipType) : RedirectResponse
     {
-        // TODO: Fix gate!
+        if (Auth::user()->cannot('pay', Membership::class)) {
+            abort(403);
+        }
 
         $currentSchoolYear = SchoolYear::current();
 

@@ -150,4 +150,18 @@ class User extends Authenticatable
 
         return true;
     }
+
+    /**
+     * Returns whether the user is member for the current year
+     * @return Attribute<bool,never>
+     */
+    public function isMember(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->memberships()
+                ->where('school_year_id', SchoolYear::current()->id)
+                ->exists(),
+        );
+    }
+
 }
