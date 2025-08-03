@@ -33,12 +33,16 @@ class PaymentController extends Controller
             'membership_type' => $membershipType->value,
         ]);
 
-        return redirect()->route('payments.review', $payment);
+        return redirect()->route('payments.show', $payment);
     }
 
-    public function review(Payment $payment): View
+    public function show(Payment $payment): View
     {
-        return view('payments.review', compact('payment'));
+        if (Auth::user()->cannot('view', $payment)) {
+            abort(403);
+        }
+
+        return view('payments.show', compact('payment'));
     }
 
     /**
@@ -48,6 +52,10 @@ class PaymentController extends Controller
      */
     public function cancel(Payment $payment): RedirectResponse
     {
+        if (Auth::user()->cannot('pay', $payment)) {
+            abort(403);
+        }
+
         $payment->delete();
 
         return redirect('dashboard')->with('success', 'Payment has been cancelled.');
@@ -55,6 +63,10 @@ class PaymentController extends Controller
 
     public function prepare(Payment $payment): RedirectResponse
     {
+        if (Auth::user()->cannot('pay', $payment)) {
+            abort(403);
+        }
+
         $molliePayment = Mollie::api()
             ->payments
             ->create([
@@ -74,6 +86,10 @@ class PaymentController extends Controller
 
     public function callback(Payment $payment): RedirectResponse
     {
+        if (Auth::user()->cannot('view', $payment)) {
+            abort(403);
+        }
+        
         $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
 
         if($molliePayment->isPaid())
@@ -100,10 +116,5 @@ class PaymentController extends Controller
     public function webhook(): RedirectResponse
     {
         //TODO: issue #30
-    }
-
-    public function show(Payment $payment): View
-    {
-        return view('payments.show', compact('payment'));
     }
 }

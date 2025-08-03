@@ -37,7 +37,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
-    Route::get('/payment/{payment}/review', [PaymentController::class, 'review'])->name('payments.review');
     Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payments.show');
     Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
     Route::get('/payment/{payment}/callback', [PaymentController::class, 'callback'])->name('payments.callback');

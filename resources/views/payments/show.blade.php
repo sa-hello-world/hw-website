@@ -35,6 +35,33 @@
                     </div>
                 </div>
             </div>
+
+            @can('pay', $payment)
+                <div class="max-w-3xl text-left">
+                    <h2 class="text-2xl font-semibold text-white mb-3">Ready to Pay?</h2>
+                    <p class="text-gray-400 text-sm mb-6">
+                        Double-check your payment details and proceed to Mollie to complete the transaction.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-end">
+                        <form action="{{route('payments.cancel', $payment)}}" method="POST">
+                            @csrf
+                            <button
+                                class="flex-1 sm:flex-none sm:w-40 text-center py-3 rounded-xl border border-gray-600 text-gray-300 hover:bg-gray-700 transition">
+                                Cancel
+                            </button>
+                        </form>
+
+                        <form action="{{route('payments.prepare', $payment)}}" method="POST" class="flex-1 sm:flex-none sm:w-40">
+                            @csrf
+                            <button type="submit"
+                                    class="w-full py-3 rounded-xl bg-hw-blue-600 text-white font-medium hover:bg-hw-blue-700 hover:cursor-pointer transition-colors">
+                                Pay
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @endcan
         </div>
     </div>
 </x-layouts.hub>
