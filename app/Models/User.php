@@ -177,7 +177,6 @@ class User extends Authenticatable
                     ->first()
                     ->contains(function ($membership) use ($now, $startOfYear, $secondSemester, $endOfYear) {
                         if (is_null($membership->semester)) {
-                            dd($membership->semester);
                             return true;
                         }
 
