@@ -171,18 +171,17 @@ class User extends Authenticatable
                 $secondSemester = $schoolYear->start_second_semester;
                 $endOfYear = Carbon::parse($schoolYear->end_academic_year);
 
-                return $this->memberships()
+                $membership = $this->memberships()
                     ->where('school_year_id', $schoolYear->id)
                     ->orderBy('id', 'desc')
-                    ->first()
-                    ->contains(function ($membership) use ($now, $startOfYear, $secondSemester, $endOfYear) {
-                        if (is_null($membership->semester)) {
-                            return true;
-                        }
+                    ->first();
 
-                        return ($membership->semester == 1 && $now->between($startOfYear, $secondSemester)) ||
-                            ($membership->semester == 2 && $now->between($secondSemester, $endOfYear));
-                    });
+                if (!$membership) {
+                    return false;
+                }
+
+                return ($membership->semester == 1 && $now->between($startOfYear, $secondSemester)) ||
+                    ($membership->semester == 2 && $now->between($secondSemester, $endOfYear));
             }
         );
     }
