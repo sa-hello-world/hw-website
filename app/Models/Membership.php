@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Membership extends Model
 {
-    protected $fillable = ['user_id', 'school_year_id', 'payment_id'];
+    protected $fillable = ['user_id', 'school_year_id', 'payment_id', 'semester'];
 
     /**
      * Returns the user it belongs to

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('school_year_id');
+            $table->integer('semester')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('school_year_id')->references('id')->on('school_years');
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -158,9 +159,32 @@ class User extends Authenticatable
     public function isMember(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->memberships()
-                ->where('school_year_id', SchoolYear::current()->id)
-                ->exists(),
+            get: function () {
+                $schoolYear = SchoolYear::current();
+
+                if (!$schoolYear) {
+                    return false;
+                }
+
+                $now = Carbon::now();
+                $startOfYear = Carbon::parse($schoolYear->start_academic_year);
+                $secondSemester = $schoolYear->start_second_semester;
+                $endOfYear = Carbon::parse($schoolYear->end_academic_year);
+
+                return $this->memberships()
+                    ->where('school_year_id', $schoolYear->id)
+                    ->orderBy('id', 'desc')
+                    ->first()
+                    ->contains(function ($membership) use ($now, $startOfYear, $secondSemester, $endOfYear) {
+                        if (is_null($membership->semester)) {
+                            dd($membership->semester);
+                            return true;
+                        }
+
+                        return ($membership->semester == 1 && $now->between($startOfYear, $secondSemester)) ||
+                            ($membership->semester == 2 && $now->between($secondSemester, $endOfYear));
+                    });
+            }
         );
     }
 

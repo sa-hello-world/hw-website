@@ -24,14 +24,25 @@ class PaymentController extends Controller
 
         $currentSchoolYear = SchoolYear::current();
 
-        $payment = Payment::create([
+        $description = "Membership contribution for academic year {$currentSchoolYear->years}";
+        $payment = Payment::create( [
             'user_id' => auth()->id(),
             'amount' => $currentSchoolYear->getPrice($membershipType->value),
-            'description' => "Membership contribution for academic year {$currentSchoolYear->years}",
-            'payable_type' => 'membership',
-            'payable_id' => $currentSchoolYear->id,
-            'membership_type' => $membershipType->value,
+            'description' => $description,
         ]);
+
+        $metaPaymentData = [];
+        $metaPaymentData['payable_type'] = 'membership';
+        $metaPaymentData['payable_id'] = $currentSchoolYear->id;
+        $metaPaymentData['membership_type'] = $membershipType->value;
+
+        if ($membershipType == MembershipType::SEMESTER) {
+            $payment->description .= " (Semester {$currentSchoolYear->semester_number})";
+            $metaPaymentData['semester'] = $currentSchoolYear->semester_number;
+        }
+
+        $payment->meta = $metaPaymentData;
+        $payment->save();
 
         return redirect()->route('payments.show', $payment);
     }
@@ -42,7 +53,9 @@ class PaymentController extends Controller
             abort(403);
         }
 
-        return view('payments.show', compact('payment'));
+        $schoolYear = SchoolYear::find($payment->meta['payable_id']);
+
+        return view('payments.show', compact('payment', 'schoolYear'));
     }
 
     /**
@@ -89,7 +102,7 @@ class PaymentController extends Controller
         if (Auth::user()->cannot('view', $payment)) {
             abort(403);
         }
-        
+
         $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
 
         if($molliePayment->isPaid())
@@ -99,11 +112,15 @@ class PaymentController extends Controller
                 'paid_at' => $molliePayment->paidAt,
             ]);
 
-            Membership::create([
+            $membership = Membership::create([
                 'user_id' => Auth::user()->id,
-                'school_year_id' => SchoolYear::current()->id,
+                'school_year_id' => $payment->meta['payable_id'],
                 'payment_id' => $payment->id,
             ]);
+
+            if($payment->meta['membership_type'] == MembershipType::SEMESTER->value) {
+                $membership->update(['semester' => $payment->meta['semester']]);
+            }
 
             return redirect()->route('payments.show', $payment)
                 ->with('success', 'Payment has been confirmed.');

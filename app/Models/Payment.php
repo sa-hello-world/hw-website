@@ -50,53 +50,6 @@ class Payment extends Model
     }
 
     /**
-     * Type attribute (event/membership)
-     * @return Attribute<string|null, string|null>
-     */
-    protected function payableType(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => $this->meta['payable_type'] ?? null,
-            set: fn($value) => [
-                'meta' => array_merge($this->meta ?? [], ['payable_type' => $value])
-            ]
-        );
-    }
-
-    /**
-     * Payable ID attribute
-     * @return Attribute<int|null, int|null>
-     */
-    protected function payableId(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => isset($this->meta['payable_id'])
-                ? (int) $this->meta['payable_id']
-                : null,
-
-            set: fn($value) => [
-                'meta' => array_merge($this->meta ?? [], [
-                    'payable_id' => $value !== null ? (int) $value : null
-                ]),
-            ]
-        );
-    }
-
-    /**
-     * Membership type attribute (full, semester, early_bird)
-     * @return Attribute<string|null, string|null>
-     */
-    protected function membershipType(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->meta['membership_type'] ?? null,
-            set: fn ($value) => [
-                'meta' => array_merge($this->meta ?? [], ['membership_type' => $value])
-            ]
-        );
-    }
-
-    /**
      * Casts the integer values from the db into money type and vice versa
      * for the amount of the payment
      * @return Attribute<Money, string>
