@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\MembershipType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -149,6 +150,21 @@ class User extends Authenticatable
         }
 
         EventUser::create(['user_id' => $this->id, 'event_id' => $event->id]);
+
+        return true;
+    }
+
+    public function registerAsMemberForSchoolYear(SchoolYear $schoolYear, Payment $payment, ?int $semester = null): bool
+    {
+        $membership = Membership::create([
+            'user_id' => $this->id,
+            'school_year_id' => $schoolYear->id,
+            'payment_id' => $payment->id,
+        ]);
+
+        if($semester) {
+            $membership->update(['semester' => $payment->meta['semester']]);
+        }
 
         return true;
     }

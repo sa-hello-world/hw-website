@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Enums\MembershipType;
 use App\Enums\PaymentStatus;
 use App\Helpers\MoneyHelper;
+use App\Models\Event;
 use App\Models\Membership;
 use App\Models\Payment;
 use App\Models\SchoolYear;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Mollie\Laravel\Facades\Mollie;
+use Money\Money;
+use function PHPUnit\Framework\isEmpty;
 
 // TODO: Add the event payment as well
 class PaymentController extends Controller
@@ -26,7 +30,7 @@ class PaymentController extends Controller
 
         $description = "Membership contribution for academic year {$currentSchoolYear->years}";
         $payment = Payment::create( [
-            'user_id' => auth()->id(),
+            'user_id' => Auth::user()->id,
             'amount' => $currentSchoolYear->getPrice($membershipType->value),
             'description' => $description,
         ]);
@@ -41,6 +45,29 @@ class PaymentController extends Controller
             $metaPaymentData['semester'] = $currentSchoolYear->semester_number;
         }
 
+        $payment->meta = $metaPaymentData;
+        $payment->save();
+
+        return redirect()->route('payments.show', $payment);
+    }
+
+    public function storeForEvent(Event $event) : RedirectResponse
+    {
+        $user = Auth::user();
+
+        if ($user->cannot('pay', Event::class)) {
+            abort(403);
+        }
+
+        $feeType = $user->is_member ? 'Membership' : 'Regular';
+        $payment = Payment::create([
+            'user_id' => $user->id,
+            'amount' => $user->is_member ? ($event->member_price ?? Money::EUR(0)) : ($event->regular_price ?? Money::EUR(0)),
+            'description' => "Entrance fee for the {$event->name} event ({$feeType} fee)",
+        ]);
+        $metaPaymentData = [];
+        $metaPaymentData['payable_type'] = 'event';
+        $metaPaymentData['payable_id'] = $event->id;
         $payment->meta = $metaPaymentData;
         $payment->save();
 
@@ -112,14 +139,10 @@ class PaymentController extends Controller
                 'paid_at' => $molliePayment->paidAt,
             ]);
 
-            $membership = Membership::create([
-                'user_id' => Auth::user()->id,
-                'school_year_id' => $payment->meta['payable_id'],
-                'payment_id' => $payment->id,
-            ]);
-
-            if($payment->meta['membership_type'] == MembershipType::SEMESTER->value) {
-                $membership->update(['semester' => $payment->meta['semester']]);
+            if (!$payment->membership_type) {
+                User::firstOrFail($payment->user_id)->registerAsMemberForSchoolYear(SchoolYear::firstOrFail($payment->payable_id), $payment, $payment->semester);
+            } else {
+                User::firstOrFail($payment->user_id)->registerForEvent(Event::findOrFail($payment->payable_id));
             }
 
             return redirect()->route('payments.show', $payment)
