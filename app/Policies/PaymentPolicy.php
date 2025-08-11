@@ -10,7 +10,7 @@ class PaymentPolicy
 {
     public function view(User $user, Payment $payment) : bool
     {
-        return $user->id === $payment->user_id || $user->hasPermissionTo('view payments');
+        return $user->id === $payment->user_id || $user->hasPermissionTo('view payment');
     }
 
     public function pay(User $user, Payment $payment) : bool

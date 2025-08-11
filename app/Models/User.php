@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Mollie\Laravel\Facades\Mollie;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -154,6 +155,7 @@ class User extends Authenticatable
 
     /**
      * Returns whether the user is member for the current year
+     * TODO: Refactor to be more readable/maintainable
      * @return Attribute<bool,never>
      */
     public function isMember(): Attribute
@@ -166,11 +168,6 @@ class User extends Authenticatable
                     return false;
                 }
 
-                $now = Carbon::now();
-                $startOfYear = Carbon::parse($schoolYear->start_academic_year);
-                $secondSemester = $schoolYear->start_second_semester;
-                $endOfYear = Carbon::parse($schoolYear->end_academic_year);
-
                 $membership = $this->memberships()
                     ->where('school_year_id', $schoolYear->id)
                     ->orderBy('id', 'desc')
@@ -178,12 +175,18 @@ class User extends Authenticatable
 
                 if (!$membership) {
                     return false;
+                } elseif (is_null($membership->semester)){
+                    return true;
                 }
+
+                $now = Carbon::now();
+                $startOfYear = Carbon::parse($schoolYear->start_academic_year);
+                $secondSemester = $schoolYear->start_second_semester;
+                $endOfYear = Carbon::parse($schoolYear->end_academic_year);
 
                 return ($membership->semester == 1 && $now->between($startOfYear, $secondSemester)) ||
                     ($membership->semester == 2 && $now->between($secondSemester, $endOfYear));
             }
         );
     }
-
 }
