@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Data\PaymentMeta;
 use App\Enums\MembershipType;
 use App\Enums\PaymentStatus;
 use App\Models\Membership;
@@ -73,9 +74,11 @@ class PaymentControllerTest extends TestCase
             'amount' => $current->regular_membership_price,
             'description' => 'Lorem ipsum dolar sit amet',
         ]);
-        $meta['payable_type'] = 'membership';
-        $meta['payable_id'] = $current->id;
-        $meta['membership_type'] = MembershipType::REGULAR->value;
+        $meta = new PaymentMeta(
+            $current->id,
+            'membership',
+            MembershipType::REGULAR->value
+        );
         $payment->meta = $meta;
         $payment->save();
 
@@ -97,9 +100,11 @@ class PaymentControllerTest extends TestCase
             'amount' => $current->regular_membership_price,
             'description' => 'Lorem ipsum dolar sit amet',
         ]);
-        $meta['payable_type'] = 'membership';
-        $meta['payable_id'] = $current->id;
-        $meta['membership_type'] = MembershipType::REGULAR->value;
+        $meta = new PaymentMeta(
+            $current->id,
+            'membership',
+            MembershipType::REGULAR->value
+        );
         $payment->meta = $meta;
         $payment->save();
 
@@ -121,9 +126,11 @@ class PaymentControllerTest extends TestCase
             'amount' => $current->regular_membership_price,
             'description' => 'Lorem ipsum dolar sit amet',
         ]);
-        $meta['payable_type'] = 'membership';
-        $meta['payable_id'] = $current->id;
-        $meta['membership_type'] = MembershipType::REGULAR->value;
+        $meta = new PaymentMeta(
+            $current->id,
+            'membership',
+            MembershipType::REGULAR->value
+        );
         $payment->meta = $meta;
         $payment->save();
 
@@ -142,9 +149,11 @@ class PaymentControllerTest extends TestCase
             'amount' => $current->regular_membership_price,
             'description' => 'Lorem ipsum dolar sit amet',
         ]);
-        $meta['payable_type'] = 'membership';
-        $meta['payable_id'] = $current->id;
-        $meta['membership_type'] = MembershipType::REGULAR->value;
+        $meta = new PaymentMeta(
+            $current->id,
+            'membership',
+            MembershipType::REGULAR->value
+        );
         $payment->status = PaymentStatus::PENDING->value;
         $payment->meta = $meta;
         $payment->save();
@@ -165,9 +174,11 @@ class PaymentControllerTest extends TestCase
             'amount' => $current->regular_membership_price,
             'description' => 'Lorem ipsum dolar sit amet',
         ]);
-        $meta['payable_type'] = 'membership';
-        $meta['payable_id'] = $current->id;
-        $meta['membership_type'] = MembershipType::REGULAR->value;
+        $meta = new PaymentMeta(
+            $current->id,
+            'membership',
+            MembershipType::REGULAR->value
+        );
         $payment->status = PaymentStatus::PENDING->value;
         $payment->meta = $meta;
         $payment->save();
@@ -187,9 +198,11 @@ class PaymentControllerTest extends TestCase
             'amount' => $current->regular_membership_price,
             'description' => 'Lorem ipsum dolar sit amet',
         ]);
-        $meta['payable_type'] = 'membership';
-        $meta['payable_id'] = $current->id;
-        $meta['membership_type'] = MembershipType::REGULAR->value;
+        $meta = new PaymentMeta(
+            $current->id,
+            'membership',
+            MembershipType::REGULAR->value
+        );
         $payment->status = PaymentStatus::PENDING->value;
         $payment->meta = $meta;
         $payment->save();
