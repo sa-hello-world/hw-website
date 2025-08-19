@@ -139,10 +139,11 @@ class PaymentController extends Controller
                 'paid_at' => $molliePayment->paidAt,
             ]);
 
-            if (!$payment->membership_type) {
-                User::firstOrFail($payment->user_id)->registerAsMemberForSchoolYear(SchoolYear::firstOrFail($payment->payable_id), $payment, $payment->semester);
+            $user = User::findOrFail($payment->user_id);
+            if ($payment->meta['membership_type']) {
+                $user->registerAsMemberForSchoolYear(SchoolYear::findOrFail($payment->meta['payable_id']), $payment);
             } else {
-                User::firstOrFail($payment->user_id)->registerForEvent(Event::findOrFail($payment->payable_id));
+                $user->registerForEvent(Event::findOrFail($payment->meta['payable_id']));
             }
 
             return redirect()->route('payments.show', $payment)

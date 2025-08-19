@@ -10,6 +10,35 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Money\Currency;
 use Money\Money;
 
+/**
+ * @property int $id
+ * @property int $user_id
+ * @property Money $amount
+ * @property string $description
+ * @property string $status
+ * @property string|null $paid_at
+ * @property array<array-key, mixed>|null $meta
+ * @property string|null $mollie_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\EventUser|null $eventUser
+ * @property-read \App\Models\Membership|null $membership
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereMeta($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereMollieId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Payment whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Payment extends Model
 {
     protected $fillable = ['user_id', 'amount', 'description', 'status', 'paid_at', 'meta', 'mollie_id'];

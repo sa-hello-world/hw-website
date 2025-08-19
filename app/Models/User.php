@@ -27,6 +27,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EventUser> $eventUsers
  * @property-read int|null $event_users_count
  * @property-read mixed $events
+ * @property-read mixed $is_member
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -154,15 +155,15 @@ class User extends Authenticatable
         return true;
     }
 
-    public function registerAsMemberForSchoolYear(SchoolYear $schoolYear, Payment $payment, ?int $semester = null): bool
+    public function registerAsMemberForSchoolYear(SchoolYear $schoolYear, Payment $payment): bool
     {
         $membership = Membership::create([
             'user_id' => $this->id,
             'school_year_id' => $schoolYear->id,
             'payment_id' => $payment->id,
         ]);
-
-        if($semester) {
+        
+        if($payment->meta['semester']) {
             $membership->update(['semester' => $payment->meta['semester']]);
         }
 

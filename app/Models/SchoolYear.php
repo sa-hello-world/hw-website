@@ -28,6 +28,8 @@ use Money\Money;
  * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
+ * @property-read mixed $semester_number
+ * @property-read mixed $start_second_semester
  * @property-read mixed $years
  * @method static \Database\Factories\SchoolYearFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newModelQuery()
