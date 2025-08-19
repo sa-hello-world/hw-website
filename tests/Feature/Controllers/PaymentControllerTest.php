@@ -133,7 +133,8 @@ class PaymentControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function test_cancel_payment_deletes_the_pending_payment_for_creator(): void {
+    public function test_cancel_payment_deletes_the_pending_payment_for_creator(): void
+    {
         $current = SchoolYear::current();
 
         $payment = Payment::create([
@@ -155,7 +156,8 @@ class PaymentControllerTest extends TestCase
         $this->assertDatabaseMissing('payments', ['id' => $payment->id]);
     }
 
-    public function test_cancel_payment_for_chair_returns_403(): void {
+    public function test_cancel_payment_for_chair_returns_403(): void
+    {
         $current = SchoolYear::current();
 
         $payment = Payment::create([
@@ -176,7 +178,8 @@ class PaymentControllerTest extends TestCase
         $response->assertForbidden();
     }
 
-    public function test_cancel_payment_for_anyone_else_except_creator_returns_403(): void {
+    public function test_cancel_payment_for_anyone_else_except_creator_returns_403(): void
+    {
         $current = SchoolYear::current();
 
         $payment = Payment::create([

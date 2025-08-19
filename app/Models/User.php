@@ -155,6 +155,12 @@ class User extends Authenticatable
         return true;
     }
 
+    /**
+     * Creates a membership entity for the user
+     * @param SchoolYear $schoolYear
+     * @param Payment $payment
+     * @return bool
+     */
     public function registerAsMemberForSchoolYear(SchoolYear $schoolYear, Payment $payment): bool
     {
         $membership = Membership::create([
@@ -162,9 +168,9 @@ class User extends Authenticatable
             'school_year_id' => $schoolYear->id,
             'payment_id' => $payment->id,
         ]);
-        
-        if($payment->meta['semester']) {
-            $membership->update(['semester' => $payment->meta['semester']]);
+
+        if ($payment->meta && $payment->meta->semester) {
+            $membership->update(['semester' => $payment->meta->semester]);
         }
 
         return true;
@@ -192,7 +198,7 @@ class User extends Authenticatable
 
                 if (!$membership) {
                     return false;
-                } elseif (is_null($membership->semester)){
+                } elseif (is_null($membership->semester)) {
                     return true;
                 }
 

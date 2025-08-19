@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\PaymentMeta;
 use App\Enums\MembershipType;
 use App\Enums\PaymentStatus;
 use App\Helpers\MoneyHelper;
@@ -11,15 +12,20 @@ use App\Models\Payment;
 use App\Models\SchoolYear;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Mollie\Laravel\Facades\Mollie;
 use Money\Money;
-use function PHPUnit\Framework\isEmpty;
 
 // TODO: Add the event payment as well
 class PaymentController extends Controller
 {
+    /**
+     * Creates a payment based on the membership
+     * @param MembershipType $membershipType
+     * @return RedirectResponse
+     */
     public function storeForMembership(MembershipType $membershipType) : RedirectResponse
     {
         if (Auth::user()->cannot('pay', Membership::class)) {
@@ -27,30 +33,41 @@ class PaymentController extends Controller
         }
 
         $currentSchoolYear = SchoolYear::current();
+        if (!$currentSchoolYear) {
+            abort(404);
+        }
 
         $description = "Membership contribution for academic year {$currentSchoolYear->years}";
-        $payment = Payment::create( [
+        $payment = Payment::create([
             'user_id' => Auth::user()->id,
             'amount' => $currentSchoolYear->getPrice($membershipType->value),
             'description' => $description,
         ]);
 
-        $metaPaymentData = [];
-        $metaPaymentData['payable_type'] = 'membership';
-        $metaPaymentData['payable_id'] = $currentSchoolYear->id;
-        $metaPaymentData['membership_type'] = $membershipType->value;
+        $meta = new PaymentMeta(
+            $currentSchoolYear->id,
+            'membership',
+            $membershipType->value,
+            $membershipType == MembershipType::SEMESTER
+                ? $currentSchoolYear->semester_number
+                : null,
+        );
 
         if ($membershipType == MembershipType::SEMESTER) {
             $payment->description .= " (Semester {$currentSchoolYear->semester_number})";
-            $metaPaymentData['semester'] = $currentSchoolYear->semester_number;
         }
 
-        $payment->meta = $metaPaymentData;
+        $payment->meta = $meta;
         $payment->save();
 
         return redirect()->route('payments.show', $payment);
     }
 
+    /**
+     * Creates a payment based on an event
+     * @param Event $event
+     * @return RedirectResponse
+     */
     public function storeForEvent(Event $event) : RedirectResponse
     {
         $user = Auth::user();
@@ -65,22 +82,32 @@ class PaymentController extends Controller
             'amount' => $user->is_member ? ($event->member_price ?? Money::EUR(0)) : ($event->regular_price ?? Money::EUR(0)),
             'description' => "Entrance fee for the {$event->name} event ({$feeType} fee)",
         ]);
-        $metaPaymentData = [];
-        $metaPaymentData['payable_type'] = 'event';
-        $metaPaymentData['payable_id'] = $event->id;
-        $payment->meta = $metaPaymentData;
+        $meta = new PaymentMeta(
+            $event->id,
+            'event'
+        );
+        $payment->meta = $meta;
         $payment->save();
 
         return redirect()->route('payments.show', $payment);
     }
 
+    /**
+     * Returns the payment
+     * @param Payment $payment
+     * @return View
+     */
     public function show(Payment $payment): View
     {
         if (Auth::user()->cannot('view', $payment)) {
             abort(403);
         }
 
-        $schoolYear = SchoolYear::find($payment->meta['payable_id']);
+        if (!$payment->meta) {
+            throw new \LogicException('Payment missing meta');
+        }
+
+        $schoolYear = SchoolYear::findOrFail($payment->meta->payable_id);
 
         return view('payments.show', compact('payment', 'schoolYear'));
     }
@@ -101,10 +128,21 @@ class PaymentController extends Controller
         return redirect('dashboard')->with('success', 'Payment has been cancelled.');
     }
 
-    public function prepare(Payment $payment): RedirectResponse
+    /**
+     * Prepares a mollie payment
+     * @param Payment $payment
+     * @return RedirectResponse|Redirector
+     * @throws \Mollie\Api\Exceptions\ApiException
+     */
+    public function prepare(Payment $payment): RedirectResponse|Redirector
     {
         if (Auth::user()->cannot('pay', $payment)) {
             abort(403);
+        }
+
+        if ($payment->mollie_id) {
+            $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
+            return redirect($molliePayment->getCheckoutUrl(), 303);
         }
 
         $molliePayment = Mollie::api()
@@ -124,26 +162,34 @@ class PaymentController extends Controller
         return redirect($molliePayment->getCheckoutUrl(), 303);
     }
 
+    /**
+     * Callback for mollies payment
+     * TODO: Look into signed routes
+     * @param Payment $payment
+     * @return RedirectResponse
+     * @throws \Mollie\Api\Exceptions\ApiException
+     */
     public function callback(Payment $payment): RedirectResponse
     {
         if (Auth::user()->cannot('view', $payment)) {
             abort(403);
         }
+        abort_unless((bool)$payment->mollie_id, 404);
+        abort_unless((bool)$payment->meta, 404);
 
         $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
 
-        if($molliePayment->isPaid())
-        {
+        if ($molliePayment->isPaid()) {
             $payment->update([
                 'status' => PaymentStatus::PAID->value,
                 'paid_at' => $molliePayment->paidAt,
             ]);
 
             $user = User::findOrFail($payment->user_id);
-            if ($payment->meta['membership_type']) {
-                $user->registerAsMemberForSchoolYear(SchoolYear::findOrFail($payment->meta['payable_id']), $payment);
+            if ($payment->meta->membership_type) {
+                $user->registerAsMemberForSchoolYear(SchoolYear::findOrFail($payment->meta->payable_id), $payment);
             } else {
-                $user->registerForEvent(Event::findOrFail($payment->meta['payable_id']));
+                $user->registerForEvent(Event::findOrFail($payment->meta->payable_id));
             }
 
             return redirect()->route('payments.show', $payment)
@@ -154,8 +200,8 @@ class PaymentController extends Controller
             ->with('error', 'Something has gone wrong or it could be just your payment being processed slower. If this continue contact us.');
     }
 
-    public function webhook(): RedirectResponse
-    {
-        //TODO: issue #30
-    }
+//    public function webhook(): RedirectResponse
+//    {
+//        //TODO: issue #30
+//    }
 }

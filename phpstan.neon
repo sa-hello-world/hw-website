@@ -7,7 +7,6 @@ parameters:
     paths:
         - app/
         - database/
-        - tests/
     level: 8
     ignoreErrors:
         -
@@ -16,4 +15,12 @@ parameters:
                 - app/Http/Controllers/SponsorController.php # The controller is behind an Auth middleware
                 - app/Http/Controllers/EventController.php # Ditto
                 - app/Http/Controllers/SchoolYearController.php # Ditto
-
+                - app/Http/Controllers/PaymentController.php # Ditto
+        -
+            message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/PaymentController.php
+        -
+            message: '#^Cannot access property \$is_member on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/PaymentController.php

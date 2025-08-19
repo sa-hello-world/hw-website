@@ -57,7 +57,7 @@ class Membership extends Model
     /**
      * Returns the payment it was created with
      *
-     * @return BelongsTo
+     * @return BelongsTo<Payment, $this>
      */
     public function payment(): BelongsTo
     {

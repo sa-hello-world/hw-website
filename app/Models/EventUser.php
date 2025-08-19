@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * This model is a linking table between the user and the event.
- * 
+ *
  * The model is not to be used directly. Use either Event or User model
  * Will be extended to contain a payment ID
  *
@@ -56,7 +56,7 @@ class EventUser extends Model
     /**
      * Returns the payment it was created with
      *
-     * @return BelongsTo
+     * @return BelongsTo<Payment, $this>
      */
     public function payment(): BelongsTo
     {

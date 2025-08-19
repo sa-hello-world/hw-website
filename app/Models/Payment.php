@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Data\PaymentMeta;
 use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +18,7 @@ use Money\Money;
  * @property string $description
  * @property string $status
  * @property string|null $paid_at
- * @property array<array-key, mixed>|null $meta
+ * @property \App\Data\PaymentMeta|null $meta
  * @property string|null $mollie_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -48,7 +49,7 @@ class Payment extends Model
     ];
 
     protected $casts = [
-        'meta' => 'array',
+        'meta' => PaymentMeta::class,
     ];
 
     /**
@@ -90,5 +91,4 @@ class Payment extends Model
             set: fn (Money $money) => $money->getAmount()
         );
     }
-
 }

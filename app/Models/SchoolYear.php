@@ -64,10 +64,12 @@ class SchoolYear extends Model
             get: function () {
                 $februaryFirst = Carbon::create(Carbon::parse($this->end_academic_year)->year, 2, 1);
 
+                /** @phpstan-ignore method.nonObject */
                 if ($februaryFirst->isMonday()) {
                     return $februaryFirst;
                 }
 
+                /** @phpstan-ignore method.nonObject */
                 return $februaryFirst->next(CarbonInterface::MONDAY);
             }
         );
@@ -216,5 +218,4 @@ class SchoolYear extends Model
             }
         );
     }
-
 }
