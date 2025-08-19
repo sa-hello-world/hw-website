@@ -17,7 +17,7 @@ class PaymentMetaCast implements CastsAttributes
      * @param Model $model
      * @param string $key
      * @param mixed $value
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @return PaymentMeta|null
      * @throws \JsonException
      */
