@@ -1,6 +1,6 @@
 <?php
 
-namespace Feature\Controllers;
+namespace Feature\Controllers\Board;
 
 use App\Enums\EventType;
 use App\Models\Event;

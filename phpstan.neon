@@ -12,9 +12,9 @@ parameters:
         -
             message: '#^Cannot call method cannot\(\) on App\\Models\\User\|null\.$#'
             paths:
-                - app/Http/Controllers/SponsorController.php # The controller is behind an Auth middleware
-                - app/Http/Controllers/EventController.php # Ditto
-                - app/Http/Controllers/SchoolYearController.php # Ditto
+                - app/Http/Controllers/Board/SponsorController.php # The controller is behind an Auth middleware
+                - app/Http/Controllers/Board/EventController.php # Ditto
+                - app/Http/Controllers/Board/SchoolYearController.php # Ditto
                 - app/Http/Controllers/PaymentController.php # Ditto
         -
             message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'

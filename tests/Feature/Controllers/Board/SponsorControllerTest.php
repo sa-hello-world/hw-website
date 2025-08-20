@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Feature\Controllers\Board;
 
 use App\Enums\SponsorshipTier;
 use App\Models\Sponsor;

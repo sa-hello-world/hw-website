@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\Board\EventController;
+use App\Http\Controllers\Board\SchoolYearController;
+use App\Http\Controllers\Board\SponsorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\SchoolYearController;
-use App\Http\Controllers\SponsorController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;

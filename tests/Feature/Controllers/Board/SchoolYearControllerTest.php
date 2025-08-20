@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Feature\Controllers\Board;
 
 use App\Models\SchoolYear;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Money\Money;
@@ -193,7 +192,7 @@ class SchoolYearControllerTest extends TestCase
         if (getenv('CI')) {
             $this->markTestSkipped('Skipped in CI because it fails randomly there but not locally ¯\_(ツ)_/¯');
         }
-        
+
         $schoolYear = SchoolYear::factory()->create();
 
         $data = [
