@@ -35,12 +35,7 @@
 
                     <div class="flex justify-between items-center">
                         <span class="text-neutral-300">Status</span>
-                        <span class="px-4 py-1 text-sm rounded-full
-                            @if($payment->status === 'pending') bg-yellow-500/20 text-yellow-400
-                            @elseif($payment->status === 'failed') bg-red-500/20 text-red-400
-                            @else bg-green-500/20 text-green-400 @endif">
-                            {{ ucfirst($payment->status) }}
-                        </span>
+                        <x-hw.badge :label="$payment->status" :color="$payment->status"/>
                     </div>
                 </div>
             </div>

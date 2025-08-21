@@ -29,4 +29,14 @@ class PaymentPolicy
     {
         return $user->id === $payment->user_id && $payment->status == PaymentStatus::PENDING->value;
     }
+
+    /**
+     * Determines whether the user can view any payments
+     * @param User $user
+     * @return bool
+     */
+    public function viewAny(User $user) : bool
+    {
+        return $user->can('viewAny payment');
+    }
 }
