@@ -34,9 +34,11 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('sponsors', SponsorController::class)->except(['show']);
         Route::resource('events', EventController::class)->except(['show']);
         Route::resource('school-years', SchoolYearController::class)->except(['show']);
-        Route::resource('payments', \App\Http\Controllers\Board\PaymentController::class)->except(['show']);
+        Route::resource('payments', \App\Http\Controllers\Board\PaymentController::class)
+            ->only(['index'])->names(['index' => 'board.payments.index']);
     });
 
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
     Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payments.show');
     Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');

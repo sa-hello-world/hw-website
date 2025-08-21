@@ -22,7 +22,7 @@ class PaymentController extends Controller
         $payments = Payment::paginate(10);
         $openPaymentsCount = Payment::where('status', PaymentStatus::PENDING->value)->count();
 
-        return view('payments.index', compact('payments', 'openPaymentsCount'));
+        return view('payments.board.index', compact('payments', 'openPaymentsCount'));
     }
 
     /**

@@ -200,6 +200,16 @@ class PaymentController extends Controller
             ->with('error', 'Something has gone wrong or it could be just your payment being processed slower. If this continue contact us.');
     }
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $payments = Auth::user()->payments;
+
+        return view('payments.index', compact('payments'));
+    }
+
 //    public function webhook(): RedirectResponse
 //    {
 //        //TODO: issue #30
