@@ -194,4 +194,12 @@ class Event extends Model
 
         return $query->get();
     }
+
+    /**
+     * Determines whether the even has passed
+     * @return bool
+     */
+    public function hasPassed() : bool {
+        return $this->start < Carbon::now();
+    }
 }

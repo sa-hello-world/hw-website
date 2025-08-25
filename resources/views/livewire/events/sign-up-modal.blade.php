@@ -1,5 +1,5 @@
 <div>
-    <div wire:click="show(true)">
+    <div wire:click="show(true)" class="hover:cursor-pointer">
         @if($event->poster_path)
             <img src="{{asset('storage/' . $event->poster_path)}}" class="object-cover h-90 rounded-xl w-full" alt="Event poster"/>
         @else

@@ -1,5 +1,3 @@
-<!-- TODO: Adjust to sizes for different mobile devices-->
-
 @php use App\Helpers\MoneyHelper;use Carbon\Carbon;use Illuminate\Support\Facades\Auth; @endphp
 
 @props([
@@ -19,7 +17,7 @@
                     </section>
                 @else
                     <section
-                        class="rounded-l-3xl bg-cover bg-center bg-hw-blue-500 hover:bg-hw-blue-600 transition-colors text-white text-center">
+                        class="rounded-l-3xl bg-cover bg-center bg-hw-blue-500 transition-colors text-white text-center">
                         <div class="h-full flex justify-center items-center font-bayon text-3xl text-wrap">
                             {{$event->name}}
                         </div>
@@ -47,7 +45,7 @@
                                     fee: {{$event->member_price ? '€ ' . MoneyHelper::toDecimal($event->member_price) : 'Free!'}}</p>
                             @elseif(Auth::user()->events->contains($event))
                                 <div
-                                    class="flex items-center justify-center pointer-events-none w-full {{$isModal ? 'mt-6' : 'mt-12'}}">
+                                    class="lg:flex items-center justify-center pointer-events-none w-full {{$isModal ? 'mt-6' : 'mt-12'}} hidden ">
                                     <div
                                         class="{{$isModal ? 'py-4 px-8 text-2xl' : 'py-8 px-10 text-5xl'}} border-5 border-hw-blue-500 -rotate-20 opacity-65">
                                         <span class="uppercase font-black text-hw-blue-500">SIGNED UP!</span>
