@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('memberships', function (Blueprint $table) {
+        Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('school_year_id');
-            $table->integer('semester')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('school_year_id')->references('id')->on('school_years');
+            $table->string('amount');
+            $table->string('description');
+            $table->string('status');
+            $table->dateTime('paid_at')->nullable();
+            $table->json('meta')->nullable();
+            $table->string('mollie_id')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('memberships');
+        Schema::dropIfExists('payments');
     }
 };

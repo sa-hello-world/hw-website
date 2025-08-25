@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\MembershipType;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Database\Factories\SchoolYearFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,6 +28,8 @@ use Money\Money;
  * @property-read int|null $events_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
+ * @property-read mixed $semester_number
+ * @property-read mixed $start_second_semester
  * @property-read mixed $years
  * @method static \Database\Factories\SchoolYearFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|SchoolYear newModelQuery()
@@ -49,6 +53,27 @@ class SchoolYear extends Model
 
     protected $fillable = ['start_academic_year', 'end_academic_year', 'name_of_chairman', 'regular_membership_price',
         'early_membership_price', 'semester_membership_price'];
+
+    /**
+     * Calculates the start of the second semester
+     * @return Attribute<Carbon, never>
+     */
+    public function startSecondSemester() : Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $februaryFirst = Carbon::create(Carbon::parse($this->end_academic_year)->year, 2, 1);
+
+                /** @phpstan-ignore method.nonObject */
+                if ($februaryFirst->isMonday()) {
+                    return $februaryFirst;
+                }
+
+                /** @phpstan-ignore method.nonObject */
+                return $februaryFirst->next(CarbonInterface::MONDAY);
+            }
+        );
+    }
 
     /**
      * Returns the memberships created through the season
@@ -156,6 +181,41 @@ class SchoolYear extends Model
         return Attribute::make(
             get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
             set: fn (?Money $money) => $money?->getAmount()
+        );
+    }
+
+    /**
+     * Returns the correct price based on the passed membership type
+     * @param string $membershipType
+     * @return Money
+     */
+    public function getPrice(string $membershipType): Money
+    {
+        $prices = [
+            MembershipType::REGULAR->value => $this->regular_membership_price,
+            MembershipType::EARLY_BIRD->value => $this->early_membership_price,
+            MembershipType::SEMESTER->value => $this->semester_membership_price,
+        ];
+
+        return $prices[$membershipType] ?? throw new \InvalidArgumentException("Invalid membership type: $membershipType");
+    }
+
+    /**
+     * Returns the current semester number
+     * @return Attribute<int, never>
+     */
+    public function semesterNumber(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $now = now();
+
+                if ($now->lt($this->start_academic_year) || $now->gt($this->end_academic_year)) {
+                    return -1;
+                }
+
+                return $now->lt($this->start_second_semester) ? 1 : 2;
+            }
         );
     }
 }

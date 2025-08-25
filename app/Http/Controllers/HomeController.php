@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\MembershipType;
 use App\Helpers\MoneyHelper;
 use App\Models\Event;
 use App\Models\SchoolYear;
@@ -39,18 +40,21 @@ class HomeController extends Controller
                     'highlight' => 'Few left',
                     'style' => 'bg-white',
                     'highlightColor' => 'bg-hw-pink',
+                    'membershipType' => MembershipType::EARLY_BIRD,
                 ],
                 [
                     'label' => 'Normal – ' . MoneyHelper::toDecimal($schoolYear->regular_membership_price) . '€',
                     'highlight' => null,
                     'style' => 'bg-hw-green',
                     'highlightColor' => null,
+                    'membershipType' => MembershipType::REGULAR,
                 ],
                 [
                     'label' => '1 semester – ' . MoneyHelper::toDecimal($schoolYear->semester_membership_price) . '€',
                     'highlight' => null,
                     'style' => 'bg-white',
                     'highlightColor' => null,
+                    'membershipType' => MembershipType::SEMESTER,
                 ],
             ];
         }

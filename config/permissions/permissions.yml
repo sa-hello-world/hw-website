@@ -26,3 +26,6 @@ permissions:
     create: [ chairman, head of media ]
     update: [ chairman, head of media ]
     delete: [ chairman ]
+  payment:
+    view: [ chairman ]
+    viewAny: [ chairman ]

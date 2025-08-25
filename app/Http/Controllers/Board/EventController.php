@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Board;
 
 use App\Enums\EventType;
 use App\Helpers\MoneyHelper;
+use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\SchoolYear;
 use Illuminate\Http\RedirectResponse;

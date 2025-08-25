@@ -3,13 +3,17 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\MembershipType;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Mollie\Laravel\Facades\Mollie;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -24,6 +28,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EventUser> $eventUsers
  * @property-read int|null $event_users_count
  * @property-read mixed $events
+ * @property-read mixed $is_member
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -111,6 +116,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Defines the relationship between payment and user
+     * @return HasMany<Payment, $this>
+     */
+    public function payments() : HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Returns the events a user has registered for
      *
      * @return Attribute<Collection<int, Event>, never>
@@ -149,5 +163,63 @@ class User extends Authenticatable
         EventUser::create(['user_id' => $this->id, 'event_id' => $event->id]);
 
         return true;
+    }
+
+    /**
+     * Creates a membership entity for the user
+     * @param SchoolYear $schoolYear
+     * @param Payment $payment
+     * @return bool
+     */
+    public function registerAsMemberForSchoolYear(SchoolYear $schoolYear, Payment $payment): bool
+    {
+        $membership = Membership::create([
+            'user_id' => $this->id,
+            'school_year_id' => $schoolYear->id,
+            'payment_id' => $payment->id,
+        ]);
+
+        if ($payment->meta && $payment->meta->semester) {
+            $membership->update(['semester' => $payment->meta->semester]);
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns whether the user is member for the current year
+     * TODO: Refactor to be more readable/maintainable
+     * @return Attribute<bool,never>
+     */
+    public function isMember(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $schoolYear = SchoolYear::current();
+
+                if (!$schoolYear) {
+                    return false;
+                }
+
+                $membership = $this->memberships()
+                    ->where('school_year_id', $schoolYear->id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+
+                if (!$membership) {
+                    return false;
+                } elseif (is_null($membership->semester)) {
+                    return true;
+                }
+
+                $now = Carbon::now();
+                $startOfYear = Carbon::parse($schoolYear->start_academic_year);
+                $secondSemester = $schoolYear->start_second_semester;
+                $endOfYear = Carbon::parse($schoolYear->end_academic_year);
+
+                return ($membership->semester == 1 && $now->between($startOfYear, $secondSemester)) ||
+                    ($membership->semester == 2 && $now->between($secondSemester, $endOfYear));
+            }
+        );
     }
 }

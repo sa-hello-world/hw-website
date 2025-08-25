@@ -48,4 +48,15 @@ class EventPolicy
     {
         return $user->can('delete event');
     }
+
+    /**
+     * Determines whether the user can register/pay for the event
+     * @param User $user
+     * @param Event $event
+     * @return bool
+     */
+    public function pay(User $user, Event $event): bool
+    {
+        return !$user->events->contains($event);
+    }
 }

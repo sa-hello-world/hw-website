@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\EventController;
+use App\Http\Controllers\Board\EventController;
+use App\Http\Controllers\Board\SchoolYearController;
+use App\Http\Controllers\Board\SponsorController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SchoolYearController;
-use App\Http\Controllers\SponsorController;
+use App\Http\Controllers\PaymentController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -33,8 +34,16 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('sponsors', SponsorController::class)->except(['show']);
         Route::resource('events', EventController::class)->except(['show']);
         Route::resource('school-years', SchoolYearController::class)->except(['show']);
+        Route::resource('payments', \App\Http\Controllers\Board\PaymentController::class)
+            ->only(['index'])->names(['index' => 'board.payments.index']);
     });
 
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
+    Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payments.show');
+    Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
+    Route::get('/payment/{payment}/callback', [PaymentController::class, 'callback'])->name('payments.callback');
+    Route::post('/payment/prepare/{payment}', [PaymentController::class, 'prepare'])->name('payments.prepare');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');

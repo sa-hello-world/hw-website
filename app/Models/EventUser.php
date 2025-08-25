@@ -16,7 +16,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int|null $payment_id
  * @property-read \App\Models\Event $event
+ * @property-read \App\Models\Payment|null $payment
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser newQuery()
@@ -24,13 +26,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereEventId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser wherePaymentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|EventUser whereUserId($value)
  * @mixin \Eloquent
  */
 class EventUser extends Model
 {
-    protected $fillable = ['user_id', 'event_id'];
+    protected $fillable = ['user_id', 'event_id', 'payment_id'];
 
     /**
      * Establishes relationship between users and this model (linking table) to events
@@ -48,5 +51,15 @@ class EventUser extends Model
     public function event(): BelongsTo
     {
         return $this->belongsTo(Event::class);
+    }
+
+    /**
+     * Returns the payment it was created with
+     *
+     * @return BelongsTo<Payment, $this>
+     */
+    public function payment(): BelongsTo
+    {
+        return $this->belongsTo(Payment::class);
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Board;
 
 use App\Helpers\MoneyHelper;
+use App\Http\Controllers\Controller;
 use App\Models\SchoolYear;
 use App\Rules\NoAcademicEndOverlap;
 use App\Rules\NoAcademicStartOverlap;
@@ -11,8 +12,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Money\Currencies\ISOCurrencies;
-use Money\Parser\DecimalMoneyParser;
 use Money\Currency;
+use Money\Parser\DecimalMoneyParser;
 
 class SchoolYearController extends Controller
 {
