@@ -202,9 +202,11 @@ class PaymentController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @return View
      */
-    public function index()
+    public function index() : View
     {
+        // @phpstan-ignore-next-line - Auth cannot be null since it's behind the auth middleware
         $payments = Auth::user()->payments;
 
         return view('payments.index', compact('payments'));

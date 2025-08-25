@@ -1,7 +1,7 @@
 @php use App\Helpers\MoneyHelper;use Illuminate\Support\Facades\Auth; @endphp
 <x-layouts.hub>
     <div class="h-full py-5">
-        <h1 class="text-3xl font-bold text-white mb-2">Payment #{{$payment->id}}</h1>
+        <h1 class="text-5xl font-bayon text-white mb-2">Payment #{{$payment->id}}</h1>
         <p class="text-gray-400 mb-8">Here you can find details regarding your payment.</p>
 
         <div class="max-w-3xl space-y-8">

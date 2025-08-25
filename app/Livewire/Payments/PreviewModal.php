@@ -21,6 +21,8 @@ class PreviewModal extends Component
     public function mount(Payment $payment) : void
     {
         $this->payment = $payment;
+
+        // @phpstan-ignore-next-line - meta data should always exist
         $this->schoolYear = $payment->meta->payable_type == 'membership' ? SchoolYear::findOrFail($payment->meta->payable_id) : null;
     }
 

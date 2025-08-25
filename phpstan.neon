@@ -15,6 +15,7 @@ parameters:
                 - app/Http/Controllers/Board/SponsorController.php # The controller is behind an Auth middleware
                 - app/Http/Controllers/Board/EventController.php # Ditto
                 - app/Http/Controllers/Board/SchoolYearController.php # Ditto
+                - app/Http/Controllers/Board/PaymentController.php # Ditto
                 - app/Http/Controllers/PaymentController.php # Ditto
         -
             message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'

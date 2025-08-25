@@ -119,7 +119,8 @@ class User extends Authenticatable
      * Defines the relationship between payment and user
      * @return HasMany<Payment, $this>
      */
-    public function payments() : HasMany {
+    public function payments() : HasMany
+    {
         return $this->hasMany(Payment::class);
     }
 
