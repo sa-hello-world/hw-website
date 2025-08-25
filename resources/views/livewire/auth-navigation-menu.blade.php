@@ -6,47 +6,47 @@
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <div class="flex items-center flex-shrink-0">
-                <a href="/" class="mb-2">
-                    <img src="{{ asset('/img/main_logo_inline_white.png') }}" alt="WAITT Logo" class="h-9 w-auto max-w-full"/>
+                <a href="{{route('welcome')}}" class="mb-2 mx-6 md:mx-0">
+                    <img src="{{ asset('/img/main_logo_inline_white.png') }}" alt="HW Logo" class="h-9 w-auto max-w-full"/>
                 </a>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('dashboard')"
                                    wire:navigate.hover>
                         {{ __('Home') }}
                     </x-hw.nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
                     <x-hw.nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')"
                                    wire:navigate.hover>
                         {{ __('About Us') }}
                     </x-hw.nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
                                    wire:navigate.hover>
                         {{ __('Shenanigans') }}
                     </x-hw.nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
                     <x-hw.nav-link href="{{ route('partners') }}" :active="request()->routeIs('partners')"
                                    wire:navigate.hover>
                         {{ __('Partners') }}
                     </x-hw.nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
                     <x-hw.nav-link href="{{ route('events') }}" :active="request()->routeIs('events')"
                                    wire:navigate.hover>
                         {{ __('Events') }}
                     </x-hw.nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
                     <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
                                    wire:navigate.hover>
                         {{ __('Say Hello!') }}
@@ -55,7 +55,7 @@
             </div>
 
             <div class="grow flex justify-end">
-                <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-5 md:flex">
                     <x-hw.dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <span
@@ -82,10 +82,10 @@
                             <div class="block px-4 py-2 text-xs text-gray-400">
                                 {{ __('Manage Account') }}
                             </div>
-                            <x-hw.dropdown-link href="{{ route('welcome') }}" wire:navigate.hover>
+                            <x-hw.dropdown-link href="{{ route('dashboard') }}" wire:navigate.hover>
                                 {{ __('My hub') }}
                             </x-hw.dropdown-link>
-                            <x-hw.dropdown-link href="{{ route('welcome') }}" wire:navigate.hover>
+                            <x-hw.dropdown-link href="{{ route('settings.profile') }}" wire:navigate.hover>
                                 {{ __('Profile') }}
                             </x-hw.dropdown-link>
                             <div class="border-t border-gray-200 dark:border-gray-600"></div>
@@ -124,6 +124,26 @@
             <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('welcome') }}"
                                       :active="request()->routeIs('welcome')">
                 {{ __('Home') }}
+            </x-hw.responsive-nav-link>
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('aboutus') }}"
+                                      :active="request()->routeIs('aboutus')">
+                {{ __('About us') }}
+            </x-hw.responsive-nav-link>
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('welcome') }}"
+                                      :active="request()->routeIs('welcome')">
+                {{ __('Shenanigans') }}
+            </x-hw.responsive-nav-link>
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('partners') }}"
+                                      :active="request()->routeIs('partners')">
+                {{ __('Partners') }}
+            </x-hw.responsive-nav-link>
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('events') }}"
+                                      :active="request()->routeIs('events')">
+                {{ __('Events') }}
+            </x-hw.responsive-nav-link>
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('events') }}"
+                                      :active="request()->routeIs('events')">
+                {{ __('Say hello!') }}
             </x-hw.responsive-nav-link>
             <div class="border-t border-gray-200 dark:border-gray-600"></div>
             <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('dashboard') }}"
