@@ -19,9 +19,7 @@ Route::get('/partners', function () {
     return view('partners');
 })->name('partners');
 
-Route::get('/events', function () {
-    return view('events');
-})->name('events');
+Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])

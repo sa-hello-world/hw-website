@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\EventStatus;
+use Carbon\Carbon;
 use Database\Factories\EventFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -145,5 +146,52 @@ class Event extends Model
             get: fn ($value) => $value !== null ? new Money($value, new Currency('EUR')) : null,
             set: fn (?Money $money) => $money?->getAmount()
         );
+    }
+
+    /**
+     * Returns the next (soonest) event
+     * @return Event|null
+     */
+    public static function next() : ?Event
+    {
+        return self::where('start', '>=', Carbon::now())
+            ->orderBy('start', 'asc')
+            ->first();
+    }
+
+    /**
+     * Returns all next events (optionally limited)
+     *
+     * @param int|null $limit
+     * @return Collection<int, Event>
+     */
+    public static function allNext(?int $limit = null) : Collection
+    {
+        $query = self::where('start', '>=', Carbon::now())
+            ->orderBy('start', 'asc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
+
+    /**
+     * Returns all past events (optionally limited)
+     *
+     * @param int|null $limit
+     * @return Collection<int, Event>
+     */
+    public static function allPast(?int $limit = null) : Collection
+    {
+        $query = self::where('start', '<=', Carbon::now())
+            ->orderBy('start', 'asc');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 }
