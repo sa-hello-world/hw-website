@@ -13,7 +13,7 @@
             <div class="grid-cols-4 gap-4 inline-grid py-5">
                 @foreach($nextEvents as $event)
                     <div class="w-full col-span-1">
-                        <x-hw.event-card :event="$event"/>
+                        <livewire:events.sign-up-modal :event="$event"/>
                     </div>
                 @endforeach
             </div>
@@ -23,7 +23,7 @@
             <div class="grid-cols-4 gap-4 inline-grid py-5">
                 @foreach($pastEvents as $event)
                     <div class="w-full col-span-1">
-                        <x-hw.event-card :event="$event"/>
+                        <livewire:events.sign-up-modal :event="$event"/>
                     </div>
                 @endforeach
             </div>

@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * TODO: Expand with the payments when Mollie gets implemented
- *
  * @property int $id
  * @property int $user_id
  * @property int $school_year_id

@@ -150,7 +150,6 @@ class User extends Authenticatable
 
     /**
      * Helper function that registers a user for event
-     * TODO: expand when payment comes in
      * @param Event $event
      * @return bool
      */

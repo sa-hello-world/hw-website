@@ -1,3 +1,4 @@
+<!-- TODO: Fix the links of the dropdown -->
 <nav x-data="{ open: false }"
      class="relative z-40 bg-hw-dark">
     <!-- Primary Navigation Menu -->
