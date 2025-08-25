@@ -18,7 +18,6 @@ use Illuminate\View\View;
 use Mollie\Laravel\Facades\Mollie;
 use Money\Money;
 
-// TODO: Add the event payment as well
 class PaymentController extends Controller
 {
     /**
@@ -72,7 +71,7 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->cannot('pay', Event::class)) {
+        if ($user->cannot('pay', $event)) {
             abort(403);
         }
 

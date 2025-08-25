@@ -4,7 +4,7 @@
         @if($nextEvent)
             <h2 class="text-white font-bayon text-5xl my-6">Next event</h2>
             <div class="h-[81vh]">
-                <x-next-event-card :event="$nextEvent"/>
+                <x-next-event-card :event="$nextEvent" :link="'payments.store.event'"/>
             </div>
         @endif
         @if(count($nextEvents) > 0)

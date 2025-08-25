@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
     Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
+    Route::post('/payments/event/{event}', [PaymentController::class, 'storeForEvent'])->name('payments.store.event');
     Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payments.show');
     Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
     Route::get('/payment/{payment}/callback', [PaymentController::class, 'callback'])->name('payments.callback');
