@@ -74,7 +74,7 @@ class EventControllerTest extends TestCase
         $response = $this->get(route('events.create'));
 
         $response->assertOk();
-        $response->assertViewIs('events.create');
+        $response->assertViewIs('board.events.create');
     }
 
     #[Test]
@@ -165,7 +165,7 @@ class EventControllerTest extends TestCase
         $response = $this->get(route('events.edit', $event));
 
         $response->assertOk();
-        $response->assertViewIs('events.edit');
+        $response->assertViewIs('board.events.edit');
         $response->assertViewHas('event');
     }
 
