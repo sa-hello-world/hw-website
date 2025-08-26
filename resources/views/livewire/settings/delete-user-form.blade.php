@@ -1,7 +1,7 @@
 <section class="mt-10 space-y-6">
     <div class="relative mb-5">
-        <flux:heading>{{ __('Delete account') }}</flux:heading>
-        <flux:subheading>{{ __('Delete your account and all of its resources') }}</flux:subheading>
+        <h1 class="text-xl font-bayon text-white">Delete account</h1>
+        <p class="text-gray-400">Delete your account and all of its resources</p>
     </div>
 
     <flux:modal.trigger name="confirm-user-deletion">
