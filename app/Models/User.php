@@ -221,4 +221,17 @@ class User extends Authenticatable
             }
         );
     }
+
+    /**
+     * Finds the payment for a specific event
+     * @param Event $event
+     * @return Payment
+     */
+    public function findPayment(Event $event): Payment
+    {
+        return $this->payments()
+            ->where('meta->payable_id', $event->id)
+            ->where('meta->payable_type', 'event')
+            ->first();
+    }
 }

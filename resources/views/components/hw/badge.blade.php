@@ -1,6 +1,6 @@
 @php
     use App\Enums\EventStatus;
-    use App\Enums\PaymentStatus;
+    use App\Enums\EventType;use App\Enums\PaymentStatus;
     use App\Enums\SponsorshipTier;
 
     $colors = [
@@ -18,6 +18,13 @@
         'event' => 'border-indigo-400 text-indigo-400 bg-indigo-900',
         PaymentStatus::PENDING->value => 'border-yellow-500 text-yellow-500 bg-yellow-900',
         PaymentStatus::PAID->value => 'border-green-600 text-green-600 bg-green-900',
+        EventType::COMPANY_VISIT->value => 'border-blue-400 text-blue-400 bg-blue-900',
+        EventType::WORKSHOP->value      => 'border-purple-400 text-purple-400 bg-purple-900',
+        EventType::SOCIAL->value        => 'border-pink-400 text-pink-400 bg-pink-900',
+        EventType::WAITT->value         => 'border-indigo-400 text-indigo-400 bg-indigo-900',
+        EventType::HACKATHON->value     => 'border-red-400 text-red-400 bg-red-900',
+        EventType::TRIP->value          => 'border-emerald-400 text-emerald-400 bg-emerald-900',
+        EventType::OTHER->value         => 'border-gray-400 text-gray-400 bg-gray-800',
     ];
 
     $theme = $colors[$color ?? 'neutral'];

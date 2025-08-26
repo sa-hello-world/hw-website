@@ -36,7 +36,12 @@ Route::middleware(['auth'])->group(function () {
             ->only(['index'])->names(['index' => 'board.payments.index']);
     });
 
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::prefix('my')->group(function () {
+        Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+        Route::get('/events', [\App\Http\Controllers\Home\EventController::class, 'index'])->name('my.events.index');
+        Route::get('/event/{event}', [\App\Http\Controllers\Home\EventController::class, 'show'])->name('my.events.show');
+    });
+
     Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
     Route::post('/payments/event/{event}', [PaymentController::class, 'storeForEvent'])->name('payments.store.event');
     Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payments.show');
