@@ -57,7 +57,7 @@ class SponsorControllerTest extends TestCase
     {
         $response = $this->get(route('sponsors.create'));
         $response->assertOk();
-        $response->assertViewIs('sponsors.create');
+        $response->assertViewIs('board.sponsors.create');
     }
 
     #[Test]
@@ -116,7 +116,7 @@ class SponsorControllerTest extends TestCase
 
         $response = $this->get(route('sponsors.edit', $sponsor));
         $response->assertOk();
-        $response->assertViewIs('sponsors.edit');
+        $response->assertViewIs('board.sponsors.edit');
         $response->assertViewHas('sponsor');
     }
 

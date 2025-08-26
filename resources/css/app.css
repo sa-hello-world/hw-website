@@ -88,3 +88,20 @@ select:focus[data-flux-control] {
 /* \[:where(&)\]:size-4 {
     @apply size-4;
 } */
+
+.stamp {
+    font-size: 3rem;
+    font-weight: 900;
+    color: rgba(38, 68, 220, 0.8); /* red-600 */
+    border: 5px solid rgba(38, 74, 220, 0.8);
+    padding: 0.5em 1em;
+    text-transform: uppercase;
+    transform: rotate(-20deg);
+    display: inline-block;
+    opacity: 0.8;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(1px);
+    border-radius: 0.25rem;
+}
+
+

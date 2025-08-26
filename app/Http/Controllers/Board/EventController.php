@@ -45,7 +45,7 @@ class EventController extends Controller
                 ->withQueryString();
         }
 
-        return view('events.index', compact(
+        return view('board.events.index', compact(
             'currentSchoolYear',
             'currentSchoolYearEvents',
             'currentSchoolYearEventsCount',
@@ -62,7 +62,7 @@ class EventController extends Controller
             abort(403);
         }
 
-        return view('events.create');
+        return view('board.events.create');
     }
 
     /**
@@ -119,7 +119,7 @@ class EventController extends Controller
             abort(403);
         }
 
-        return view('events.edit', compact('event'));
+        return view('board.events.edit', compact('event'));
     }
 
     /**

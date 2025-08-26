@@ -30,7 +30,7 @@ class SponsorController extends Controller
 
         $sponsors = Sponsor::all();
 
-        return view('sponsors.index', compact('sponsorCounts', 'sponsors'));
+        return view('board.sponsors.index', compact('sponsorCounts', 'sponsors'));
     }
 
     /**
@@ -42,7 +42,7 @@ class SponsorController extends Controller
             abort(403);
         }
 
-        return view('sponsors.create');
+        return view('board.sponsors.create');
     }
 
     /**
@@ -79,7 +79,7 @@ class SponsorController extends Controller
             abort(403);
         }
 
-        return view('sponsors.edit', compact('sponsor'));
+        return view('board.sponsors.edit', compact('sponsor'));
     }
 
     /**

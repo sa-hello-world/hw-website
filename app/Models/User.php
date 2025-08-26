@@ -150,7 +150,6 @@ class User extends Authenticatable
 
     /**
      * Helper function that registers a user for event
-     * TODO: expand when payment comes in
      * @param Event $event
      * @return bool
      */
@@ -221,5 +220,18 @@ class User extends Authenticatable
                     ($membership->semester == 2 && $now->between($secondSemester, $endOfYear));
             }
         );
+    }
+
+    /**
+     * Finds the payment for a specific event
+     * @param Event $event
+     * @return Payment|null
+     */
+    public function findPayment(Event $event): Payment|null
+    {
+        return $this->payments()
+            ->where('meta->payable_id', $event->id)
+            ->where('meta->payable_type', 'event')
+            ->first();
     }
 }

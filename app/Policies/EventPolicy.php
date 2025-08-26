@@ -57,6 +57,6 @@ class EventPolicy
      */
     public function pay(User $user, Event $event): bool
     {
-        return !$user->events->contains($event);
+        return !$user->events->contains($event) && !$event->hasPassed();
     }
 }

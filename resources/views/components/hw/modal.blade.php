@@ -1,3 +1,4 @@
+<!-- TODO: Adjust to sizes for different mobile devices-->
 @props(['id' => null, 'maxWidth' => null])
 
 @php

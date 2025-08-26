@@ -18,7 +18,6 @@ use Illuminate\View\View;
 use Mollie\Laravel\Facades\Mollie;
 use Money\Money;
 
-// TODO: Add the event payment as well
 class PaymentController extends Controller
 {
     /**
@@ -72,7 +71,7 @@ class PaymentController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->cannot('pay', Event::class)) {
+        if ($user->cannot('pay', $event)) {
             abort(403);
         }
 
@@ -107,7 +106,10 @@ class PaymentController extends Controller
             throw new \LogicException('Payment missing meta');
         }
 
-        $schoolYear = SchoolYear::findOrFail($payment->meta->payable_id);
+        $schoolYear = null;
+        if ($payment->meta->payable_type == 'membership') {
+            $schoolYear = SchoolYear::findOrFail($payment->meta->payable_id);
+        }
 
         return view('payments.show', compact('payment', 'schoolYear'));
     }
@@ -198,18 +200,6 @@ class PaymentController extends Controller
 
         return redirect()->route('payments.show', $payment)
             ->with('error', 'Something has gone wrong or it could be just your payment being processed slower. If this continue contact us.');
-    }
-
-    /**
-     * Display a listing of the resource.
-     * @return View
-     */
-    public function index() : View
-    {
-        // @phpstan-ignore-next-line - Auth cannot be null since it's behind the auth middleware
-        $payments = Auth::user()->payments;
-
-        return view('payments.index', compact('payments'));
     }
 
 //    public function webhook(): RedirectResponse

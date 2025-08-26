@@ -19,9 +19,7 @@ Route::get('/partners', function () {
     return view('partners');
 })->name('partners');
 
-Route::get('/events', function () {
-    return view('events');
-})->name('events');
+Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -38,12 +36,21 @@ Route::middleware(['auth'])->group(function () {
             ->only(['index'])->names(['index' => 'board.payments.index']);
     });
 
-    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::prefix('my')->group(function () {
+        Route::get('/payments', [\App\Http\Controllers\Home\PaymentController::class, 'index'])->name('my.payments.index');
+        Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('my.payments.show');
+        Route::get('/events', [\App\Http\Controllers\Home\EventController::class, 'index'])->name('my.events.index');
+        Route::get('/event/{event}', [\App\Http\Controllers\Home\EventController::class, 'show'])->name('my.events.show');
+    });
+
     Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
+    Route::post('/payments/event/{event}', [PaymentController::class, 'storeForEvent'])->name('payments.store.event');
     Route::get('/payment/{payment}', [PaymentController::class, 'show'])->name('payments.show');
     Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
     Route::get('/payment/{payment}/callback', [PaymentController::class, 'callback'])->name('payments.callback');
     Route::post('/payment/prepare/{payment}', [PaymentController::class, 'prepare'])->name('payments.prepare');
+
+    Route::post('/event/{event}/register', [\App\Http\Controllers\Home\EventController::class, 'register'])->name('events.register');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');

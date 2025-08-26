@@ -29,7 +29,7 @@ class SchoolYearController extends Controller
         $currentSchoolYear = SchoolYear::current();
         $schoolYears = SchoolYear::orderBy('start_academic_year', 'desc')->get();
 
-        return view('school-years.index', compact('currentSchoolYear', 'schoolYears'));
+        return view('board.school-years.index', compact('currentSchoolYear', 'schoolYears'));
     }
 
     /**
@@ -41,7 +41,7 @@ class SchoolYearController extends Controller
             abort(403);
         }
 
-        return view('school-years.create');
+        return view('board.school-years.create');
     }
 
     /**
@@ -88,7 +88,7 @@ class SchoolYearController extends Controller
             abort(403);
         }
 
-        return view('school-years.edit', compact('schoolYear'));
+        return view('board.school-years.edit', compact('schoolYear'));
     }
 
     /**

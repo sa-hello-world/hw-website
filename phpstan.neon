@@ -18,6 +18,26 @@ parameters:
                 - app/Http/Controllers/Board/PaymentController.php # Ditto
                 - app/Http/Controllers/PaymentController.php # Ditto
         -
+            message: '#^Cannot access property \$events on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/Home/EventController.php # The controller is behind an Auth middleware
+        -
+            message: '#^Cannot call method findPayment\(\) on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/Home/EventController.php # The controller is behind an Auth middleware
+        -
+            message: '#^Cannot call method can\(\) on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/Home/EventController.php # The controller is behind an Auth middleware
+        -
+            message: '#^Cannot call method registerForEvent\(\) on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/Home/EventController.php # The controller is behind an Auth middleware
+        -
+            message: '#^Cannot call method payments\(\) on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/Home/PaymentController.php # The controller is behind an Auth middleware
+        -
             message: '#^Cannot access property \$id on App\\Models\\User\|null\.$#'
             paths:
                 - app/Http/Controllers/PaymentController.php
