@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -32,13 +33,14 @@ class EventController extends Controller
      * @param Event $event
      * @return View
      */
-    public function register(Event $event) : View
+    public function register(Event $event) : RedirectResponse
     {
         $user = Auth::user();
         abort_unless($user->can('pay', $event), 403);
 
         $user->registerForEvent($event);
 
-        //TODO: Finish method
+        return redirect()->route('my.events.show', $event)
+            ->with('success', 'Successfully registered for the ' . $event->name . ' event.');
     }
 }

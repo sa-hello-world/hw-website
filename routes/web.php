@@ -37,7 +37,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::prefix('my')->group(function () {
-        Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+        Route::get('/payments', [\App\Http\Controllers\Home\PaymentController::class, 'index'])->name('my.payments.index');
+        Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('my.payments.show');
         Route::get('/events', [\App\Http\Controllers\Home\EventController::class, 'index'])->name('my.events.index');
         Route::get('/event/{event}', [\App\Http\Controllers\Home\EventController::class, 'show'])->name('my.events.show');
     });
@@ -48,6 +49,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/payment/{payment}/cancel', [PaymentController::class, 'cancel'])->name('payments.cancel');
     Route::get('/payment/{payment}/callback', [PaymentController::class, 'callback'])->name('payments.callback');
     Route::post('/payment/prepare/{payment}', [PaymentController::class, 'prepare'])->name('payments.prepare');
+
+    Route::post('/event/{event}/register', [\App\Http\Controllers\EventController::class, 'register'])->name('events.register');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
