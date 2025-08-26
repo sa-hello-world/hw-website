@@ -36,7 +36,7 @@ class SchoolYearControllerTest extends TestCase
         $response = $this->get(route('school-years.index'));
 
         $response->assertOk();
-        $response->assertViewIs('school-years.index');
+        $response->assertViewIs('board.school-years.index');
         $response->assertViewHas('schoolYears');
     }
 
@@ -56,7 +56,7 @@ class SchoolYearControllerTest extends TestCase
         $response = $this->get(route('school-years.create'));
 
         $response->assertOk();
-        $response->assertViewIs('school-years.create');
+        $response->assertViewIs('board.school-years.create');
     }
 
     #[Test]
@@ -124,7 +124,7 @@ class SchoolYearControllerTest extends TestCase
         $response = $this->get(route('school-years.edit', $schoolYear));
 
         $response->assertOk();
-        $response->assertViewIs('school-years.edit');
+        $response->assertViewIs('board.school-years.edit');
         $response->assertViewHas('schoolYear', $schoolYear);
     }
 
