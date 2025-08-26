@@ -40,7 +40,7 @@ class EventController extends Controller
      * Sparsely used route; used only as a shortcut if an event is a free one
      * (behind auth middleware)
      * @param Event $event
-     * @return View
+     * @return RedirectResponse
      */
     public function register(Event $event) : RedirectResponse
     {

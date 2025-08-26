@@ -199,7 +199,8 @@ class Event extends Model
      * Determines whether the even has passed
      * @return bool
      */
-    public function hasPassed() : bool {
+    public function hasPassed() : bool
+    {
         return $this->start < Carbon::now();
     }
 
@@ -208,7 +209,8 @@ class Event extends Model
      * @param User $user
      * @return Money|null
      */
-    public function priceForUser(User $user) : Money|null {
+    public function priceForUser(User $user) : Money|null
+    {
         return $user->is_member ? $this->member_price : $this->regular_price;
     }
 }

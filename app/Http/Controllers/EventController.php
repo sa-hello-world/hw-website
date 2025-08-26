@@ -8,6 +8,10 @@ use Illuminate\View\View;
 
 class EventController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     * @return View
+     */
     public function index() : View
     {
         $nextEvent = Event::next();

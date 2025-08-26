@@ -21,8 +21,10 @@ class SignUpModal extends Component
     public function mount(Event $event) : void
     {
         $this->event = $event;
-        $price = $event->priceForUser(Auth::user());
-        $this->route = is_null($price) || ($price && $price->getAmount() == 0) ? 'events.register' : $this->route;
+        if (Auth::user()) {
+            $price = $event->priceForUser(Auth::user());
+            $this->route = is_null($price) || $price->getAmount() == 0 ? 'events.register' : $this->route;
+        }
     }
 
     /**
