@@ -106,7 +106,10 @@ class PaymentController extends Controller
             throw new \LogicException('Payment missing meta');
         }
 
-        $schoolYear = SchoolYear::findOrFail($payment->meta->payable_id);
+        $schoolYear = null;
+        if ($payment->meta->payable_type == 'membership') {
+            $schoolYear = SchoolYear::findOrFail($payment->meta->payable_id);
+        }
 
         return view('payments.show', compact('payment', 'schoolYear'));
     }

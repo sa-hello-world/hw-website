@@ -16,7 +16,7 @@
         </x-slot>
 
         <x-slot name="content">
-            <x-next-event-card :event="$event" :isModal="true" :link="'payments.store.event'"/>
+            <x-next-event-card :event="$event" :isModal="true" :link="$route"/>
         </x-slot>
 
         <x-slot name="footer">

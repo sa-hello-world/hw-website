@@ -10,6 +10,10 @@ use Illuminate\View\View;
 
 class EventController extends Controller
 {
+    /**
+     * Shows the listing of the resource
+     * @return View
+     */
     public function index() : View
     {
         $events = Auth::user()->events;
@@ -17,6 +21,11 @@ class EventController extends Controller
         return view('home.events.index', compact('events'));
     }
 
+    /**
+     * Shows the payment
+     * @param Event $event
+     * @return View
+     */
     public function show(Event $event) : View
     {
         $user = Auth::user();

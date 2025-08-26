@@ -202,4 +202,13 @@ class Event extends Model
     public function hasPassed() : bool {
         return $this->start < Carbon::now();
     }
+
+    /**
+     * Determines which price the user should pay
+     * @param User $user
+     * @return Money|null
+     */
+    public function priceForUser(User $user) : Money|null {
+        return $user->is_member ? $this->member_price : $this->regular_price;
+    }
 }

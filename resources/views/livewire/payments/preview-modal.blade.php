@@ -25,17 +25,16 @@
                     <span class="text-gray-200 font-medium">{{ $payment->description }}</span>
                 </div>
 
-                <div class="flex justify-between items-center border-b border-neutral-700 pb-4">
-                    <span class="text-neutral-300">Valid until</span>
-                    @if($payment->meta->payable_type == 'membership')
+                @if($payment->meta->payable_type == 'membership')
+                    <div class="flex justify-between items-center border-b border-neutral-700 pb-4">
+                        <span class="text-neutral-300">Valid until</span>
                         @if($payment->meta->membership_type == 'semester')
-                            <span
-                                class="text-gray-200 font-medium">{{ $payment->meta->semester == 1 ? $schoolYear->start_second_semester->format('m-d-Y') : $schoolYear->end_academic_year }}</span>
+                            <span class="text-gray-200 font-medium">{{ $payment->meta->semester == 1 ? $schoolYear->start_second_semester->format('m-d-Y') : $schoolYear->end_academic_year }}</span>
                         @else
                             <span class="text-gray-200 font-medium">{{ $schoolYear->end_academic_year }}</span>
                         @endif
-                    @endif
-                </div>
+                    </div>
+                @endif
 
                 <div class="flex justify-between items-center border-b border-neutral-700 pb-4">
                     <span class="text-neutral-300">Amount</span>
