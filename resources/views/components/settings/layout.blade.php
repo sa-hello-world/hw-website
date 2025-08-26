@@ -1,19 +1,27 @@
-<div class="flex items-start max-md:flex-col">
-    <div class="me-10 w-full pb-4 md:w-[220px]">
-        <flux:navlist>
-            <flux:navlist.item :href="route('settings.profile')" wire:navigate>{{ __('Profile') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('settings.password')" wire:navigate>{{ __('Password') }}</flux:navlist.item>
-            <flux:navlist.item :href="route('settings.appearance')" wire:navigate>{{ __('Appearance') }}</flux:navlist.item>
-        </flux:navlist>
-    </div>
+@php use Illuminate\Support\Facades\Route; @endphp
+<div class="w-full">
+    <ul class="flex border-b border-gray-500 mb-6">
+        <x-hw.nav-link
+            :href="route('settings.profile')"
+            wire:navigate
+            class="px-4 py-2 -mb-px border-b-2 transition {{Route::is('settings.profile') ? 'underline text-hw-blue' : ''}}"
+        >
+            {{ __('Profile') }}
+        </x-hw.nav-link>
 
-    <flux:separator class="md:hidden" />
+        <x-hw.nav-link
+            :href="route('settings.password')"
+            wire:navigate
+            class="px-4 py-2 -mb-px border-b-2 transition {{Route::is('settings.password') ? 'underline text-hw-blue' : ''}}"
+        >
+            {{ __('Password') }}
+        </x-hw.nav-link>
+    </ul>
 
-    <div class="flex-1 self-stretch max-md:pt-6">
-        <flux:heading>{{ $heading ?? '' }}</flux:heading>
-        <flux:subheading>{{ $subheading ?? '' }}</flux:subheading>
-
-        <div class="mt-5 w-full max-w-lg">
+    <div class="max-w-lg">
+        <h1 class="text-xl font-bayon text-white">{{ $heading ?? '' }}</h1>
+        <p class="text-gray-400">{{ $subheading ?? '' }}</p>
+        <div class="mt-5">
             {{ $slot }}
         </div>
     </div>
