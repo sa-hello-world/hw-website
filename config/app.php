@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    // Makes the changing of the mail easier
+    'email' => env('MAIL_FROM_ADDRESS', 'info@svhelloworld.nl'),
 ];

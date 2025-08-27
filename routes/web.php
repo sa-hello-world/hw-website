@@ -18,6 +18,10 @@ Route::get('/aboutus', [AboutUsController::class, 'index'])->name('aboutus');
 
 Route::get('/partners', [PublicController::class, 'partners'])->name('partners');
 
+Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
+Route::post('/contact', [PublicController::class, 'send'])->name('contact.send')
+    ->middleware('throttle:3,1');
+
 Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events');
 
 Route::view('dashboard', 'dashboard')
