@@ -1,0 +1,7 @@
+.fl-flasher {
+    background-color: #171717; /* bg-gray-900 */
+    color: #f9fafb;           /* text-gray-100 */
+    border-radius: 0.5rem;
+    padding: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
+}

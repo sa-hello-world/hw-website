@@ -106,8 +106,8 @@ class EventController extends Controller
 
         Event::create($validated);
 
-        return redirect()->route('events.index')
-            ->with('success', 'Event created successfully.');
+        \Flasher\Prime\flash()->success('Event created successfully!');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -163,8 +163,8 @@ class EventController extends Controller
 
         $event->update($validated);
 
-        return redirect()->route('events.index')
-            ->with('success', 'Event updated successfully.');
+        \Flasher\Prime\flash()->success('Event updated successfully!');
+        return redirect()->route('events.index');
     }
 
     /**
@@ -178,7 +178,7 @@ class EventController extends Controller
 
         $event->delete();
 
-        return redirect()->route('events.index')
-            ->with('success', 'Event deleted successfully.');
+        \Flasher\Prime\flash()->success('Event deleted successfully!');
+        return redirect()->route('events.index');
     }
 }
