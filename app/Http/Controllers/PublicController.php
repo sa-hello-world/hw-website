@@ -8,6 +8,10 @@ use Illuminate\View\View;
 
 class PublicController extends Controller
 {
+    /**
+     * Returns the public facing partners page
+     * @return View
+     */
     public function partners(): View
     {
         $sponsors = Sponsor::all();
