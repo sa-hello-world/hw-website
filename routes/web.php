@@ -1,23 +1,20 @@
 <?php
 
-use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\Board\EventController as BoardEventController;
 use App\Http\Controllers\Board\SchoolYearController as BoardSchoolYearController;
 use App\Http\Controllers\Board\SponsorController as BoardSponsorController;
 use App\Http\Controllers\Board\PaymentController as BoardPaymentController;
-use App\Http\Controllers\EventController;
 use App\Http\Controllers\Home\EventController as HomeEventController;
 use App\Http\Controllers\Home\PaymentController as HomePaymentController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PublicController;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('welcome');
+Route::get('/', [PublicController::class, 'index'])->name('welcome');
 
-Route::get('/aboutus', [AboutUsController::class, 'index'])->name('aboutus');
+Route::get('/aboutus', [PublicController::class, 'aboutUs'])->name('aboutus');
 
 Route::get('/partners', [PublicController::class, 'partners'])->name('partners');
 
@@ -25,7 +22,7 @@ Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
 Route::post('/contact', [PublicController::class, 'send'])->name('contact.send')
     ->middleware('throttle:3,1');
 
-Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::get('/events', [PublicController::class, 'events'])->name('events');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
