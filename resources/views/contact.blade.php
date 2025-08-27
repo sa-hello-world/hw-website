@@ -88,7 +88,7 @@
                 <p class="text-gray-400 mb-8">Fill out the form below and we'll get back to you as soon as
                     possible.</p>
 
-                <form method="POST" class="space-y-6">
+                <form action="{{route('contact.send')}}" method="POST" class="space-y-6">
                     @csrf
                     @if(session('success'))
                         <div class="bg-green-500/10 text-green-400 p-4 rounded-lg mb-6">

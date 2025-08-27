@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
-                    <x-hw.nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')"
+                    <x-hw.nav-link href="{{ route('contact') }}" :active="request()->routeIs('contactus')"
                                    wire:navigate.hover>
                         {{ __('Say Hello!') }}
                     </x-hw.nav-link>
@@ -93,8 +93,8 @@
                                       :active="request()->routeIs('partners')">
                 {{ __('Partners') }}
             </x-hw.responsive-nav-link>
-            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('contactus') }}"
-                                      :active="request()->routeIs('contactus')">
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('contact') }}"
+                                      :active="request()->routeIs('contact')">
                 {{ __('Say hello!') }}
             </x-hw.responsive-nav-link>
             <div class="border-t border-gray-200 dark:border-gray-600"></div>
