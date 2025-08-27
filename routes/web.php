@@ -1,13 +1,16 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\Board\EventController;
-use App\Http\Controllers\Board\SchoolYearController;
-use App\Http\Controllers\Board\SponsorController;
+use App\Http\Controllers\Board\EventController as BoardEventController;
+use App\Http\Controllers\Board\SchoolYearController as BoardSchoolYearController;
+use App\Http\Controllers\Board\SponsorController as BoardSponsorController;
+use App\Http\Controllers\Board\PaymentController as BoardPaymentController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\Home\EventController as HomeEventController;
+use App\Http\Controllers\Home\PaymentController as HomePaymentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PublicController;
-use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use Illuminate\Support\Facades\Route;
@@ -22,7 +25,7 @@ Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
 Route::post('/contact', [PublicController::class, 'send'])->name('contact.send')
     ->middleware('throttle:3,1');
 
-Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events');
+Route::get('/events', [EventController::class, 'index'])->name('events');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -32,18 +35,18 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
     Route::prefix('board')->group(function () {
-        Route::resource('sponsors', SponsorController::class)->except(['show']);
-        Route::resource('events', EventController::class)->except(['show']);
-        Route::resource('school-years', SchoolYearController::class)->except(['show']);
-        Route::resource('payments', \App\Http\Controllers\Board\PaymentController::class)
+        Route::resource('sponsors', BoardSponsorController::class)->except(['show']);
+        Route::resource('events', BoardEventController::class)->except(['show']);
+        Route::resource('school-years', BoardSchoolYearController::class)->except(['show']);
+        Route::resource('payments', BoardPaymentController::class)
             ->only(['index'])->names(['index' => 'board.payments.index']);
     });
 
     Route::prefix('my')->group(function () {
-        Route::get('/payments', [\App\Http\Controllers\Home\PaymentController::class, 'index'])->name('my.payments.index');
+        Route::get('/payments', [HomePaymentController::class, 'index'])->name('my.payments.index');
         Route::get('/payments/{payment}', [PaymentController::class, 'show'])->name('my.payments.show');
-        Route::get('/events', [\App\Http\Controllers\Home\EventController::class, 'index'])->name('my.events.index');
-        Route::get('/event/{event}', [\App\Http\Controllers\Home\EventController::class, 'show'])->name('my.events.show');
+        Route::get('/events', [HomeEventController::class, 'index'])->name('my.events.index');
+        Route::get('/event/{event}', [HomeEventController::class, 'show'])->name('my.events.show');
     });
 
     Route::post('/payments/membership/{membershipType}', [PaymentController::class, 'storeForMembership'])->name('payments.store.membership');
@@ -53,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/payment/{payment}/callback', [PaymentController::class, 'callback'])->name('payments.callback');
     Route::post('/payment/prepare/{payment}', [PaymentController::class, 'prepare'])->name('payments.prepare');
 
-    Route::post('/event/{event}/register', [\App\Http\Controllers\Home\EventController::class, 'register'])->name('events.register');
+    Route::post('/event/{event}/register', [HomeEventController::class, 'register'])->name('events.register');
 
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
