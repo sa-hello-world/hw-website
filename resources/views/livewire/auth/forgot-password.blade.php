@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-6">
     <div class="text-center">
-        <h1 class="text-2xl font-bayon text-white">Log in to your account</h1>
-        <p class="text-sm text-hw-blue-400 font-handwriting">Enter your email and password below to log in</p>
+        <h1 class="text-2xl font-bayon text-white">Forgot password</h1>
+        <p class="text-sm text-hw-blue-400 font-handwriting">Enter your email to receive a password reset link</p>
     </div>
 
     <!-- Session Status -->

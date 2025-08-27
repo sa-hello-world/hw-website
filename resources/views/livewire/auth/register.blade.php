@@ -59,14 +59,14 @@
         </div>
 
         <div>
-            <x-hw.label for="password" value="New Password"/>
+            <x-hw.label for="password_confirmation" value="New Password"/>
             <x-hw.input
                 wire:model="password_confirmation"
                 type="password"
                 required
                 autocomplete="new-password"
             />
-            @error('password') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            @error('password_confirmation') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="flex items-center justify-end">

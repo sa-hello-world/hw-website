@@ -33,7 +33,6 @@
                 <a href="{{route('password.request')}}" wire:navigate
                    class="underline text-hw-blue-300 end-0 top-0 text-sm">{{ __('Forgot your password?') }}</a>
             @endif
-
         </div>
 
         <!-- Remember Me -->
