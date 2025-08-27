@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
-                    <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
+                    <x-hw.nav-link href="{{ route('events') }}" :active="request()->routeIs('events')"
                                    wire:navigate.hover>
                         {{ __('Shenanigans') }}
                     </x-hw.nav-link>
@@ -38,14 +38,7 @@
                 </div>
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
-                    <x-hw.nav-link href="{{ route('events') }}" :active="request()->routeIs('events')"
-                                   wire:navigate.hover>
-                        {{ __('Events') }}
-                    </x-hw.nav-link>
-                </div>
-
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 md:flex">
-                    <x-hw.nav-link href="{{ route('welcome') }}" :active="request()->routeIs('welcome')"
+                    <x-hw.nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')"
                                    wire:navigate.hover>
                         {{ __('Say Hello!') }}
                     </x-hw.nav-link>
@@ -92,20 +85,16 @@
                                       :active="request()->routeIs('aboutus')">
                 {{ __('About us') }}
             </x-hw.responsive-nav-link>
-            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('welcome') }}"
-                                      :active="request()->routeIs('welcome')">
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('events') }}"
+                                      :active="request()->routeIs('events')">
                 {{ __('Shenanigans') }}
             </x-hw.responsive-nav-link>
             <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('partners') }}"
                                       :active="request()->routeIs('partners')">
                 {{ __('Partners') }}
             </x-hw.responsive-nav-link>
-            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('events') }}"
-                                      :active="request()->routeIs('events')">
-                {{ __('Events') }}
-            </x-hw.responsive-nav-link>
-            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('events') }}"
-                                      :active="request()->routeIs('events')">
+            <x-hw.responsive-nav-link wire:navigate.hover href="{{ route('contactus') }}"
+                                      :active="request()->routeIs('contactus')">
                 {{ __('Say hello!') }}
             </x-hw.responsive-nav-link>
             <div class="border-t border-gray-200 dark:border-gray-600"></div>

@@ -25,4 +25,8 @@ class PublicController extends Controller
 
         return view('partners', compact('sponsors', 'tiers', 'tierColors'));
     }
+
+    public function contact(): View {
+        return view('contact');
+    }
 }

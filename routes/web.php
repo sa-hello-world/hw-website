@@ -18,6 +18,8 @@ Route::get('/aboutus', [AboutUsController::class, 'index'])->name('aboutus');
 
 Route::get('/partners', [PublicController::class, 'partners'])->name('partners');
 
+Route::get('/contactus', [PublicController::class, 'contact'])->name('contactus');
+
 Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events');
 
 Route::view('dashboard', 'dashboard')
