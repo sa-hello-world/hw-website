@@ -6,6 +6,7 @@ use App\Http\Controllers\Board\SchoolYearController;
 use App\Http\Controllers\Board\SponsorController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\PublicController;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -15,9 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('welcome');
 
 Route::get('/aboutus', [AboutUsController::class, 'index'])->name('aboutus');
 
-Route::get('/partners', function () {
-    return view('partners');
-})->name('partners');
+Route::get('/partners', [PublicController::class, 'partners'])->name('partners');
 
 Route::get('/events', [\App\Http\Controllers\EventController::class, 'index'])->name('events');
 
