@@ -79,6 +79,6 @@
 
     <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-400">
         <span>{{ __('Already have an account?') }}</span>
-        <a href="route('login')" wire:navigate class="underline text-hw-blue-300">{{ __('Log in') }}</a>
+        <a href="{{route('login')}}" wire:navigate class="underline text-hw-blue-300">{{ __('Log in') }}</a>
     </div>
 </div>
