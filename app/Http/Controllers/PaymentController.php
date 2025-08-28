@@ -15,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Mollie\Api\Exceptions\ApiException;
 use Mollie\Laravel\Facades\Mollie;
 use Money\Money;
 
@@ -135,7 +136,7 @@ class PaymentController extends Controller
      * Prepares a mollie payment
      * @param Payment $payment
      * @return RedirectResponse|Redirector
-     * @throws \Mollie\Api\Exceptions\ApiException
+     * @throws ApiException
      */
     public function prepare(Payment $payment): RedirectResponse|Redirector
     {
@@ -145,7 +146,10 @@ class PaymentController extends Controller
 
         if ($payment->mollie_id) {
             $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
-            return redirect($molliePayment->getCheckoutUrl(), 303);
+
+            if ($molliePayment->isOpen() || $molliePayment->isPending()) {
+                return redirect($molliePayment->getCheckoutUrl(), 303);
+            }
         }
 
         $molliePayment = Mollie::api()
@@ -170,7 +174,7 @@ class PaymentController extends Controller
      * TODO: Look into signed routes
      * @param Payment $payment
      * @return RedirectResponse
-     * @throws \Mollie\Api\Exceptions\ApiException
+     * @throws ApiException
      */
     public function callback(Payment $payment): RedirectResponse
     {
