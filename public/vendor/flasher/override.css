@@ -5,3 +5,12 @@
     padding: 1rem;
     box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5);
 }
+
+.fl-icon, .fl-progress-bar {
+    display: none;
+}
+
+.fl-title, .fl-message {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}

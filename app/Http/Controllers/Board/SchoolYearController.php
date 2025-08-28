@@ -75,8 +75,8 @@ class SchoolYearController extends Controller
 
         SchoolYear::create($validated);
 
-        return redirect()->route('school-years.index')
-            ->with('success', 'School year created successfully.');
+        \Flasher\Prime\flash()->success('School year created successfully!');
+        return redirect()->route('school-years.index');
     }
 
     /**
@@ -129,8 +129,8 @@ class SchoolYearController extends Controller
 
         $schoolYear->update($validated);
 
-        return redirect()->route('school-years.index')
-            ->with('success', 'School year updated successfully.');
+        \Flasher\Prime\flash()->success('School year updated successfully!');
+        return redirect()->route('school-years.index');
     }
 
     /**
@@ -144,7 +144,7 @@ class SchoolYearController extends Controller
 
         $schoolYear->delete();
 
-        return redirect()->route('school-years.index')
-            ->with('success', 'School year deleted successfully.');
+        \Flasher\Prime\flash()->success('School year deleted successfully!');
+        return redirect()->route('school-years.index');
     }
 }

@@ -149,7 +149,6 @@ class PublicController extends Controller
         $recipientEmail = trim((string)config('app.email'));
         Mail::to($recipientEmail)->send(new ContactUs($data));
 
-
         return redirect()->back()->with('success', 'Thank you for your message. We will get back to you soon.');
     }
 }
