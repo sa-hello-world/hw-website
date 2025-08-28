@@ -54,6 +54,18 @@ class EventController extends Controller
     }
 
     /**
+     * Shows the event
+     */
+    public function show(Event $event) : View
+    {
+        if (Auth::user()->cannot('view', $event)) {
+            abort(403);
+        }
+
+        return view('board.events.show', compact('event'));
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create() : View

@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between pt-5">
         <h1 class="text-3xl md:text-5xl font-bayon text-white">School years</h1>
         @can('create',  SchoolYear::class)
-            <x-hw.button-link href="{{ route('school-years.create') }}">
+            <x-hw.button-link href="{{ route('school-years.create') }}" class="inline-flex">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                      stroke-width="1.5" stroke="currentColor" class="h-5 md:mr-2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
