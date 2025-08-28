@@ -1,6 +1,6 @@
 @php use App\Models\Sponsor; @endphp
 <x-layouts.hub>
-    <div class="flex items-center justify-between pt-5">
+    <div class="flex items-center justify-between pt-5 overflow-hidden">
         <h1 class="text-5xl font-bayon text-white">Sponsorships</h1>
         @can('create',  Sponsor::class)
             <x-hw.button-link href="{{ route('sponsors.create') }}">
@@ -14,6 +14,7 @@
             </x-hw.button-link>
         @endcan
     </div>
+
     <div class="flex w-full flex-1 flex-col gap-4 rounded">
         <div class="grid auto-rows-min gap-4 md:grid-cols-3 pt-5">
             @foreach($sponsorCounts as $tier => $count)
@@ -24,8 +25,8 @@
                 />
             @endforeach
         </div>
-        <div
-            class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-500 dark:border-neutral-700">
+
+        <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-500 dark:border-neutral-700 hidden md:block">
             <x-hw.table>
                 <x-slot:head>
                     <tr>
@@ -37,16 +38,24 @@
                 </x-slot:head>
 
                 <x-slot:body>
-                    @foreach($sponsors as $sponsor)
+                    @forelse($sponsors as $sponsor)
                         <tr class="hover:bg-neutral-900 transition-all">
                             <td class="px-4 py-4 capitalize">{{ $sponsor->name }}</td>
-                            <td class="px-4 py-4 ">
-                                <a class="flex items-center gap-x-2 text-hw-blue-200 hover:text-hw-blue-400 transition" href="{{ 'https://' . $sponsor->website }}">
-                                    Go to website
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-                                    </svg>
-                                </a>
+                            <td class="px-4 py-4">
+                                @if($sponsor->website)
+                                    <a class="flex items-center gap-x-2 text-hw-blue-200 hover:text-hw-blue-400 transition"
+                                       href="{{ str_starts_with($sponsor->website, 'http') ? $sponsor->website : 'https://' . $sponsor->website }}"
+                                       target="_blank">
+                                        Go to website
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             stroke-width="1.5" stroke="currentColor" class="size-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                  d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                        </svg>
+                                    </a>
+                                @else
+                                    <span class="text-gray-400">—</span>
+                                @endif
                             </td>
                             <td class="px-4 py-4">
                                 <x-hw.badge :label="$sponsor->tier" :color="$sponsor->tier"/>
@@ -69,9 +78,64 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="4" class="text-center py-6 text-gray-400">
+                                No sponsors found.
+                            </td>
+                        </tr>
+                    @endforelse
                 </x-slot:body>
             </x-hw.table>
+        </div>
+        <div class="md:hidden">
+            <div class="space-y-4">
+                @forelse($sponsors as $sponsor)
+                    <div class="bg-neutral-800 rounded-lg p-4 border border-neutral-700">
+                        <div class="flex justify-between items-center">
+                            <h2 class="font-semibold text-white">{{ $sponsor->name }}</h2>
+                            <x-hw.badge :label="$sponsor->tier" :color="$sponsor->tier"/>
+                        </div>
+
+                        <div class="mt-2">
+                            @if($sponsor->website)
+                                <a class="flex items-center gap-x-2 text-sm text-hw-blue-200 hover:text-hw-blue-400 transition"
+                                   href="{{ str_starts_with($sponsor->website, 'http') ? $sponsor->website : 'https://' . $sponsor->website }}"
+                                   target="_blank">
+                                    Go to website
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+                                    </svg>
+                                </a>
+                            @else
+                                <p class="text-gray-400 text-sm">No website</p>
+                            @endif
+                        </div>
+
+                        <div class="flex gap-x-3 mt-3">
+                            @can('update', $sponsor)
+                                <a href="{{route('sponsors.edit', $sponsor)}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         stroke-width="1.5" stroke="currentColor"
+                                         class="size-5 stroke-hw-blue-200 hover:stroke-hw-blue-400 hover:cursor-pointer transition-all">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                              d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
+                                    </svg>
+                                </a>
+                            @endcan
+                            @can('delete', $sponsor)
+                                <livewire:delete-modal :key="$sponsor->id" :model="$sponsor" :route="'sponsors.destroy'"/>
+                            @endcan
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center py-6 text-gray-400">
+                        No sponsors found.
+                    </div>
+                @endforelse
+            </div>
         </div>
     </div>
 </x-layouts.hub>
