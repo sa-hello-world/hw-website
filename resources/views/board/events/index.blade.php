@@ -1,21 +1,20 @@
 @php use App\Models\Event;use Carbon\Carbon; @endphp
 <x-layouts.hub>
     <div class="flex items-center justify-between pt-5">
-        <h1 class="text-5xl font-bayon text-white">Events</h1>
+        <h1 class="text-3xl md:text-5xl font-bayon text-white">Events</h1>
         @can('create',  Event::class)
-            <x-hw.button-link href="{{ route('events.create') }}">
-                <div class="flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="h-5 pr-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                    </svg>
-                    New event
-                </div>
+            <x-hw.button-link href="{{ route('events.create') }}" class="inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.5" stroke="currentColor" class="h-5 md:mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                <span class="hidden md:inline">New event</span>
             </x-hw.button-link>
         @endcan
     </div>
-    <h1 class="text-3xl font-bayon text-white">Current academic year</h1>
-    <div class="flex w-full flex-1 flex-col gap-4 rounded">
+
+    <h1 class="text-xl md:text-3xl font-bayon text-white">Current academic year</h1>
+    <div class="flex w-full flex-1 flex-col gap-4 rounded overflow-hidden">
         <div class="grid auto-rows-min gap-4 md:grid-cols-3 pt-5">
             <x-hw.card
                 label="Number of events for the academic year"
@@ -31,7 +30,7 @@
                         <th class="px-4 py-2 font-semibold w-1/5">Event</th>
                         <th class="px-4 py-2 font-semibold w-1/5">Date</th>
                         <th class="px-4 py-2 font-semibold w-1/5">Type</th>
-                        <th class="px-4 py-2 font-semibold w-1/5">Tier</th>
+                        <th class="px-4 py-2 font-semibold w-1/5">Status</th>
                         <th class="px-4 py-2 font-semibold w-1/5">Actions</th>
                     </tr>
                 </x-slot:head>
@@ -130,7 +129,7 @@
                         <th class="px-4 py-2 font-semibold w-1/5">Event</th>
                         <th class="px-4 py-2 font-semibold w-1/5">Date</th>
                         <th class="px-4 py-2 font-semibold w-1/5">Type</th>
-                        <th class="px-4 py-2 font-semibold w-1/5">Tier</th>
+                        <th class="px-4 py-2 font-semibold w-1/5">Status</th>
                         <th class="px-4 py-2 font-semibold w-1/5">Actions</th>
                     </tr>
                 </x-slot:head>

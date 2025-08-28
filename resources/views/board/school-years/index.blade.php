@@ -1,16 +1,14 @@
 @php use App\Models\SchoolYear;@endphp
 <x-layouts.hub>
     <div class="flex items-center justify-between pt-5">
-        <h1 class="text-5xl font-bayon text-white">School years</h1>
+        <h1 class="text-3xl md:text-5xl font-bayon text-white">School years</h1>
         @can('create',  SchoolYear::class)
             <x-hw.button-link href="{{ route('school-years.create') }}">
-                <div class="flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="h-5 pr-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                    </svg>
-                    New school year
-                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.5" stroke="currentColor" class="h-5 md:mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                <span class="hidden md:inline">New school year</span>
             </x-hw.button-link>
         @endcan
     </div>

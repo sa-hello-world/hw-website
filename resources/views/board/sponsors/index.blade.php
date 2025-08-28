@@ -1,20 +1,17 @@
 @php use App\Models\Sponsor; @endphp
 <x-layouts.hub>
-    <div class="flex items-center justify-between pt-5 overflow-hidden">
-        <h1 class="text-5xl font-bayon text-white">Sponsorships</h1>
+    <div class="flex items-center justify-between pt-5">
+        <h1 class="text-3xl md:text-5xl font-bayon text-white">Sponsorships</h1>
         @can('create',  Sponsor::class)
-            <x-hw.button-link href="{{ route('sponsors.create') }}">
-                <div class="flex">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" class="h-5 pr-2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                    </svg>
-                    New sponsor
-                </div>
+            <x-hw.button-link href="{{ route('sponsors.create') }}" class="inline-flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     stroke-width="1.5" stroke="currentColor" class="h-5 md:mr-2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                </svg>
+                <span class="hidden md:inline">New sponsor</span>
             </x-hw.button-link>
         @endcan
     </div>
-
     <div class="flex w-full flex-1 flex-col gap-4 rounded">
         <div class="grid auto-rows-min gap-4 md:grid-cols-3 pt-5">
             @foreach($sponsorCounts as $tier => $count)
@@ -25,7 +22,6 @@
                 />
             @endforeach
         </div>
-
         <div class="relative h-full flex-1 overflow-hidden rounded-xl border border-neutral-500 dark:border-neutral-700 hidden md:block">
             <x-hw.table>
                 <x-slot:head>
