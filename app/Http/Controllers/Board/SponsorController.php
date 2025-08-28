@@ -61,13 +61,16 @@ class SponsorController extends Controller
             'website' => ['required', 'regex:/^www\.[\w\-]+\.[\w\-\.]+$/i'],
         ]);
 
-        $logo = $request->file('logo');
-        $path = $logo->store('uploads', 'public');
+        if ($logo = $request->file('logo')) {
+            $path = $logo->store('uploads', 'public');
+            $validated['logo_path'] = $path;
+        }
 
-        Sponsor::create(array_merge($validated, ['logo_path' => $path]));
+        Sponsor::create($validated);
 
-        return redirect()->route('sponsors.index')
-            ->with('success', 'Sponsor created successfully.');
+
+        \Flasher\Prime\flash()->success('Sponsor created successfully!');
+        return redirect()->route('sponsors.index');
     }
 
     /**
@@ -105,8 +108,8 @@ class SponsorController extends Controller
 
         $sponsor->update($validated);
 
-        return redirect()->route('sponsors.index')
-            ->with('success', 'Sponsor updated successfully.');
+        \Flasher\Prime\flash()->success('Sponsor updated successfully!');
+        return redirect()->route('sponsors.index');
     }
 
 
@@ -121,7 +124,7 @@ class SponsorController extends Controller
 
         $sponsor->delete();
 
-        return redirect()->route('sponsors.index')
-            ->with('success', 'Sponsor deleted successfully.');
+        \Flasher\Prime\flash()->success('Sponsor deleted successfully!');
+        return redirect()->route('sponsors.index');
     }
 }

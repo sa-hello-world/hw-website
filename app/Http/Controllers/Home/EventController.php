@@ -49,7 +49,7 @@ class EventController extends Controller
 
         $user->registerForEvent($event);
 
-        return redirect()->route('my.events.show', $event)
-            ->with('success', 'Successfully registered for the ' . $event->name . ' event.');
+        \Flasher\Prime\flash()->success('Your registered for the ' . $event->name . ' event successfully.');
+        return redirect()->route('my.events.show', $event);
     }
 }

@@ -127,7 +127,8 @@ class PaymentController extends Controller
 
         $payment->delete();
 
-        return redirect('dashboard')->with('success', 'Payment has been cancelled.');
+        \Flasher\Prime\flash()->success('Payment has been cancelled successfully.');
+        return redirect('dashboard');
     }
 
     /**
@@ -194,12 +195,12 @@ class PaymentController extends Controller
                 $user->registerForEvent(Event::findOrFail($payment->meta->payable_id));
             }
 
-            return redirect()->route('payments.show', $payment)
-                ->with('success', 'Payment has been confirmed.');
+            \Flasher\Prime\flash()->success('Payment has been confirmed.');
+            return redirect()->route('payments.show', $payment);
         }
 
-        return redirect()->route('payments.show', $payment)
-            ->with('error', 'Something has gone wrong or it could be just your payment being processed slower. If this continue contact us.');
+        \Flasher\Prime\flash()->error('Something has gone wrong or it could be just your payment being processed slower. If this continues, please contact us.');
+        return redirect()->route('payments.show', $payment);
     }
 
 //    public function webhook(): RedirectResponse
