@@ -153,16 +153,25 @@ class User extends Authenticatable
     /**
      * Helper function that registers a user for event
      * @param Event $event
+     * @param Payment|null $payment
      * @return bool
      */
-    public function registerForEvent(Event $event): bool
+    public function registerForEvent(Event $event, ?Payment $payment=null): bool
     {
         if ($this->events->contains($event)) {
             return false;
         }
 
-        EventUser::create(['user_id' => $this->id, 'event_id' => $event->id]);
+        $pivotTableData = [
+            'user_id' => $this->id,
+            'event_id' => $event->id
+        ];
 
+        if ($payment) {
+            $pivotTableData['payment_id'] = $payment->id;
+        }
+
+        EventUser::create($pivotTableData);
         return true;
     }
 

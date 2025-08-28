@@ -186,7 +186,7 @@ class PaymentController extends Controller
 
         $molliePayment = Mollie::api()->payments->get($payment->mollie_id);
 
-        if ($molliePayment->isPaid()) {
+        if ($molliePayment->isPaid() && $payment->status != PaymentStatus::PAID->value) {
             $payment->update([
                 'status' => PaymentStatus::PAID->value,
                 'paid_at' => $molliePayment->paidAt,
@@ -196,7 +196,7 @@ class PaymentController extends Controller
             if ($payment->meta->membership_type) {
                 $user->registerAsMemberForSchoolYear(SchoolYear::findOrFail($payment->meta->payable_id), $payment);
             } else {
-                $user->registerForEvent(Event::findOrFail($payment->meta->payable_id));
+                $user->registerForEvent(Event::findOrFail($payment->meta->payable_id), $payment);
             }
 
             \Flasher\Prime\flash()->success('Payment has been confirmed.');
