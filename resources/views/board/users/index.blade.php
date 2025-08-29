@@ -27,6 +27,7 @@
                         <th class="px-4 py-2 font-semibold w-1/5">Email</th>
                         <th class="px-4 py-2 font-semibold w-1/5"></th>
                         <th class="px-4 py-2 font-semibold w-1/5">Registration date</th>
+                        <th class="px-4 py-2 font-semibold w-1/5">Actions</th>
                     </tr>
                 </x-slot:head>
                 <x-slot:body>
@@ -41,6 +42,11 @@
                             </td>
                             <td class="px-4 py-4 capitalize">
                                 {{ $user->created_at->format('d-m-Y') }}
+                            </td>
+                            <td>
+                                @can('markAsBoardMember', $user)
+                                    <livewire:user.mark-as-board-member :user="$user"/>
+                                @endcan
                             </td>
                         </tr>
                     @empty

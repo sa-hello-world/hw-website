@@ -31,3 +31,4 @@ permissions:
     viewAny: [ chairman ]
   user:
     viewAny: [ chairman ]
+    markAsBoardMember: [ chairman ]
