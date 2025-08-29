@@ -6,6 +6,7 @@ use App\Http\Controllers\Board\SponsorController as BoardSponsorController;
 use App\Http\Controllers\Board\PaymentController as BoardPaymentController;
 use App\Http\Controllers\Board\UserController;
 use App\Http\Controllers\Home\EventController as HomeEventController;
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\PaymentController as HomePaymentController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PublicController;
@@ -25,12 +26,9 @@ Route::post('/contact', [PublicController::class, 'send'])->name('contact.send')
 
 Route::get('/events', [PublicController::class, 'events'])->name('events');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
 
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+    Route::get('dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     Route::prefix('board')->group(function () {
         Route::resource('sponsors', BoardSponsorController::class)->except(['show']);
@@ -57,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/event/{event}/register', [HomeEventController::class, 'register'])->name('events.register');
 
+    Route::redirect('settings', 'settings/profile');
     Route::get('settings/profile', Profile::class)->name('settings.profile');
     Route::get('settings/password', Password::class)->name('settings.password');
 });
