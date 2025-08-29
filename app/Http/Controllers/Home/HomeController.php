@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
+use App\Models\Event;
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -12,6 +15,12 @@ class HomeController extends Controller
      * @return View
      */
     public function index() : View {
-        return view('home.dashboard');
+        $user = Auth::user();
+        $nextEvent = Event::next();
+        $nextEvents = Event::allNext(5);
+        $totalEventsAttended = $user->events->count();
+        $currentSchoolYear = SchoolYear::current();
+        $currentYearAttended =  $currentSchoolYear ? $user->events->where('school_year_id', $currentSchoolYear->id)->count() : null;
+        return view('home.dashboard', compact('user', 'nextEvent', 'nextEvents', 'totalEventsAttended', 'currentYearAttended'));
     }
 }
