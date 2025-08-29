@@ -3,7 +3,10 @@
         <h1 class="text-white font-bayon text-5xl my-6 px-6 lg:px-0">Events</h1>
         @if($nextEvent)
             <h2 class="text-white font-bayon text-5xl my-6 px-6 lg:px-0">Next event</h2>
-            <x-next-event-card :event="$nextEvent" :link="'payments.store.event'"/>
+            @php
+
+            @endphp
+            <x-next-event-card :event="$nextEvent" :link="$route"/>
         @endif
         @if(count($nextEvents) > 0)
             <h2 class="text-white font-bayon text-5xl mt-6">All future events</h2>

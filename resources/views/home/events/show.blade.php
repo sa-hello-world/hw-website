@@ -2,8 +2,8 @@
 
 <x-layouts.hub>
     <div class="h-full py-5">
-        <h1 class="text-5xl font-bayon text-white mb-2">Event: {{ $event->name }}</h1>
-        <p class="text-xl text-hw-blue-400 mb-8">Here you can find details regarding this event.</p>
+        <h1 class="text-3xl md:text-5xl font-bayon text-white mb-2">Event: {{ $event->name }}</h1>
+        <p class="text-md md:text-xl text-hw-blue-400 mb-8">Here you can find details regarding this event.</p>
 
         <div class="max-w-3xl space-y-8">
             <div class="bg-hw-black rounded-2xl shadow-lg border border-neutral-500 bg-neutral-500/5 p-8">

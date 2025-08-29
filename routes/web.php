@@ -34,7 +34,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('board')->group(function () {
         Route::resource('sponsors', BoardSponsorController::class)->except(['show']);
-        Route::resource('events', BoardEventController::class)->except(['show']);
+        Route::resource('events', BoardEventController::class);
         Route::resource('school-years', BoardSchoolYearController::class)->except(['show']);
         Route::resource('payments', BoardPaymentController::class)
             ->only(['index'])->names(['index' => 'board.payments.index']);

@@ -10,6 +10,7 @@ use App\Models\SchoolYear;
 use App\Models\Sponsor;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
@@ -77,7 +78,13 @@ class PublicController extends Controller
         $nextEvents = Event::allNext(4);
         $pastEvents = Event::allPast(4);
 
-        return view('events', compact('nextEvent', 'nextEvents', 'pastEvents'));
+        $route = 'payments.store.event';
+        if (Auth::user()) {
+            $price = $nextEvent->priceForUser(Auth::user());
+            $route = is_null($price) || $price->getAmount() == 0 ? 'events.register' : $route;
+        }
+
+        return view('events', compact('nextEvent', 'nextEvents', 'pastEvents', 'route'));
     }
 
     /**
