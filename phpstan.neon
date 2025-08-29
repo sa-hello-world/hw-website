@@ -18,6 +18,10 @@ parameters:
                 - app/Http/Controllers/Board/PaymentController.php # Ditto
                 - app/Http/Controllers/PaymentController.php # Ditto
         -
+            message: '#^Cannot call method can\(\) on App\\Models\\User\|null\.$#'
+            paths:
+                - app/Http/Controllers/Board/UserController.php # The controller is behind an Auth middleware
+        -
             message: '#^Cannot access property \$events on App\\Models\\User\|null\.$#'
             paths:
                 - app/Http/Controllers/Home/EventController.php # The controller is behind an Auth middleware

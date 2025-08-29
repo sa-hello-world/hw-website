@@ -29,3 +29,6 @@ permissions:
   payment:
     view: [ chairman ]
     viewAny: [ chairman ]
+  user:
+    viewAny: [ chairman ]
+    markAsBoardMember: [ chairman ]

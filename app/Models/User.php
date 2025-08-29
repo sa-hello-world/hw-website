@@ -69,7 +69,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'study_year'
+        'study_year',
+        'was_board_member'
     ];
 
     /**
@@ -195,6 +196,10 @@ class User extends Authenticatable
     {
         return Attribute::make(
             get: function () {
+                if ($this->was_board_member) {
+                    return true;
+                }
+
                 $schoolYear = SchoolYear::current();
 
                 if (!$schoolYear) {

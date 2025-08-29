@@ -7,6 +7,7 @@
     $variantClasses = match($variant) {
         'save' => 'border-hw-blue text-hw-blue',
         'danger' => 'border-red-600 text-red-600',
+        'success' => 'border-green-600 text-green-600',
         'default' => 'border-gray-600 text-gray-400 ',
         'sign_up' => 'bg-hw-blue text-gray-50 w-full justify-center'
     };

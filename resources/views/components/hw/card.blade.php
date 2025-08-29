@@ -7,7 +7,7 @@
         'danger'  => 'text-red-600',
         'warning' => 'text-yellow-600 border-yellow-600',
         'green' => 'border-green-500 text-green-500',
-        'neutral' => 'text-neutral-900',
+        'neutral' => 'text-neutral-500',
     ];
 
     $theme = $colors[$color ?? 'neutral'];

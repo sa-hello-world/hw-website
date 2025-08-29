@@ -4,6 +4,7 @@ use App\Http\Controllers\Board\EventController as BoardEventController;
 use App\Http\Controllers\Board\SchoolYearController as BoardSchoolYearController;
 use App\Http\Controllers\Board\SponsorController as BoardSponsorController;
 use App\Http\Controllers\Board\PaymentController as BoardPaymentController;
+use App\Http\Controllers\Board\UserController;
 use App\Http\Controllers\Home\EventController as HomeEventController;
 use App\Http\Controllers\Home\PaymentController as HomePaymentController;
 use App\Http\Controllers\PaymentController;
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('school-years', BoardSchoolYearController::class)->except(['show']);
         Route::resource('payments', BoardPaymentController::class)
             ->only(['index'])->names(['index' => 'board.payments.index']);
+        Route::get('/users', [UserController::class, 'index'])->name('board.users.index');
     });
 
     Route::prefix('my')->group(function () {
