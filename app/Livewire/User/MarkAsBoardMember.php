@@ -11,6 +11,8 @@ class MarkAsBoardMember extends Component
 {
     public bool $showModal = false;
     public User $user;
+    public bool $markAsBoardMember = true;
+    public string $authRule = 'markAsBoardMember';
 
     /**
      * Toggles the component on and off
@@ -20,7 +22,8 @@ class MarkAsBoardMember extends Component
      */
     public function show(bool $show): void
     {
-        $this->authorize('markAsBoardMember', $this->user);
+        $this->authRule = $this->markAsBoardMember ? $this->authRule : 'removeAsBoardMember';
+        $this->authorize($this->authRule, $this->user);
         $this->showModal = $show;
     }
 
@@ -29,10 +32,10 @@ class MarkAsBoardMember extends Component
      * @return void
      * @throws AuthorizationException
      */
-    public function markAsBoardMember(): void
+    public function save(): void
     {
-        $this->authorize('markAsBoardMember', $this->user);
-        $this->user->update(['was_board_member' => true]);
+        $this->authorize($this->authRule, $this->user);
+        $this->user->update(['was_board_member' => $this->markAsBoardMember]);
         $this->redirect(route('board.users.index'));
     }
 

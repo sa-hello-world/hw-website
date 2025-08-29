@@ -47,6 +47,9 @@
                                 @can('markAsBoardMember', $user)
                                     <livewire:user.mark-as-board-member :user="$user"/>
                                 @endcan
+                                @can('removeAsBoardMember', $user)
+                                    <livewire:user.mark-as-board-member :user="$user" :markAsBoardMember="false"/>
+                                @endcan
                             </td>
                         </tr>
                     @empty
