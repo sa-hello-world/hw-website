@@ -21,6 +21,13 @@ class HomeController extends Controller
         $totalEventsAttended = $user->events->count();
         $currentSchoolYear = SchoolYear::current();
         $currentYearAttended =  $currentSchoolYear ? $user->events->where('school_year_id', $currentSchoolYear->id)->count() : null;
-        return view('home.dashboard', compact('user', 'nextEvent', 'nextEvents', 'totalEventsAttended', 'currentYearAttended'));
+
+        $route = 'payments.store.event';
+        if (Auth::user()) {
+            $price = $nextEvent->priceForUser(Auth::user());
+            $route = is_null($price) || $price->getAmount() == 0 ? 'events.register' : $route;
+        }
+
+        return view('home.dashboard', compact('user', 'nextEvent', 'nextEvents', 'totalEventsAttended', 'currentYearAttended', 'route'));
     }
 }

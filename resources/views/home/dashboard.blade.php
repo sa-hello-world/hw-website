@@ -6,22 +6,22 @@
         <div class="grid auto-rows-min gap-4 md:grid-cols-3">
             @if(!is_null($currentYearAttended))
                 <x-hw.card
-                    label="Number of events attended this year"
+                    label="Attended events this year"
                     :value="$currentYearAttended"
-                    color="green"
+                    color="blue"
                 />
             @endif
             <x-hw.card
-                label="Number of events attended this year"
-                :value="$currentYearAttended"
-                color="success"
+                label="Total attended events"
+                :value="$totalEventsAttended"
+                color="neutral"
             />
         </div>
         <div class="relative h-full flex-1 overflow-hidden rounded-xl">
             <h1 class="text-3xl md:text-5xl font-bayon text-white py-5">Upcoming Events</h1>
             <div class="w-full grid grid-cols-3 gap-3">
                 <div class="col-span-2 h-full">
-                    <x-next-event-card :event="$nextEvent"/>
+                    <x-next-event-card :event="$nextEvent" :link="$route"/>
                 </div>
                 <div class="flex flex-col gap-3 ">
                     @foreach($nextEvents as $event)
