@@ -249,4 +249,16 @@ class User extends Authenticatable
             ->where('meta->payable_type', 'event')
             ->first();
     }
+
+    /**
+     * Checks if the user has a board member role
+     * @return Attribute<bool,never>
+     */
+    public function isBoardMember(): Attribute {
+        return Attribute::make(
+            get: function () {
+                return $this->hasAnyRole(config('roles'));
+            }
+        );
+    }
 }

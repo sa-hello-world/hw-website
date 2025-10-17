@@ -7,6 +7,8 @@ roles:
   - chairman
   - head of activity
   - head of media
+  - activity committee member
+  - media committee member
 permissions:
   sponsor:
     viewAny: [ chairman, head of activity, head of media ]

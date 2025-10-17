@@ -29,4 +29,20 @@ class UserPolicy
     {
         return $user->can('markAsBoardMember user') && $model->was_board_member;
     }
+
+    /**
+     * Determine whether the user can add the board member membership.
+     */
+    public function markAsCurrentBoardMember(User $user, User $model): bool
+    {
+        return $user->can('markAsBoardMember user') && !$model->is_board_member;
+    }
+
+    /**
+     * Determine whether the user can remove the board member membership.
+     */
+    public function removeAsCurrentBoardMember(User $user, User $model): bool
+    {
+        return $user->can('markAsBoardMember user') && $model->is_board_member;
+    }
 }
