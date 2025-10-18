@@ -27,7 +27,7 @@
                     @endforeach
                 </select>
             @else
-                Revoke all roles and permissions in relation to the board from {{$user->name}}
+                Revoke all roles and permissions in relation to the current board from {{$user->name}}
             @endif
         </x-slot>
 

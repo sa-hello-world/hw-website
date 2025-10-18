@@ -35,9 +35,14 @@
                         <tr class="hover:bg-neutral-900 transition-all">
                             <td class="px-4 py-4 capitalize">{{ $user->name }}</td>
                             <td class="px-4 py-4">{{ $user->email }}</td>
-                            <td class="px-4 py-4 capitalize">
+                            <td class="px-4 py-4 capitalize flex gap-x-2">
                                 @if($user->is_member)
                                     <x-hw.badge label="Member" color="success"/>
+                                @endif
+                                @if($user->is_board_member)
+                                     @foreach($user->roles as $role)
+                                            <x-hw.badge label="{{$role->name}}" color="membership"/>
+                                     @endforeach
                                 @endif
                             </td>
                             <td class="px-4 py-4 capitalize">

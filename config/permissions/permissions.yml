@@ -3,12 +3,13 @@
 # The roles are defined in the roles section of the file.
 # TODO: These are not the final permissions!
 roles:
-  - member
   - chairman
   - head of activity
   - head of media
   - activity committee member
   - media committee member
+  - secretary
+  - treasurer
 permissions:
   sponsor:
     viewAny: [ chairman, head of activity, head of media ]
