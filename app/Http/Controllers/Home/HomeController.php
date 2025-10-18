@@ -23,7 +23,7 @@ class HomeController extends Controller
         $currentYearAttended =  $currentSchoolYear ? $user->events->where('school_year_id', $currentSchoolYear->id)->count() : null;
 
         $route = 'payments.store.event';
-        if (Auth::user()) {
+        if (Auth::user() && $nextEvent) {
             $price = $nextEvent->priceForUser(Auth::user());
             $route = is_null($price) || $price->getAmount() == 0 ? 'events.register' : $route;
         }

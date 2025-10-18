@@ -20,9 +20,11 @@
         <div class="relative h-full flex-1 overflow-hidden rounded-xl">
             <h1 class="text-3xl md:text-5xl font-bayon text-white py-5">Upcoming Events</h1>
             <div class="w-full grid grid-cols-3 gap-3">
-                <div class="col-span-2 h-full">
-                    <x-next-event-card :event="$nextEvent" :link="$route"/>
-                </div>
+                @if($nextEvent)
+                    <div class="col-span-2 h-full">
+                        <x-next-event-card :event="$nextEvent" :link="$route"/>
+                    </div>
+                @endif
                 <div class="flex flex-col gap-3 ">
                     @foreach($nextEvents as $event)
                         @if($event->banner_path)
