@@ -25,6 +25,7 @@ parameters:
             message: '#^Cannot access property \$events on App\\Models\\User\|null\.$#'
             paths:
                 - app/Http/Controllers/Home/EventController.php # The controller is behind an Auth middleware
+                - app/Http/Controllers/Home/HomeController.php
         -
             message: '#^Cannot call method findPayment\(\) on App\\Models\\User\|null\.$#'
             paths:

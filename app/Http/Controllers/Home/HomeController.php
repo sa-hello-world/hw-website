@@ -14,7 +14,8 @@ class HomeController extends Controller
     /**
      * @return View
      */
-    public function index() : View {
+    public function index() : View
+    {
         $user = Auth::user();
         $nextEvent = Event::next();
         $nextEvents = Event::allNext(5);

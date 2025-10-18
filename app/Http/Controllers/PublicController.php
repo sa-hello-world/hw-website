@@ -79,7 +79,7 @@ class PublicController extends Controller
         $pastEvents = Event::allPast(4);
 
         $route = 'payments.store.event';
-        if (Auth::user()) {
+        if (Auth::user() && $nextEvent) {
             $price = $nextEvent->priceForUser(Auth::user());
             $route = is_null($price) || $price->getAmount() == 0 ? 'events.register' : $route;
         }

@@ -4,6 +4,7 @@ namespace App\Livewire\User;
 
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class MarkAsCurrentBoard extends Component
@@ -23,7 +24,8 @@ class MarkAsCurrentBoard extends Component
      * Initializes the component
      * @return void
      */
-    public function mount() : void {
+    public function mount() : void
+    {
         $this->boardRoles = config('roles');
         $this->board_role = $this->boardRoles[0];
     }
@@ -61,7 +63,11 @@ class MarkAsCurrentBoard extends Component
         $this->redirect(route('board.users.index'));
     }
 
-    public function render()
+    /**
+     * Renders the component
+     * @return View
+     */
+    public function render() : View
     {
         return view('livewire.user.mark-as-current-board');
     }
