@@ -155,7 +155,7 @@ class Event extends Model
     public static function next() : ?Event
     {
         return self::where('start', '>=', Carbon::now())
-            ->orderBy('start', 'asc')
+            ->orderBy('start', 'desc')
             ->first();
     }
 
@@ -168,7 +168,7 @@ class Event extends Model
     public static function allNext(?int $limit = null) : Collection
     {
         $query = self::where('start', '>=', Carbon::now())
-            ->orderBy('start', 'asc');
+            ->orderBy('start', 'desc');
 
         if ($limit !== null) {
             $query->limit($limit);

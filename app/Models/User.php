@@ -20,6 +20,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property int $id
  * @property string $name
  * @property string $email
+ * @property string|null $study_year
+ * @property int $was_board_member
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -28,11 +30,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\EventUser> $eventUsers
  * @property-read int|null $event_users_count
  * @property-read mixed $events
+ * @property-read mixed $is_board_member
  * @property-read mixed $is_member
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Membership> $memberships
  * @property-read int|null $memberships_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $payments
+ * @property-read int|null $payments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Permission> $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
@@ -50,7 +55,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStudyYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereWasBoardMember($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutPermission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutRole($roles, $guard = null)
  * @mixin \Eloquent
@@ -153,16 +160,25 @@ class User extends Authenticatable
     /**
      * Helper function that registers a user for event
      * @param Event $event
+     * @param Payment|null $payment
      * @return bool
      */
-    public function registerForEvent(Event $event): bool
+    public function registerForEvent(Event $event, ?Payment $payment = null): bool
     {
         if ($this->events->contains($event)) {
             return false;
         }
 
-        EventUser::create(['user_id' => $this->id, 'event_id' => $event->id]);
+        $pivotTableData = [
+            'user_id' => $this->id,
+            'event_id' => $event->id
+        ];
 
+        if ($payment) {
+            $pivotTableData['payment_id'] = $payment->id;
+        }
+
+        EventUser::create($pivotTableData);
         return true;
     }
 
@@ -239,5 +255,18 @@ class User extends Authenticatable
             ->where('meta->payable_id', $event->id)
             ->where('meta->payable_type', 'event')
             ->first();
+    }
+
+    /**
+     * Checks if the user has a board member role
+     * @return Attribute<bool,never>
+     */
+    public function isBoardMember(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return $this->hasAnyRole(config('roles'));
+            }
+        );
     }
 }

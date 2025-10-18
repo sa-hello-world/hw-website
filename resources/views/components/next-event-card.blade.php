@@ -6,7 +6,7 @@
     'isModal' => false,
 ])
 
-<section class="p-6 h-full">
+<section class="h-full">
     <div class="mx-auto text-center h-full">
         <x-notebook-card extraClasses="flex h-full">
             <div class="grid grid-cols-1 md:grid-cols-2 h-full relative">

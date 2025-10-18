@@ -1,6 +1,6 @@
 @props(['memberBenefits', 'membershipPrices'])
 
-<section class="bg-hw-dark md:p-20 p-6">
+<section class="bg-hw-dark md:p-20 p-6" id="memberships">
     <div class="mx-auto max-w-6xl text-center">
         <p class="text-gray-50 font-handwriting text-2xl mb-4">
             Caught your attention?

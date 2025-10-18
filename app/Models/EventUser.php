@@ -7,10 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * This model is a linking table between the user and the event.
- *
  * The model is not to be used directly. Use either Event or User model
  * Will be extended to contain a payment ID
- *
  * @property int $id
  * @property int $event_id
  * @property int $user_id

@@ -1,4 +1,4 @@
-@php use App\Models\User; @endphp
+@php use App\Models\User;use Illuminate\Support\Facades\Auth; @endphp
 <x-layouts.hub>
     <div class="flex items-center justify-between pt-5">
         <h1 class="text-3xl md:text-5xl font-bayon text-white">Users</h1>
@@ -35,21 +35,34 @@
                         <tr class="hover:bg-neutral-900 transition-all">
                             <td class="px-4 py-4 capitalize">{{ $user->name }}</td>
                             <td class="px-4 py-4">{{ $user->email }}</td>
-                            <td class="px-4 py-4 capitalize">
+                            <td class="px-4 py-4 capitalize flex gap-x-2">
                                 @if($user->is_member)
                                     <x-hw.badge label="Member" color="success"/>
+                                @endif
+                                @if($user->is_board_member)
+                                     @foreach($user->roles as $role)
+                                            <x-hw.badge label="{{$role->name}}" color="membership"/>
+                                     @endforeach
                                 @endif
                             </td>
                             <td class="px-4 py-4 capitalize">
                                 {{ $user->created_at->format('d-m-Y') }}
                             </td>
                             <td>
-                                @can('markAsBoardMember', $user)
-                                    <livewire:user.mark-as-board-member :user="$user"/>
-                                @endcan
-                                @can('removeAsBoardMember', $user)
-                                    <livewire:user.mark-as-board-member :user="$user" :markAsBoardMember="false"/>
-                                @endcan
+                                <div class="flex gap-x-2">
+                                        @can('markAsBoardMember', $user)
+                                            <livewire:user.mark-as-board-member :user="$user"/>
+                                        @endcan
+                                        @can('removeAsBoardMember', $user)
+                                            <livewire:user.mark-as-board-member :user="$user" :markAsBoardMember="false"/>
+                                        @endcan
+                                        @can('markAsCurrentBoardMember', $user)
+                                            <livewire:user.mark-as-current-board :user="$user"/>
+                                        @endcan
+                                        @can('removeAsCurrentBoardMember', $user)
+                                            <livewire:user.mark-as-current-board :user="$user" :markAsBoardMember="false"/>
+                                        @endcan
+                                </div>
                             </td>
                         </tr>
                     @empty
